@@ -1,0 +1,186 @@
+
+aside.details {
+background-color :  #DE8B0E;
+border : dotted 2px;
+border-color : #e76a00;
+width : 300px;
+padding : 20px;
+}
+
+aside.news {
+background-color :  #DE8B0E;
+border : solid 4px;
+border-color : #f6c653 #bd6a23 #b6631f #e8ab4a;
+width : 25%;
+margin : 50px;
+padding : 20px;
+height : 200px;
+float : left;
+}
+
+/*Ajouté par Annelyse*/
+
+
+body {
+margin : 0;
+padding : 0;
+background-color : #14111e;
+padding-top : 50px;
+}
+
+/*Ajouté par Annelyse*/
+main{
+margin-top: 4em;	
+}
+
+footer {
+background-image:linear-gradient(#6e0b14, #1A0000);	
+/*background-color : #6e0b14;*/
+border-top : 3px solid;
+border-color : black;
+padding : 20px;
+height : 200px;
+}
+
+footer p {
+	color : #ffba00;
+}
+#authors {
+width: 50%;
+}
+
+#information {
+float : left;
+display : inline-block;
+width: 50%;
+}
+
+#copyright {
+
+}
+
+h1, h2, h3, h4, h5, h6 {
+color : #DE8B0E;
+}
+
+h1 {
+font-size: 50px;
+}
+h2 {
+font-family: Arial; 
+font-size: 40px;
+}
+h3 {
+font-size: 25px;
+}
+h4 {
+font-size: 20px;
+}
+h5 {
+font-size: 15px;
+}
+h6 {
+font-size: 10px;
+}
+.title_red {
+color : #c20000;
+}
+
+.title_grey {
+color : #202020;
+}
+
+.reverse_text {
+color : #fff;
+}
+
+header {
+	width : 100%;
+	height : 130px;
+	text-align: center;
+	margin-bottom: 40px;
+}
+
+p {
+font-family: Arial; 
+color : #202020;
+}
+
+figure.header_left {
+	margin-right : 130px ;
+	display : inline-block;
+}
+
+figure.header_right {
+	margin-left : 130px ;
+	display : inline-block;
+}
+
+nav {
+/*background-color : #f2b300;*/
+width :100%;
+min-width : 710px;
+background-image : url("../img/menu/bandeau_menu.png");
+height : 35px;
+text-align : center;
+position : fixed;
+top : 0px;
+}
+
+nav a {
+font-style : none;
+font-size : 28px;
+margin : 0px;
+color : black;
+}
+
+nav ul {
+list-style-type:none;
+display: inline;
+}
+
+nav ul li {
+display: inline;
+padding : 5px;
+vertical-align : top;
+}
+
+/*
+Supprimé par Annelyse
+section div {
+margin : 10px;
+padding : 5px;
+float : left;
+text-align : center;
+}*/
+
+section.cadre_gris {
+border: 5px solid;
+border-color: #f8f8f8 #838383 #787878 #dedede;
+background-color : #e1e1e1;
+margin : 50px;
+padding : 30px;
+
+/*Ajouté par Annelyse*/
+width: 65%;
+min-width: 500px;
+
+}
+
+section.petit {
+border: 5px solid;
+border-color : #f6c653 #bd6a23 #b6631f #e8ab4a;
+background-color : #e1e1e1;
+margin : 50px;
+padding : 30px;
+width : 50%;
+float : left;
+}
+
+
+.button_red {
+font-family : Arial;
+color : #dec1c1;
+background-color : #c00000;
+padding : 5px;
+}
