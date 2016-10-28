@@ -25,5 +25,9 @@ public function sight()
 
 public function diary()
 {
+    $playerId = $this->Auth->user('id');
+    $this->loadModel('Fighters');
+    $fighters = $this->Fighters->getFightersByPlayer($playerId);
+    $this->set(compact('fighters'));
 }
 }

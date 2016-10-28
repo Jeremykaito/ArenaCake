@@ -24,12 +24,12 @@ class PlayersTable extends Table
 	}
 	
 	public function findPlayerByEmail($email){
-			$player = $this
+            $player = $this
            ->find()
            ->where(['email' => $email])
            ->first();
 		   
-		 return $player;
+            return $player;
 	}
 	
 	public function generateId(){
