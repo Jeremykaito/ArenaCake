@@ -21,9 +21,11 @@ public function index()
     
     $fighterlist=    $this->Fighters->getFighters();
     $playerlist =    $this->Players->getPlayers();
+    //$eventPlayer =   $this->Events->getAllEvents();
     
     $this->set('fighterlist',$fighterlist);
     $this->set('playerlist',$playerlist);
+    //$this->set('eventlist',$eventPlayer);
     
 }
 
