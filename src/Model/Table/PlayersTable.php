@@ -48,4 +48,11 @@ class PlayersTable extends Table
 	$rules->add($rules->isUnique(['email']),['message' => 'Cet e-mail est déjà utilisé.']);
     return $rules;
 }
+
+
+    public function getPlayers(){
+        return $this->find('all')->toArray();
+    } 
+
+
 }
