@@ -28,12 +28,6 @@
 			Prenez garde car vous pourriez bien tomber dans un piège ou bien nez à nez avec un monstre errant...</p>
 		<p>Consultez le Hall of Fame pour tout connaître de vos statistiques et vous améliorer continuellement.</p>
 		<p>L'Arène Herbeuse n'attend plus que vous ! Êtes-vous prêt ?</p>
-	</section>
-	
-	<!--Présentation des combattants-->
-	<section class='cadre_gris'>
-	
-		<h2>Les combattants de l'Arène Herbeuse</h2>
 		
 		<!-- Le slider des personnages-->
 		<ul class="bxslider">
@@ -42,6 +36,13 @@
 			<li><?php  echo $this->Html->image("champions/sorcier.png", ["alt" => "sorcier"]);?></li>
 			<li><?php  echo $this->Html->image("champions/elf.png", ["alt" => "elf"]);?></li>
 		</ul>
+                <?= $this->Html->link('Inscription', array('controller' => 'Players', 'action' => 'add')); ?>
+	</section>
+	
+	<!--Présentation des combattants-->
+	<section class='cadre_gris'>
+	
+		<h2>Les combattants de l'Arène Herbeuse</h2>
 		
 		<!-- La description des personnages-->
 		<dl>
