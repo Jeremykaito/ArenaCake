@@ -57,6 +57,8 @@ echo $this->Html->script('jqplot.1.0.9/jquery.jqplot.min.js');
         $skillsight[] = $fighter->skill_sight;
         $skillhealth[] = $fighter->skill_health;
         $skillstrength[] = $fighter->skill_strength;
+        $fightersXp[] = $fighter->xp;
+        $fighterslvl[] = $fighter->level;
     }
     
     ?>
@@ -74,7 +76,7 @@ echo $this->Html->script('jqplot.1.0.9/jquery.jqplot.min.js');
     
     <div style="margin:auto;">
         <h3>Number of fighter per Player</h3>
-        <div id="level" style="height:400px;width:400px;margin:auto;"></div>
+        <div id="pieChart" style="height:400px;width:400px;margin:auto;"></div>
     </div>
     
  <?php
@@ -86,6 +88,7 @@ echo $this->Html->script('jqplot.1.0.9/shBrushXml.min.js');
 
 /** KRA: additional plugins **/
 echo $this->Html->script('jqplot.1.0.9/jqplot.barRenderer.min.js');
+echo $this->Html->script('jqplot.1.0.9/jqplot.pieRenderer.min.js');
 echo $this->Html->script('jqplot.1.0.9/jqplot.categoryAxisRenderer.min.js');
 echo $this->Html->script('jqplot.1.0.9/jqplot.pointLabels.min.js');
 
@@ -97,6 +100,25 @@ var namesArray      =<?php echo json_encode($names );?>;
 var skillhealth     =<?php echo json_encode($skillhealth );?>;
 var skillsight      =<?php echo json_encode($skillsight );?>;
 var skillstrength   =<?php echo json_encode($skillstrength );?>;
+var fightersXp      =<?php echo json_encode($fightersXp );?>;
+var fighterslvl     =<?php echo json_encode($fighterslvl );?>;
+
+/** new array to pass **/
+var xpResult = new Array();
+var levelRresult = new Array();
+
+    for (var i = 0; i < namesArray.length; i++) {
+        var temp1 = new Array();
+        var temp2 = new Array();
+        temp1.push(namesArray[i].toString());
+        temp1.push(namesArray[i].toString());
+        
+        temp2.push(parseInt(fightersXp[i]));
+        temp2.push(parseInt(fighterslvl[i]));
+        
+        xpResult.push(temp1);
+        levelRresult.push(temp2);
+    }
  
     
 $(document).ready(function(){
@@ -139,22 +161,11 @@ $(document).ready(function(){
         );
 
 
-        /* Plot of fighter level*/    
+        /*****************  Plot of fighter level  ************/    
 
-        var s1 = [[2002, 112000], [2003, 122000], [2004, 104000], [2005, 99000], [2006, 121000], 
-    [2007, 148000], [2008, 114000], [2009, 133000], [2010, 161000], [2011, 173000]];
-    var s2 = [[2002, 10200], [2003, 10800], [2004, 11200], [2005, 11800], [2006, 12400], 
-    [2007, 12800], [2008, 13200], [2009, 12600], [2010, 13100]];
- 
-    plot1 = $.jqplot("levelchart", [s2, s1], {
+    plot1 = $.jqplot("levelchart", [  fighterslvl, fightersXp], {
         animate: true,
         animateReplot: true,
-        cursor: {
-            show: true,
-            zoom: true,
-            looseZoom: true,
-            showTooltip: false
-        },
         series:[
             {
                 pointLabels: {
@@ -187,42 +198,60 @@ $(document).ready(function(){
         axes: {
             // These options will set up the x axis like a category axis.
             xaxis: {
-                tickInterval: 1,
+                tickInterval: 2,
                 drawMajorGridlines: false,
                 drawMinorGridlines: true,
                 drawMajorTickMarks: false,
                 rendererOptions: {
-                tickInset: 0.5,
-                minorTicks: 1
+                tickInset: 1,
+                minorTicks: 1,
+                label:"Fighter's Name",
             }
             },
             yaxis: {
-                tickOptions: {
-                    formatString: "$%'d"
-                },
+                label:"exp.",
                 rendererOptions: {
                     forceTickAt0: true
                 }
             },
             y2axis: {
-                tickOptions: {
-                    formatString: "$%'d"
-                },
+                label:"level",
                 rendererOptions: {
                     // align the ticks on the y2 axis with the y axis.
                     alignTicks: true,
                     forceTickAt0: true
                 }
             }
-        },
-        highlighter: {
-            show: true, 
-            showLabel: true, 
-            tooltipAxes: 'y',
-            sizeAdjust: 7.5 , tooltipLocation : 'ne'
         }
     });
-   
+    
+    /** plot number of fighter per player **/
+    var s1 = [['Sony',7], ['Samsumg',13.3], ['LG',14.7], ['Vizio',5.2], ['Insignia', 1.2]];
+         
+    var plot3 = $.jqplot('pieChart', [s1], {
+        grid: {
+            drawBorder: false, 
+            drawGridlines: false,
+            background: '#ffffff',
+            shadow:false
+        },
+        axesDefaults: {
+             
+        },
+        seriesDefaults:{
+            renderer:$.jqplot.PieRenderer,
+            rendererOptions: {
+                showDataLabels: true
+            }
+        },
+        legend: {
+            show: true,
+            rendererOptions: {
+                numberRows: 1
+            },
+            location: 's'
+        }
+    }); 
 
 });
 
