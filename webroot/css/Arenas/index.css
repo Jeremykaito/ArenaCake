@@ -2,6 +2,35 @@ p{
 	margin: 0.5em;
 }
 
-#btnInscription{
-    background-color : red;
+#sliderPerso{
+    text-align: center;
+}
+
+dd{
+    margin-top: 0.8em;
+    text-indent:30px
+}
+
+dt img{
+    margin-right: 1em;
+}
+
+.news{
+
+}
+
+aside.news {
+background-color :  #DE8B0E;
+border : solid 4px;
+border-color : #f6c653 #bd6a23 #b6631f #e8ab4a;
+width : 35%;
+margin : 50px;
+padding : 20px;
+height : 200px;
+float : left;
+}
+
+section.cadre_gris {
+width: 55%;
+min-width: 500px;
 }

@@ -7,17 +7,6 @@ width : 300px;
 padding : 20px;
 }
 
-aside.news {
-background-color :  #DE8B0E;
-border : solid 4px;
-border-color : #f6c653 #bd6a23 #b6631f #e8ab4a;
-width : 25%;
-margin : 50px;
-padding : 20px;
-height : 200px;
-float : left;
-}
-
 /*Ajouté par Annelyse*/
 
 
@@ -145,26 +134,12 @@ padding : 5px;
 vertical-align : top;
 }
 
-/*
-Supprimé par Annelyse
-section div {
-margin : 10px;
-padding : 5px;
-float : left;
-text-align : center;
-}*/
-
 section.cadre_gris {
 border: 5px solid;
 border-color: #f8f8f8 #838383 #787878 #dedede;
 background-color : #e1e1e1;
 margin : 50px;
 padding : 30px;
-
-/*Ajouté par Annelyse*/
-width: 65%;
-min-width: 500px;
-
 }
 
 section.petit {
