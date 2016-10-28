@@ -102,9 +102,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             array('class' => 'a')
             ); ?>
         </p>
-        </section>
-        <section id="authors"><p>Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/></section> 
-        <section id="copyright"><p>Copyright 2016</p></section>
+    </section>
+       <p id="authors">Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/>
+       <p id="copyright">Copyright 2016 © - ArenaCake</p>
 		
 		<?php //Ajouté par Annelyse ?>
 		<?php if ($this->request->session()->read('PlayerLoggedIn')){?>
