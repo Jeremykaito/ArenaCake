@@ -17,7 +17,10 @@ class ArenasController extends AppController {
     }
 
     public function fighter() {
-        
+        $playerId = $this->Auth->user('id');
+        $this->loadModel('Fighters');
+        $fighters = $this->Fighters->getFightersByPlayer($playerId);
+        $this->set(compact('fighters'));
     }
 
     public function sight() {
