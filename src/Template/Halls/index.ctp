@@ -28,22 +28,29 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
     <tbody>
 
     <?php 
-    
+    $nbrofPlayer=1;
     foreach ( $playerlist as $player ) {
         
-        echo "<tr>";
+        $nbrOfFighter = 1;
+        //echo "<tr>";
         foreach ($fighterlist as  $fighter){
             
             if ($fighter->player_id == $player->id) {
                
-                echo "<td>";
+               /* echo "<td>";
                 echo $fighter->name;
-                //echo $this->Html->image('sprites/rogue.png', ['alt' => 'perso']);
-                echo "</td>";
-            }   
+                echo $nbrOfFighter;
+                echo $nbrofPlayer;
+                echo "</td>";*/
+                $varArrayPlayerFighter['Player_'.$nbrofPlayer] = $nbrOfFighter;
+                $nbrOfFighter++;
+            } 
         }
-       echo  "</tr>";
+       $nbrofPlayer++;
+       //echo  "</tr>";
     }
+    
+    pr($varArrayPlayerFighter);
     ?>
 
     
@@ -60,7 +67,7 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
         $fightersXp[] = $fighter->xp;
         $fighterslvl[] = $fighter->level;
     }
-    
+
     ?>
     
     <div style="margin:auto;">
@@ -71,7 +78,7 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
     
     <div style="margin:auto;">
         <h3>Fighter Average level</h3>
-        <div id="levelchart" style="height:300px;width:400px;margin:auto;"></div>
+        <div id="levelchart" style="height:400px;width:400px;margin:auto;"></div>
     </div>
     
     <div style="margin:auto;">
@@ -103,24 +110,40 @@ var skillstrength   =<?php echo json_encode($skillstrength );?>;
 var fightersXp      =<?php echo json_encode($fightersXp );?>;
 var fighterslvl     =<?php echo json_encode($fighterslvl );?>;
 
+var playersfigthers =<?php echo json_encode($varArrayPlayerFighter);?>;
+
+
 /** new array to pass **/
 var xpResult = new Array();
 var levelRresult = new Array();
+var playerandFighter = new Array();
 
     for (var i = 0; i < namesArray.length; i++) {
         var temp1 = new Array();
         var temp2 = new Array();
-        temp1.push(namesArray[i].toString());
-        temp1.push(namesArray[i].toString());
         
-        temp2.push(parseInt(fightersXp[i]));
-        temp2.push(parseInt(fighterslvl[i]));
+        temp1.push(namesArray[i]);
+        temp1.push(fightersXp[i]);
+        
+        temp2.push(namesArray[i]);
+        temp2.push(fighterslvl[i]);
         
         xpResult.push(temp1);
         levelRresult.push(temp2);
     }
- 
     
+    alert(playersfigthers.keys());
+    
+    for (var i = 1; i < playersfigthers.length+1; i++){
+        var temp = new Array();
+        
+        temp.push('Player_'+i);
+        temp.push(playersfigthers['Player_'+i]);
+        playerandFighter.push(temp);
+    }
+    
+ 
+ 
 $(document).ready(function(){
         /* Plot of  Fighter skills */ 
         plot2 = $.jqplot('skillchart', [skillhealth, skillsight,skillstrength], {
@@ -196,17 +219,12 @@ $(document).ready(function(){
             pad: 0
         },
         axes: {
-            // These options will set up the x axis like a category axis.
+
             xaxis: {
-                tickInterval: 2,
-                drawMajorGridlines: false,
-                drawMinorGridlines: true,
-                drawMajorTickMarks: false,
-                rendererOptions: {
-                tickInset: 1,
-                minorTicks: 1,
-                label:"Fighter's Name",
-            }
+                    renderer: $.jqplot.CategoryAxisRenderer,
+                    ticks: namesArray,
+                    label:"Fighter's Name",
+                    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
             },
             yaxis: {
                 label:"exp.",
@@ -217,7 +235,6 @@ $(document).ready(function(){
             y2axis: {
                 label:"level",
                 rendererOptions: {
-                    // align the ticks on the y2 axis with the y axis.
                     alignTicks: true,
                     forceTickAt0: true
                 }
@@ -226,32 +243,29 @@ $(document).ready(function(){
     });
     
     /** plot number of fighter per player **/
-    var s1 = [['Sony',7], ['Samsumg',13.3], ['LG',14.7], ['Vizio',5.2], ['Insignia', 1.2]];
-         
-    var plot3 = $.jqplot('pieChart', [s1], {
-        grid: {
-            drawBorder: false, 
-            drawGridlines: false,
-            background: '#ffffff',
-            shadow:false
-        },
-        axesDefaults: {
-             
-        },
-        seriesDefaults:{
-            renderer:$.jqplot.PieRenderer,
-            rendererOptions: {
-                showDataLabels: true
-            }
-        },
-        legend: {
-            show: true,
-            rendererOptions: {
-                numberRows: 1
-            },
-            location: 's'
+  /* var data = [
+    ['Heavy Industry', 12],['Retail', 9], ['Light Industry', 14], 
+    ['Out of home', 16],['Commuting', 7], ['Orientation', 9]
+  ];*/
+  
+
+  var plot2 = jQuery.jqplot ('pieChart', [playerandFighter], 
+    {
+      seriesDefaults: {
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Turn off filling of slices.
+          fill: false,
+          showDataLabels: true, 
+          // Add a margin to seperate the slices.
+          sliceMargin: 4, 
+          // stroke the slices with a little thicker line.
+          lineWidth: 5
         }
-    }); 
+      }, 
+      legend: { show:true, location: 'e' }
+    }
+  );
 
 });
 
