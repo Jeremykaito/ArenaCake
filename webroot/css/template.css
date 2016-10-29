@@ -7,23 +7,16 @@ width : 300px;
 padding : 20px;
 }
 
-/*Ajouté par Annelyse*/
-
-
 body {
 margin : 0;
 padding : 0;
 background-color : #14111e;
-padding-top : 50px;
-}
-
-/*Ajouté par Annelyse*/
-main{
-margin-top: 4em;	
+padding-top : 20px;
+min-width : 800px;
 }
 
 footer {
-background-image:linear-gradient(#6e0b14, #1A0000);	
+background-image:linear-gradient(#6e0b14, #1A0000);
 /*background-color : #6e0b14;*/
 border-top : 3px solid;
 border-color : black;
@@ -33,6 +26,13 @@ height : 200px;
 
 footer p {
 	color : #ffba00;
+}
+#logo {
+	margin-top : -20px;
+}
+#sortie {
+	float : right;
+	margin-top : -10px;
 }
 #authors {
 width: 50%;
@@ -59,7 +59,7 @@ h1 {
 font-size: 50px;
 }
 h2 {
-font-family: Arial; 
+font-family: Arial;
 font-size: 40px;
 }
 h3 {
@@ -94,7 +94,7 @@ header {
 }
 
 p {
-font-family: Arial; 
+font-family: Arial;
 color : #202020;
 }
 
@@ -109,15 +109,12 @@ figure.header_right {
 }
 
 nav {
-/*background-color : #f2b300;*/
 width :100%;
-min-width : 710px;
 background-image : url("../img/menu/bandeau_menu.png");
 height : 35px;
-text-align : center;
 }
 
-nav a {
+nav ul li a {
 font-style : none;
 font-size : 28px;
 margin : 0px;
@@ -126,13 +123,12 @@ color : black;
 
 nav ul {
 list-style-type:none;
-display: inline;
+text-align : center;
 }
 
 nav ul li {
 display: inline-block;
-padding-left : 5px;
-padding-right : 5px;
+width : 150px;
 vertical-align : top;
 }
 
