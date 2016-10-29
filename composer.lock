@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5f61a2db1ad498a3159c210f94c2b41c",
-    "content-hash": "8ff4b464cc5fcf2fbd4731d1f8d4cd00",
+    "hash": "2c2fac65efa6447ecd27183c527e5c51",
+    "content-hash": "be3f4e5340d477e705aadb85fa4f9ef0",
     "packages": [
         {
             "name": "aura/installer-default",
@@ -343,6 +343,29 @@
             ],
             "description": "A composer installer for CakePHP 3.0+ plugins.",
             "time": "2016-04-28 03:01:34"
+        },
+        {
+            "name": "datatables/datatables",
+            "version": "1.10.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DataTables/DataTables.git",
+                "reference": "3a432c5db3546b2ef0c192f2ae367811cb5edb9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DataTables/DataTables/zipball/3a432c5db3546b2ef0c192f2ae367811cb5edb9b",
+                "reference": "3a432c5db3546b2ef0c192f2ae367811cb5edb9b",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table.",
+            "homepage": "http://www.datatables.net/",
+            "time": "2016-05-20 13:09:02"
         },
         {
             "name": "mobiledetect/mobiledetectlib",

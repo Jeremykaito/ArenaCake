@@ -74,14 +74,13 @@
 
 	<aside class='news'>
 		<h3 class='text_light'>Un nouveau combattant fait son entrée dans l'Arène !</h3>
-                <p>Découvrez Winky, le nouveau personnage de WebArena. Winky est une elfe qui semble
+                <p>Winky est une elfe qui semble
                 être à la recherche d'un trésor légendaire enfoui dans l'Arène Herbeuse...</p>
                 <p>Vous pouvez jouer avez Winky dès maintenant !</p>
 	</aside>
         
         <aside class='news'>
-		<h3 class='text_light'>Un nouveau combattant fait son entrée dans l'Arène !</h3>
-                <p>Découvrez Winky, le nouveau personnage de WebArena. Winky est une elfe qui semble
-                être à la recherche d'un trésor légendaire enfoui dans l'Arène Herbeuse...</p>
-                <p>Vous pouvez jouer avez Winky dès maintenant !</p>
+		<h3 class='text_light'>Nouvelle fonctionnalité</h3>
+                <p>Une nouvelle fonctionnalité a été ajoutée : le Hall of Fame ! Cette page
+                vous permet de voir les statistiques des joueurs de WebArena. Utile pour s'améliorer !</p>
 	</aside>

@@ -4,3 +4,4 @@
 /logs/*
 /nbproject/private/
 webroot/css/Halls/hallofFame.css
+composer.json
