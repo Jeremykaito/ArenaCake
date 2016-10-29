@@ -42,7 +42,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <?php
             if ($this->request->session()->read('PlayerLoggedIn')){?>
                 <li><?= $this->Html->link('Jouer', array('controller' => 'Arenas', 'action' => 'sight')); ?></li>
-                <li><?= $this->Html->link('Champions', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
+                <li><?= $this->Html->link('Champions', array('controller' => 'Arenas', 'action' => 'fighter')); ?></li>
                 <li>
 					<?= $this->Html->link(
 					  $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")), // Recherche dans le dossier webroot/img
@@ -52,7 +52,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 					?>
                 </li>
                 <li><?= $this->Html->link('Journal', array('controller' => 'Arenas', 'action' => 'diary')); ?></li>
-                <li><?= $this->Html->link('Hall of fame', array('controller' => 'Halls', 'action' => 'index')); ?></li>
+                <li><?= $this->Html->link('Hall of fame', array('controller' => 'Public', 'action' => 'hall')); ?></li>
 				<?php
             }
 			
@@ -67,6 +67,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 );?>
                 </li>
                 <li><?= $this->Html->link('Inscription', array('controller' => 'Public', 'action' => 'add')); ?></li>
+                <li><?= $this->Html->link('Hall of fame', array('controller' => 'Public', 'action' => 'hall')); ?></li>
 
             <?php } ?>
             </ul>    

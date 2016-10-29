@@ -10,7 +10,7 @@ class PublicController extends AppController {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login', 'add', 'logout', 'resetPassword']);
+        $this->Auth->allow(['login', 'add', 'logout', 'resetPassword', 'hall']);
     }
 
     public function index() {
@@ -77,6 +77,19 @@ class PublicController extends AppController {
         } else {
             return $this->redirect(['controller' => 'Arenas', 'action' => 'index']);
         }
+    }
+    
+    function hall() {
+        
+    $this->loadModel('Fighters');
+    $this->loadModel('Players');
+    $this->loadModel('Events');
+    
+    $fighterlist=    $this->Fighters->getFighters();
+    $playerlist =    $this->Players->getPlayers();
+    
+    $this->set('fighterlist',$fighterlist);
+    $this->set('playerlist',$playerlist);
     }
 
     function sendPasswordEmail($email, $newPassword) {
