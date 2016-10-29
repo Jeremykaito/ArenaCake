@@ -61,15 +61,11 @@ class AppController extends Controller {
                 'home'
             ],
             'loginAction' => [
-                'controller' => 'Players',
+                'controller' => 'Public',
                 'action' => 'login',
                 'home'
             ],
         ]);
-    }
-
-    public function beforeFilter(Event $event) {
-        $this->Auth->allow(['index', 'view', 'display']);
     }
 
     /**

@@ -58,7 +58,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 			
 			//If the player is NOT logged in
             else { ?>
-                <li><?= $this->Html->link('Connexion', array('controller' => 'Players', 'action' => 'login')); ?></li>
+                <li><?= $this->Html->link('Connexion', array('controller' => 'Public', 'action' => 'login')); ?></li>
                 <li>
                 <?= $this->Html->link(
                   $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")), // Recherche dans le dossier webroot/img
@@ -66,7 +66,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                   array('escape' => false) // Ceci pour indiquer de ne pas échapper les caractères HTML du lien vu qu'ici tu as une image
                 );?>
                 </li>
-                <li><?= $this->Html->link('Inscription', array('controller' => 'Players', 'action' => 'add')); ?></li>
+                <li><?= $this->Html->link('Inscription', array('controller' => 'Public', 'action' => 'add')); ?></li>
 
             <?php } ?>
             </ul>    
@@ -109,7 +109,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 		<?php //Ajouté par Annelyse ?>
 		<?php if ($this->request->session()->read('PlayerLoggedIn')){?>
-            <a><?= $this->Html->link('Déconnexion', array('controller' => 'Players', 'action' => 'logout')); ?></a>
+            <a><?= $this->Html->link('Déconnexion', array('controller' => 'Public', 'action' => 'logout')); ?></a>
 		<?php } ?>
         </footer>
     </body>

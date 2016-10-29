@@ -6,7 +6,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\Mailer\Email;
 
-class PlayersController extends AppController {
+class PublicController extends AppController {
 
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -19,6 +19,7 @@ class PlayersController extends AppController {
 
     public function add() {
         if (!$this->request->session()->read('PlayerLoggedIn')) {
+            $this->loadModel('Players');
             $player = $this->Players->newEntity();
             if ($this->request->is('post')) {
                 $player = $this->Players->patchEntity($player, $this->request->data);
