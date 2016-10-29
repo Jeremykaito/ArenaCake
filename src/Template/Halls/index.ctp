@@ -110,7 +110,7 @@ var skillstrength   =<?php echo json_encode($skillstrength );?>;
 var fightersXp      =<?php echo json_encode($fightersXp );?>;
 var fighterslvl     =<?php echo json_encode($fighterslvl );?>;
 
-var playersfigthers =<?php echo json_encode($varArrayPlayerFighter);?>;
+var playersfigthers     =<?php echo json_encode($varArrayPlayerFighter);?>;
 
 
 /** new array to pass **/
@@ -132,7 +132,7 @@ var playerandFighter = new Array();
         levelRresult.push(temp2);
     }
     
-    alert(playersfigthers.keys());
+    alert(playersfigthers.length);
     
     for (var i = 1; i < playersfigthers.length+1; i++){
         var temp = new Array();
