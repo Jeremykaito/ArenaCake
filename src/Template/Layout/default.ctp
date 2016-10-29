@@ -34,10 +34,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 </head>
 
 <body>
-
+<header>
   <!--Menu de navigation-->
   <nav>
-
     <!--//If the player is logged in-->
     <?php
     if ($this->request->session()->read('PlayerLoggedIn')){?>
@@ -53,6 +52,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       </li>
       <li><?= $this->Html->link('Journal', array('controller' => 'Arenas', 'action' => 'diary')); ?></li>
       <li><?= $this->Html->link('Hall of fame', array('controller' => 'Halls', 'action' => 'index')); ?></li>
+
       <li id="sortie">
       <?= $this->Html->link(
           $this->Html->image('menu/sortie.png', array('alt' => "Deconnexion")),
@@ -68,7 +68,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
   else { ?>
     <ul>
       <li><?= $this->Html->link('Connexion', array('controller' => 'Players', 'action' => 'login')); ?></li>
-      <li>
+      <li id="logo">
         <?= $this->Html->link(
         $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")),
         array('controller' => 'Arenas', 'action' => ""),
@@ -76,12 +76,10 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         );?>
       </li>
       <li><?= $this->Html->link('Inscription', array('controller' => 'Players', 'action' => 'add')); ?></li>
+      <li><?= $this->Html->link('Hall of fame', array('controller' => 'Halls', 'action' => 'index')); ?></li>
     </ul>
   <?php } ?>
 </nav>
-
-
-<header>
   <figure class="header_left">
     <?= $this->Html->image('champions/rogue.png', array('alt' => "Rogue")); ?>
     <?= $this->Html->image('champions/elf.png', array('alt' => "Elf")); ?>
@@ -102,18 +100,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <!--Footer -->
 <footer>
   <section id="information">
-    <p>Groupe SI1 : Gr1-01-AE</p>
+    <h3>Groupe : SI1 Gr1-01-AE</h3>
     <p>Options : A, E, D</p>
-    <p>
-      <?php echo $this->Html->link(
-      'https://github.com/coillman/eatingPHP',
-      'https://github.com/coillman/eatingPHP',
-      array('class' => 'a')
-    ); ?>
-  </p>
+    <p>Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/>
 </section>
-<p id="authors">Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/>
-  <p id="copyright">Copyright 2016 © - ArenaCake</p>
+
+<p id="copyright">Copyright 2016 © - ArenaCake</p>
 </footer>
 </body>
 </html>
