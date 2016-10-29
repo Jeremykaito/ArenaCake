@@ -55,7 +55,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
       <li id="sortie">
       <?= $this->Html->link(
           $this->Html->image('menu/sortie.png', array('alt' => "Deconnexion")),
-          array('controller' => 'Players', 'action' => 'logout'),
+          array('controller' => 'Public', 'action' => 'logout'),
           array('escape' => false)
         ); ?>
       <li>
