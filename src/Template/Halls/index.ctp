@@ -6,14 +6,14 @@
 
 <?php
 
-echo $this->Html->css('jqplot.1.0.9/jquery.jqplot.min.css');
-echo $this->Html->css('jqplot.1.0.9/shThemejqPlot.min.css');
-echo $this->Html->css('jqplot.1.0.9/shCoreDefault.min.css');
+echo $this->Html->css('JQPlot.jquery.jqplot.min');
+echo $this->Html->css('JQPlot.shThemejqPlot.min');
+echo $this->Html->css('JQPlot.shCoreDefault.min');
 echo $this->Html->css('Halls/hallofFame.css');
 
 /** KRA :JQplot Plugins **/
 echo $this->Html->script('jquery.min.js');
-echo $this->Html->script('jqplot.1.0.9/jquery.jqplot.min.js');
+echo $this->Html->script('JQPlot.jquery.jqplot.min');
 ?>
 
 
@@ -82,15 +82,15 @@ echo $this->Html->script('jqplot.1.0.9/jquery.jqplot.min.js');
  <?php
 /** KRA: mandatory files **/
 
-echo $this->Html->script('jqplot.1.0.9/shCore.min.js');
-echo $this->Html->script('jqplot.1.0.9/shBrushJScript.min.js');
-echo $this->Html->script('jqplot.1.0.9/shBrushXml.min.js');
+echo $this->Html->script('JQPlot.shCore.min');
+echo $this->Html->script('JQPlot.shBrushJScript.min');
+echo $this->Html->script('JQPlot.shBrushXml.min');
 
 /** KRA: additional plugins **/
-echo $this->Html->script('jqplot.1.0.9/jqplot.barRenderer.min.js');
-echo $this->Html->script('jqplot.1.0.9/jqplot.pieRenderer.min.js');
-echo $this->Html->script('jqplot.1.0.9/jqplot.categoryAxisRenderer.min.js');
-echo $this->Html->script('jqplot.1.0.9/jqplot.pointLabels.min.js');
+echo $this->Html->script('JQPlot.jqplot.barRenderer.min');
+echo $this->Html->script('JQPlot.jqplot.pieRenderer.min');
+echo $this->Html->script('JQPlot.jqplot.categoryAxisRenderer.min');
+echo $this->Html->script('JQPlot.jqplot.pointLabels.min');
 
 ?>   
 

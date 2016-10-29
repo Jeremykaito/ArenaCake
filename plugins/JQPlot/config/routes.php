@@ -3,8 +3,8 @@ use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\Router;
 
 Router::plugin(
-    'BxSlider',
-    ['path' => '/bx-slider'],
+    'JQPlot',
+    ['path' => '/jq-plot'],
     function ($routes) {
         $routes->fallbacks(DashedRoute::class);
     }

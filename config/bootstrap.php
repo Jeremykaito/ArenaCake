@@ -224,3 +224,4 @@ if (Configure::read('debug')) {
 
 Plugin::load('Migrations');
 Plugin::load('BxSlider', ['routes' => true]);
+Plugin::load('JQPlot', ['routes' => true]);
