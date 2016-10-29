@@ -41,7 +41,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <!--//If the player is logged in-->
             <?php
             if ($this->request->session()->read('PlayerLoggedIn')){?>
-                <li><?= $this->Html->link('Jouer', array('controller' => 'Vision', 'action' => 'vision')); ?></li>
+                <li><?= $this->Html->link('Jouer', array('controller' => 'Arenas', 'action' => 'sight')); ?></li>
                 <li><?= $this->Html->link('Champions', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
                 <li>
 					<?= $this->Html->link(
@@ -51,7 +51,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 					);
 					?>
                 </li>
-                <li><?= $this->Html->link('Journal', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
+                <li><?= $this->Html->link('Journal', array('controller' => 'Arenas', 'action' => 'diary')); ?></li>
                 <li><?= $this->Html->link('Hall of fame', array('controller' => 'Halls', 'action' => 'index')); ?></li>
 				<?php
             }
