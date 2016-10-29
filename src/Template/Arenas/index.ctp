@@ -39,7 +39,7 @@
 			<li><?php  echo $this->Html->image("champions/sorcier.png", ["alt" => "sorcier"]);?></li>
 			<li><?php  echo $this->Html->image("champions/elf.png", ["alt" => "elf"]);?></li>
 		</ul>
-                <?= $this->Html->link('Inscription', array('controller' => 'Players', 'action' => 'add'),array('class'=>'button_red')); ?>
+                <?= $this->Html->link('Inscription', array('controller' => 'Publlic', 'action' => 'add'),array('class'=>'button_red')); ?>
             </div>  
             
         </section>

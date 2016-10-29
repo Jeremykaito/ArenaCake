@@ -42,17 +42,16 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     if ($this->request->session()->read('PlayerLoggedIn')){?>
       <ul>
         <li><?= $this->Html->link('Jouer', array('controller' => 'Arenas', 'action' => 'sight')); ?></li>
-        <li><?= $this->Html->link('Champions', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
+        <li><?= $this->Html->link('Champions', array('controller' => 'Arenas', 'action' => 'fighter')); ?></li>
         <li id="logo">
           <?= $this->Html->link(
           $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")),
-          array('controller' => 'Arenas', 'action' => ""),
+          array('controller' => 'Arenas', 'action' => 'index'),
           array('escape' => false)
         );?>
       </li>
       <li><?= $this->Html->link('Journal', array('controller' => 'Arenas', 'action' => 'diary')); ?></li>
-      <li><?= $this->Html->link('Hall of fame', array('controller' => 'Halls', 'action' => 'index')); ?></li>
-
+      <li><?= $this->Html->link('Hall of fame', array('controller' => 'Public', 'action' => 'hall')); ?></li>
       <li id="sortie">
       <?= $this->Html->link(
           $this->Html->image('menu/sortie.png', array('alt' => "Deconnexion")),
@@ -61,22 +60,21 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         ); ?>
       <li>
     </ul>
-
     <?php
   }
   //If the player is NOT logged in
   else { ?>
     <ul>
-      <li><?= $this->Html->link('Connexion', array('controller' => 'Players', 'action' => 'login')); ?></li>
+      <li><?= $this->Html->link('Connexion', array('controller' => 'Public', 'action' => 'login')); ?></li>
       <li id="logo">
         <?= $this->Html->link(
         $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")),
-        array('controller' => 'Arenas', 'action' => ""),
+        array('controller' => 'Arenas', 'action' => 'index'),
         array('escape' => false)
         );?>
       </li>
-      <li><?= $this->Html->link('Inscription', array('controller' => 'Players', 'action' => 'add')); ?></li>
-      <li><?= $this->Html->link('Hall of fame', array('controller' => 'Halls', 'action' => 'index')); ?></li>
+      <li><?= $this->Html->link('Inscription', array('controller' => 'Public', 'action' => 'add')); ?></li>
+      <li><?= $this->Html->link('Hall of fame', array('controller' => 'Public', 'action' => 'hall')); ?></li>
     </ul>
   <?php } ?>
 </nav>
@@ -104,8 +102,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <p>Options : A, E, D</p>
     <p>Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/>
 </section>
-
 <p id="copyright">Copyright 2016 © - ArenaCake</p>
 </footer>
+
 </body>
 </html>

@@ -5,19 +5,23 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 
-/**
- * Personal Controller
- * User personal interface
- *
- */
 class ArenasController extends AppController {
 
+    
+    public function beforeFilter(Event $event) {
+        parent::beforeFilter($event);
+        $this->Auth->allow(['index']);
+    }
+    
     public function index() {
         
     }
 
     public function fighter() {
-        
+        $playerId = $this->Auth->user('id');
+        $this->loadModel('Fighters');
+        $fighters = $this->Fighters->getFightersByPlayer($playerId);
+        $this->set(compact('fighters'));
     }
 
     public function sight() {
