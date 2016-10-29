@@ -223,4 +223,9 @@ if (Configure::read('debug')) {
 }
 
 Plugin::load('Migrations');
+<<<<<<< HEAD
 Plugin::load('Datatables');
+=======
+Plugin::load('BxSlider', ['routes' => true]);
+Plugin::load('JQPlot', ['routes' => true]);
+>>>>>>> 8cbcf3afca6c74b29806faeafc84c97106cda0f2

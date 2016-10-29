@@ -1,7 +1,7 @@
 <?php 
 	echo $this->Html->script('jquery.min.js');
-	echo $this->Html->script('jquery.bxslider.min.js');
-	echo $this->Html->css('jquery.bxslider.css');
+	echo $this->Html->script('BxSlider.jquery.bxslider.min');
+	echo $this->Html->css('BxSlider.jquery.bxslider');
 	echo $this->Html->css('Arenas/index.css');
 	$this->assign('title', 'WebArena - Accueil');	
 	$this->assign('header_title', 'Accueil');?>

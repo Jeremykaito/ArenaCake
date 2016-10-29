@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -17,63 +18,63 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
     <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?= $this->Html->meta('icon') ?>
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('template.css') ?>
-    <!--Ne pas supprimer-->
+        <!--Ne pas supprimer-->
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
-    <!---->
+        <!---->
 
-	<title><?= $this->fetch('title') ?></title>
-</head>
+        <title><?= $this->fetch('title') ?></title>
+    </head>
 
-<body>
-	
-	<!--Menu de navigation-->
-    <nav>
-        <ul>
-			<!--//If the player is logged in-->
+    <body>
+
+        <!--Menu de navigation-->
+        <nav>
+            <ul>
+                <!--//If the player is logged in-->
             <?php
             if ($this->request->session()->read('PlayerLoggedIn')){?>
-				<li><?= $this->Html->link('Jouer', array('controller' => 'Vision', 'action' => 'vision')); ?></li>
-				<li><?= $this->Html->link('Champions', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
-				<li>
+                <li><?= $this->Html->link('Jouer', array('controller' => 'Vision', 'action' => 'vision')); ?></li>
+                <li><?= $this->Html->link('Champions', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
+                <li>
 					<?= $this->Html->link(
 					  $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")), // Recherche dans le dossier webroot/img
 					  array('controller' => 'Arenas', 'action' => ""),
 					  array('escape' => false) // Ceci pour indiquer de ne pas échapper les caractères HTML du lien vu qu'ici il y a une image
 					);
 					?>
-				</li>
-				<li><?= $this->Html->link('Journal', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
-				<li><?= $this->Html->link('Hall of fame', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
+                </li>
+                <li><?= $this->Html->link('Journal', array('controller' => 'Arenas', 'action' => 'index')); ?></li>
+                <li><?= $this->Html->link('Hall of fame', array('controller' => 'Halls', 'action' => 'index')); ?></li>
 				<?php
             }
 			
 			//If the player is NOT logged in
             else { ?>
-            <li><?= $this->Html->link('Connexion', array('controller' => 'Players', 'action' => 'login')); ?></li>
-            <li>
+                <li><?= $this->Html->link('Connexion', array('controller' => 'Players', 'action' => 'login')); ?></li>
+                <li>
                 <?= $this->Html->link(
                   $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")), // Recherche dans le dossier webroot/img
                   array('controller' => 'Arenas', 'action' => ""),
                   array('escape' => false) // Ceci pour indiquer de ne pas échapper les caractères HTML du lien vu qu'ici tu as une image
                 );?>
-            </li>
-            <li><?= $this->Html->link('Inscription', array('controller' => 'Players', 'action' => 'add')); ?></li>
+                </li>
+                <li><?= $this->Html->link('Inscription', array('controller' => 'Players', 'action' => 'add')); ?></li>
 
             <?php } ?>
-        </ul>    
-	</nav>
-	
-	
-    <header>
-          <figure class="header_left">
+            </ul>    
+        </nav>
+
+
+        <header>
+            <figure class="header_left">
                 <?= $this->Html->image('champions/rogue.png', array('alt' => "Rogue")); ?>
                 <?= $this->Html->image('champions/elf.png', array('alt' => "Elf")); ?>
             </figure>
@@ -81,35 +82,35 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                 <?= $this->Html->image('champions/xena.png', array('alt' => "Xena")); ?>
                 <?= $this->Html->image('champions/sorcier.png', array('alt' => "Sorcier")); ?>
             </figure>
-    </header>
-	
-	<!--Conteneur principal de la page -->
-    <main class="container clearfix">
+        </header>
+
+        <!--Conteneur principal de la page -->
+        <main class="container clearfix">
         <?= $this->Flash->render() ?>
-        <h1><?= $this->fetch('header_title') ?></h1>
+            <h1><?= $this->fetch('header_title') ?></h1>
         <?= $this->fetch('content') ?>
-    </main>
-	
-	<!--Footer -->
-    <footer>
-        <section id="information">
-            <p>Groupe SI1 : Gr1-01-AE</p>
-            <p>Options : A, E, D</p>
-            <p>
+        </main>
+
+        <!--Footer -->
+        <footer>
+            <section id="information">
+                <p>Groupe SI1 : Gr1-01-AE</p>
+                <p>Options : A, E, D</p>
+                <p>
             <?php echo $this->Html->link(
             'https://github.com/coillman/eatingPHP',
             'https://github.com/coillman/eatingPHP',
             array('class' => 'a')
             ); ?>
-        </p>
-    </section>
-       <p id="authors">Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/>
-       <p id="copyright">Copyright 2016 © - ArenaCake</p>
-		
+                </p>
+            </section>
+            <p id="authors">Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/>
+            <p id="copyright">Copyright 2016 © - ArenaCake</p>
+
 		<?php //Ajouté par Annelyse ?>
 		<?php if ($this->request->session()->read('PlayerLoggedIn')){?>
-			<a><?= $this->Html->link('Déconnexion', array('controller' => 'Players', 'action' => 'logout')); ?></a>
+            <a><?= $this->Html->link('Déconnexion', array('controller' => 'Players', 'action' => 'logout')); ?></a>
 		<?php } ?>
-    </footer>
-</body>
+        </footer>
+    </body>
 </html>
