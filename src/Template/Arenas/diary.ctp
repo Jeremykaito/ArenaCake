@@ -1,83 +1,50 @@
-<?= $this->Html->css('Datatables.jquery.dataTables.min');?>
-<?= $this->Html->script('jquery.min.js');?>
+<?=
+
+$this->Html->css('Datatables.jquery.dataTables.min');?>
+<?=	$this->Html->script('jquery.min.js');?>
 <?= $this->Html->script('Datatables.jquery.dataTables.min');?>
 <?= $this->Html->script('Datatables.shCore'); ?>
+<?=$this->assign('title', 'WebArena - Journal');?>	
+<?=$this->assign('header_title', 'Journal');?>
 
 <script>
-$(document).ready(function() {
- $('#diary').DataTable( {
-  "order": [[ 3, "desc" ]]
- } );
-} );
- </script>
+    $(document).ready(function () {
+        $('#diary').DataTable({
+            "order": [[3, "desc"]]
+        });
+    });
+</script>
 
- <section>
-    <h1>DataTables example <span>Default ordering (sorting)</span></h1>
-    <!--//Tableau a copier mais avec boucle for-->
+<section class='cadre_gris'>
+
+    <p>Bienvenue dans le journal ! </p>
+    <p>Ici, vous pouvez voir les évènements qui se sont produits au cours des dernières 24h à proximité de vos personnages.</p>
+    <p>Ainsi, vous êtes sûr de n'avoir rien raté pendant votre absence !</p>
+
+    <?php 
+    if(!empty($events)){?>
     <table id="diary" class="display">
-     <thead>
-      <tr>
-       <th>Name</th>
-       <th>Position</th>
-       <th>Office</th>
-       <th>Age</th>
-       <th>Start date</th>
-       <th>Salary</th>
-      </tr>
-     </thead>
-     <tfoot>
-      <tr>
-       <th>Name</th>
-       <th>Position</th>
-       <th>Office</th>
-       <th>Age</th>
-       <th>Start date</th>
-       <th>Salary</th>
-      </tr>
-     </tfoot>
-     <tbody>
-     <?php for($i=0;$i<100; $i++){ ?>
-      <tr>
-       <td>Lael Greer</td>
-       <td>Systems Administrator</td>
-       <td>London</td>
-       <td>21</td>
-       <td>2009/02/27</td>
-       <td>$103,500</td>
-      </tr>
-      <?php  }?>
-      <tr>
-       <td>Jonas Alexander</td>
-       <td>Developer</td>
-       <td>San Francisco</td>
-       <td>30</td>
-       <td>2010/07/14</td>
-       <td>$86,500</td>
-      </tr>
-      <tr>
-       <td>Shad Decker</td>
-       <td>Regional Director</td>
-       <td>Edinburgh</td>
-       <td>51</td>
-       <td>2008/11/13</td>
-       <td>$183,000</td>
-      </tr>
-      <tr>
-       <td>Michael Bruce</td>
-       <td>Javascript Developer</td>
-       <td>Singapore</td>
-       <td>29</td>
-       <td>2011/06/27</td>
-       <td>$183,000</td>
-      </tr>
-      <tr>
-       <td>Donna Snider</td>
-       <td>Customer Support</td>
-       <td>New York</td>
-       <td>27</td>
-       <td>2011/01/25</td>
-       <td>$112,000</td>
-      </tr>
-     </tbody>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Coordinate X</th>
+                <th>Coordinate Y</th>
+            </tr>
+        </thead>
+        <?php foreach ($events as $event): ?>
+        <tr>
+            <td><?= $event->name ?></td>
+            <td><?= $event->date ?></td>
+            <td><?= $event->coordinate_x ?></td>
+            <td><?= $event->coordinate_y ?></td>
+        </tr>
+    <?php endforeach; ?>
     </table>
-  </section>
+    <?php
+    }
+    else{?>
+    <p>Il n'y a aucun évènement à afficher ! Revenez plus tard.</p>
+    <?php }
+    ?>
+</section>
