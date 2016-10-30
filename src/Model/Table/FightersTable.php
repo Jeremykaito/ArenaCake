@@ -24,48 +24,50 @@ class FightersTable extends Table {
         $yo = $this->find('all')->toArray();
         return $yo;
     }
-
-    public function getFighterById($id) {
+    
+    public function getFighterById($id){
         $yo = $this->find()->where(['id' => $id])->first();
         return $yo;
     }
-
-    public function getFighterByCo($x, $y) {
+    
+    public function getFighterByCo($x, $y){
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
         return $yo;
     }
-
-    public function kill($fighterid) {
+    
+    
+    public function kill($fighterid){
         $entity = $this->get($fighterid);
-        pr($entity->name . "c'est bien battu mais ça n'a pas suffit...");
+        pr($entity->name."c'est bien battu mais ça n'a pas suffit...");
         $result = $this->delete($entity);
     }
-
-    public function winXp($fighterid, $amount) {
+    
+    public function winXp($fighterid, $amount){
         $entity = $this->get($fighterid);
         $entity->xp += $amount;
         $this->save($entity);
     }
-
-    public function cerateViewTab() {
+    
+    
+    public function cerateViewTab(){
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
         $fighterlist = $this->getFighters();
         $toollist = $toolsTable->getTools();
         $surroundinglist = $surroundingsTable->getSurroundings();
-
-
-
-        $idFighter = 1; // à remplacer par : 1)une var de cession 2)un paramètre de la fonction----------------------
+        
+        
+        
+        $idFighter = 1;// à remplacer par : 1)une var de cession 2)un paramètre de la fonction----------------------
         $viewtab = array(array());
         $currentfighter = $this->getFighterById($idFighter);
 
-        $distance = $currentfighter->skill_sight + $toolsTable->getBonus($idFighter, 'V'); // definition de la distance de vue du fighter.
-
-
+        $distance = $currentfighter->skill_sight+ $toolsTable->getBonus($idFighter, 'V');// definition de la distance de vue du fighter.
+        
+        
         for ($y = 0; $y < 10; $y++) {
             for ($x = 0; $x < 15; $x++) {
-                if (abs($x - ($currentfighter->coordinate_x)) + abs($y - ($currentfighter->coordinate_y)) <= $distance) {
+                if(abs($x-($currentfighter->coordinate_x))+abs($y-($currentfighter->coordinate_y)) <= $distance){
                     $unused = true;
                     if ($unused) {
                         foreach ($fighterlist as $fighter) {
@@ -99,8 +101,9 @@ class FightersTable extends Table {
         }
         return $viewtab;
     }
-
-    public function dirToCo($dir) {
+    
+    
+    public function dirToCo($dir){
         $dirToCo = array();
         switch ($dir) {
             case 'up':
@@ -118,16 +121,18 @@ class FightersTable extends Table {
         }
         return $dirToCo;
     }
+    
+    
 
     public function move($dir, $fighterid) {
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
-
+        
         $fighter = $this->getFighterById($fighterid);
-
+        
         $dirToCo = $this->dirToCo($dir);
 
-
+        
         $nextPos = array('x' => $fighter->coordinate_x += $dirToCo["x"], 'y' => $fighter->coordinate_y += $dirToCo["y"]);
 
         if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
@@ -152,7 +157,7 @@ class FightersTable extends Table {
             } else {
                 pr("mouvement impossible");
             }
-        } else {
+        }else {
             pr("mouvement impossible hors cadre");
         }
     }
@@ -167,38 +172,39 @@ class FightersTable extends Table {
         $fighter->coordinate_y = $nextPos["y"];
         $this->save($fighter);
     }
-
-    public function attack($dir, $fighterid) {
+    
+    
+    public function attack($dir, $fighterid){
         $toolsTable = TableRegistry::get('Tools');
         $currentfighter = $this->getFighterById($fighterid);
-
-
+        
+        
         $dirToCo = $this->dirToCo($dir);
         $attackSpot = array('x' => $currentfighter->coordinate_x += $dirToCo["x"], 'y' => $currentfighter->coordinate_y += $dirToCo["y"]);
-
-        if ($this->exist($attackSpot['x'], $attackSpot['x'])) {
+        
+        if($this->exist($attackSpot['x'], $attackSpot['x'])){
             $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['x']);
-
+            
             $mystrength = $currentfighter->skill_strength + $toolsTable->getBonus($fighterid, 'D');
-
-            if (rand(1, 20) > (10 + $oponent->level - $currentfighter->level)) { //test de la réuissite de l'attaque
-                pr("l'attaque a atteind sa cible !"); //ajouter une phrase du type "joueur 1 a touché joueur 2"
-                $this->touchedByAttack($oponent->id, $fighterid, $mystrength);
-            } else {
+           
+            if(rand(1,20)>(10 + $oponent->level - $currentfighter->level)){ //test de la réuissite de l'attaque
+                pr("l'attaque a atteind sa cible !");//ajouter une phrase du type "joueur 1 a touché joueur 2"
+                $this->touchedByAttack($oponent->id,$fighterid, $mystrength);
+            }else{
                 pr("l'attaque a échouée");
             }
-        } else {
-            pr($currentfighter->name . ' se bat contre le vent, et il espère gagner...');
+        }else{
+            pr($currentfighter->name.' se bat contre le vent, et il espère gagner...');
         }
     }
-
-    public function touchedByAttack($defenderid, $attackerid, $strength) {
-        $defender = $this->getFighterById($defenderid);
-        if ($defender->current_health > $strength) {
-            $defender->current_health -= $strength;
+    
+    public function touchedByAttack($defenderid, $attackerid, $strength){
+        $defender=$this->getFighterById($defenderid);
+        if ($defender->current_health> $strength){
+            $defender->current_health -=  $strength;
             $this->save($defender);
             $this->winXp($attackerid, 1);
-        } else {
+        }else{
             $this->winXp($attackerid, $defender->level);
             $this->kill($defenderid);
         }

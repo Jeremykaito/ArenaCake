@@ -45,17 +45,17 @@ class ToolsTable extends Table {
         $tool->coordinate_y = null;
         $tool->save();
     }
-
-    public function getBonus($id, $type) {
+    
+    public function getBonus($id, $type){
         /*
          * attention, en fonction du nb de tool autorisé par fighter etc. à modifier
          * ici, fonction si il n'y a qu'un seul tool par fighter
          */
         $tool = $this->find()->where(['fighter_id' => $id, 'type' => $type])->toArray();
-        if (empty($tool)) {
-            $bonus = 0;
-        } else {
-            $bonus = $tool['bonus'];
+        if(empty($tool)){
+          $bonus = 0;
+        }else{
+            $bonus=$tool['bonus'];
         }
         return $bonus;
     }
