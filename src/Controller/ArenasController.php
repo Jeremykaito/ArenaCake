@@ -23,15 +23,13 @@ class ArenasController extends AppController {
         $fighters = $this->Fighters->getFightersByPlayer($playerId);
         $this->set(compact('fighters'));
         
-        if ($this->request->is('post')) {
-            $fighter = $this->Fighters->patchEntity($fighter, $this->request->data);
-            if ($this->Fighters->save($fighter)) {
-                $this->Flash->success(__('Vos modifications ont bien été enregistrées'));
-            } else {
-                $this->Flash->error(__('Un prôblème est survenu, veuillez reéssayer.'));
-            }
-        }
         
+
+        
+        
+        /* set default value of skin */
+        $session = $this->request->session();
+        $session->write('PlayerFighterSkin', "rogue");
         
     }
 
@@ -57,5 +55,36 @@ class ArenasController extends AppController {
         
         //On envoie les évènements à la vue
         $this->set(compact('events'));
+    }
+    
+    public function fighterEdit($id=null){
+        
+        $this->loadModel('Fighters');
+        $fighter = $this->Fighters->getFighterByID($id);
+        
+        if ($this->request->is('post')) {
+            $this->Fighters->patchEntity($fighter, $this->request->data);
+            if ($this->Fighters->save($fighter)) {
+                $this->Flash->success(__('Vos modifications ont bien été enregistrées'));
+                return $this->redirect(['controller' => 'Arenas', 'action' => 'fighter']);
+            } else {
+                $this->Flash->error(__('Un problème est survenu, veuillez reéssayer.'));
+            }
+        }
+        
+        $this->set(compact('fighter'));
+    }
+    
+    public function fighterDelete($id=null){
+        $this->request->allowMethod(['post', 'delete']);
+        $this->loadModel('Fighters');
+        $fighter = $this->Fighters->get($id);
+        if ($this->Fighters->delete($fighter)) {
+            $this->Flash->success(__('The fighter has been deleted.'));
+        } else {
+            $this->Flash->error(__('The fighter could not be deleted. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'fighter']);
     }
 }

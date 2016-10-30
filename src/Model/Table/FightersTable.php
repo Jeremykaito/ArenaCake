@@ -13,7 +13,14 @@ class FightersTable extends Table {
     public function getFighters() {
         return $this->find('all')->toArray();
     }
-
+    
+    public function getFighterByID($id){
+        $fighter = $this
+                ->find()
+                ->where(['id' => $id]);
+        return $fighter;
+    }
+    
     public function getFightersByPlayer($playerId) {
         $fighters = $this
                 ->find()
@@ -49,5 +56,5 @@ class FightersTable extends Table {
        
        return $found_events;
     }
-
+    
 }

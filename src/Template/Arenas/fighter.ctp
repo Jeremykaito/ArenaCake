@@ -26,8 +26,9 @@
 
 
 <div id="main-content">
-    
-
+    <!-- access session variables-->
+    <?php pr( $this->request->session()->read('PlayerLoggedIn'))?>
+    <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
   <!-- 
     <div id="sliderPerso">
         <ul class="bxslider">
@@ -69,35 +70,12 @@
 
                 <td><?= $this->Number->format($fighter->current_health) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('afficher'), ['action' => 'edit', $fighter->id]) ?>
-                    <?= $this->Form->postLink(__('supprimer'), ['action' => 'delete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
+                    <?= $this->Html->link(__('afficher'), ['action' => 'fighterEdit', $fighter->id]) ?>
+                    <?= $this->Form->postLink(__('supprimer'), ['action' => 'fighterDelete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    
-          <!--  <section>             
-                <?= $this->Form->create($fighter) ?>
-                <fieldset>
-                    <legend><?= __('Edit Fighter') ?></legend>
-                    <?php
-                        echo $this->Form->input('name');
-                        echo $this->Form->input('level');
-                        echo $this->Form->input('xp');
-                      //  echo $this->Form->input('skill_sight');
-                      //  echo $this->Form->input('skill_strength');
-                      //  echo $this->Form->input('skill_health');
-                      //  echo $this->Form->input('current_health');
-                      //  echo $this->Form->input('next_action_time', ['empty' => true]);
-                      //  echo $this->Form->input('guild_id', ['options' => $guilds, 'empty' => true]);
-                    ?>
-                </fieldset>
-                <?= $this->Form->button(__('Submit')) ?>
-                <?= $this->Form->end() ?>
-
-                
-            </section>-->
-    
-    
+  
 </div>
