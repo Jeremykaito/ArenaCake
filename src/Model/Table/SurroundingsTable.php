@@ -38,9 +38,6 @@ class SurroundingsTable extends Table {
     }
 
     public function generateSurroundings($gametab) {
-        /* $this->loadModel('Fighters');
-          $this->loadModel('Tools');
-          $this->loadModel('Surroundings'); */
         $fightersTable = TableRegistry::get('Fighters');
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundins');
