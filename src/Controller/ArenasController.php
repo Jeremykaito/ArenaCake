@@ -60,13 +60,14 @@ class ArenasController extends AppController {
     public function fighterEdit($id=null){
         
         $this->loadModel('Fighters');
-        $fighter = $this->Fighters->getFighterByID($id);
+        $fighter = $this->Fighters->get($id);
         
         if ($this->request->is('post')) {
+            pr($this->request->data);
             $this->Fighters->patchEntity($fighter, $this->request->data);
             if ($this->Fighters->save($fighter)) {
                 $this->Flash->success(__('Vos modifications ont bien été enregistrées'));
-                return $this->redirect(['controller' => 'Arenas', 'action' => 'fighter']);
+                return $this->redirect(['action' => 'fighter']);
             } else {
                 $this->Flash->error(__('Un problème est survenu, veuillez reéssayer.'));
             }
@@ -80,9 +81,9 @@ class ArenasController extends AppController {
         $this->loadModel('Fighters');
         $fighter = $this->Fighters->get($id);
         if ($this->Fighters->delete($fighter)) {
-            $this->Flash->success(__('The fighter has been deleted.'));
+            $this->Flash->success(__('Le combattant a bien été supprimé.'));
         } else {
-            $this->Flash->error(__('The fighter could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Impossssible de supprimé le personnage, veuillez réessayeer.'));
         }
 
         return $this->redirect(['action' => 'fighter']);
