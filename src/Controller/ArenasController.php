@@ -22,6 +22,17 @@ class ArenasController extends AppController {
         $this->loadModel('Fighters');
         $fighters = $this->Fighters->getFightersByPlayer($playerId);
         $this->set(compact('fighters'));
+        
+        if ($this->request->is('post')) {
+            $fighter = $this->Fighters->patchEntity($fighter, $this->request->data);
+            if ($this->Fighters->save($fighter)) {
+                $this->Flash->success(__('Vos modifications ont bien été enregistrées'));
+            } else {
+                $this->Flash->error(__('Un prôblème est survenu, veuillez reéssayer.'));
+            }
+        }
+        
+        
     }
 
     public function sight() {
