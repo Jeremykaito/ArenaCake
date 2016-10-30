@@ -2,3 +2,6 @@
 /config/app.php
 /tmp/*
 /logs/*
+/nbproject/private/
+webroot/css/Halls/hallofFame.css
+composer.json
