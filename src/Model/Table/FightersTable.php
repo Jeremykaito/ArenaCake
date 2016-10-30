@@ -9,11 +9,11 @@ class FightersTable extends Table {
 
     public function exist($x, $y) {
         if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
-            $empty = true;
+            $exist = false;
         } else {
-            $empty = false;
+            $exist = true;
         }
-        return $empty;
+        return $exist;
     }
 
     public function getBestFighter() {
@@ -24,10 +24,75 @@ class FightersTable extends Table {
         $yo = $this->find('all')->toArray();
         return $yo;
     }
-
-    public function move($dir, $playerid, $fighterid) {
+    
+    public function getFighterById($id){
+        $yo = $this->find()->where(['id' => $id])->first();
+        return $yo;
+    }
+    
+    
+    
+    public function cerateViewTab(){
         $toolsTable = TableRegistry::get('Tools');
-        $surroundingsTable = TableRegistry::get('Surroundins');
+        $surroundingsTable = TableRegistry::get('Surroundings');
+        $fighterlist = $this->getFighters();
+        $toollist = $toolsTable->getTools();
+        $surroundinglist = $surroundingsTable->getSurroundings();
+        
+        
+        
+        $idFighter = 1;// à remplacer par : 1)une var de cession 2)un paramètre de la fonction----------------------
+        $viewtab = array(array());
+        $currentfighter = $this->getFighterById($idFighter);
+
+        $distance = $currentfighter->skill_sight+ $toolsTable->getBonus($idFighter, 'V');// definition de la distance de vue du fighter.
+        
+        
+        for ($y = 0; $y < 10; $y++) {
+            for ($x = 0; $x < 15; $x++) {
+                if(abs($x-($currentfighter->coordinate_x))+abs($y-($currentfighter->coordinate_y)) <= $distance){
+                    $unused = true;
+                    if ($unused) {
+                        foreach ($fighterlist as $fighter) {
+                            if ($fighter->coordinate_x == $x && $fighter->coordinate_y == $y) {
+                                $viewtab[$x][$y] = "rogue"; // ici on devrait mettre le nom du skin du fighter en question------------------------------
+                                $unused = false;
+                            }
+                        }
+                    }
+                    if ($unused) {
+                        foreach ($toollist as $tool) {
+                            if ($tool->coordinate_x == $x && $tool->coordinate_y == $y) {
+                                $viewtab[$x][$y] = "jumelle"; //ici on devrait mettre le nom du skin du tool en question------------------------------
+                                $unused = false;
+                            }
+                        }
+                    }
+                    if ($unused) {
+                        foreach ($surroundinglist as $surrounding) {
+                            if ($surrounding->coordinate_x == $x && $surrounding->coordinate_y == $y) {
+                                $viewtab[$x][$y] = "colonne"; //ici on devrait mettre le nom du skin du surrounding en question------------------------------
+                                $unused = false;
+                            }
+                        }
+                    }
+                    if ($unused) {
+                        $viewtab[$x][$y] = 'herbe';
+                    }
+                }
+            }
+        }
+        return $viewtab;
+    }
+    
+    
+    
+
+    public function move($dir, $fighterid) {
+        $toolsTable = TableRegistry::get('Tools');
+        $surroundingsTable = TableRegistry::get('Surroundings');
+        
+        $fighter = $this->getFighterById($fighterid);
 
         $dirToCo = array();
         switch ($dir) {
@@ -46,13 +111,13 @@ class FightersTable extends Table {
         }
         $nextPos = array('x' => $fighter->coordinate_x += $dirToCo["x"], 'y' => $fighter->coordinate_y += $dirToCo["y"]);
 
-        if ($nextPos["x"] >= 0 && $nextPos["x"] <= 15 && $nextPos["y"] >= 0 && $nextPos["y"] <= 15) {
-            if (!$this->exsit($nextPos["x"], $nextPos["y"]) && !$toolsTable->exsit($nextPos["x"], $nextPos["y"]) && !$surroundingsTable->exsit($nextPos["x"], $nextPos["y"])) {
+        if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
+            if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$toolsTable->exist($nextPos["x"], $nextPos["y"]) && !$surroundingsTable->exist($nextPos["x"], $nextPos["y"])) {
                 $this->doMove($fighterid, $nextPos);
-            } else if (!$this->exsit($nextPos["x"], $nextPos["y"]) && !$surroundingsTable->exsit($nextPos["x"], $nextPos["y"])) {
+            } else if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$surroundingsTable->exist($nextPos["x"], $nextPos["y"])) {
                 $toolsTable->takeTool($nextPos["x"], $nextPos["y"], $fighterid);
                 $this->doMove($fighterid, $nextPos);
-            } else if (!$this->exsit($nextPos["x"], $nextPos["y"]) && !$toolsTable->exsit($nextPos["x"], $nextPos["y"])) {
+            } else if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$toolsTable->exist($nextPos["x"], $nextPos["y"])) {
                 switch ($surroundingsTable->getSurrounding($nextPos["x"], $nextPos["y"])["type"]) {
                     case "W"://monstre
                         $this->kill($fighterid);
@@ -68,6 +133,8 @@ class FightersTable extends Table {
             } else {
                 pr("mouvement impossible");
             }
+        }else {
+            pr("mouvement impossible hors cadre");
         }
     }
 
@@ -79,7 +146,7 @@ class FightersTable extends Table {
 
         $fighter->coordinate_x = $nextPos["x"];
         $fighter->coordinate_y = $nextPos["y"];
-        $fighter->save();
+        $this->save($fighter);
     }
 
 }

@@ -9,11 +9,11 @@ class SurroundingsTable extends Table {
 
     public function exist($x, $y) {
         if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
-            $empty = true;
+            $exist = false;
         } else {
-            $empty = false;
+            $exist = true;
         }
-        return $empty;
+        return $exist;
     }
 
     public function getSurroundings() {

@@ -3,14 +3,12 @@
 <section>
     <table id="damier">
         <?php
-        for ($i = 0; $i < 10; $i++) {
+        for ($y = 0; $y < 10; $y++) {
             echo "<tr>";
-            for ($j = 0; $j < 15; $j++) {
+            for ($x = 0; $x < 15; $x++) {
                 echo "<td>";
-                if (is_string($gametab[$j][$i])) {
-                    echo $this->Html->image('sprites/strval' . ($gametab[$j][$i]) . '.png', ['alt' => strval($gametab[$j][$i])]);
-                } else {
-                    echo $this->Html->image("sprites/rogue.png", ['alt' => 'fighter']);
+                if(!empty($viewtab[$x][$y])){
+                    echo $this->Html->image('sprites/'.$viewtab[$x][$y].'.png', ['alt' => $viewtab[$x][$y]]);
                 }
                 echo "</td>";
             }
@@ -28,25 +26,25 @@
 
     <?= $this->Form->create() ?>
     <fieldset>
-        <?= $this->Form->hidden('up', ["up" => 'up']) ?>
+        <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
         <?= $this->Form->button(__('up'), ["value" => 'up']); ?>
     </fieldset>
     <?= $this->Form->end() ?>
     <?= $this->Form->create() ?>
     <fieldset>
-        <?= $this->Form->hidden('down') ?>
+        <?= $this->Form->hidden('dir', ['value' => 'down']) ?>
         <?= $this->Form->button(__('down')); ?>
     </fieldset>
     <?= $this->Form->end() ?>
     <?= $this->Form->create() ?>
     <fieldset>
-        <?= $this->Form->hidden('left') ?>
+       <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
         <?= $this->Form->button(__('left')); ?>
     </fieldset>
     <?= $this->Form->end() ?>
     <?= $this->Form->create() ?>
     <fieldset>
-        <?= $this->Form->hidden('right') ?>
+        <?= $this->Form->hidden('dir', ['value' => 'right']) ?>
         <?= $this->Form->button(__('right')); ?>
     </fieldset>
     <?= $this->Form->end() ?>

@@ -9,11 +9,11 @@ class ToolsTable extends Table {
 
     public function exist($x, $y) {
         if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
-            $empty = true;
+            $exist = false;
         } else {
-            $empty = false;
+            $exist = true;
         }
-        return $empty;
+        return $exist;
     }
 
     public function getTools() {
@@ -41,6 +41,16 @@ class ToolsTable extends Table {
         $tool->coordinate_x = null;
         $tool->coordinate_y = null;
         $tool->save();
+    }
+    
+    public function getBonus($id, $type){
+        $tool = $this->find()->where(['fighter_id' => $id, 'type' => $type])->toArray();
+        if(empty($tool)){
+          $bonus = 0;
+        }else{
+            $bonus=$tool['bonus'];
+        }
+        return $bonus;
     }
 
     public function generateTools($gametab) {

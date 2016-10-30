@@ -21,15 +21,16 @@ class ArenasController extends AppController {
     }
 
     public function sight() {
-        $gametab = array(array());
+        $this->loadModel('Fighters');
+        $viewtab = $this->Fighters->cerateViewTab();
+        $this->set("viewtab", $viewtab);
 
-
+        //déplacements:
         if ($this->request->is('post')) {
-            pr($this->request->data);
-            //$this->Fighters->move("up", "545f827c-576c-4dc5-ab6d-27c33186dc3e", 1);
+            $this->Fighters->move($this->request->data['dir'], 1); // le deuxième paramètre est le fighter id
         }
 
-        $gametab = $this->createGameTab($gametab); //à mettre dans le controleur qui appel vision
+        //$gametab = $this->createGameTab($gametab); //à mettre dans le controleur qui appel vision
         // ajouter une fonction createMapView qui cree la map vue par le fighter courent avec gestion de la vue.
     }
 
