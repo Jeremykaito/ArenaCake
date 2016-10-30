@@ -67,6 +67,11 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
         <div id="pieChart" ></div>
     </div>
     
+    <div class="graphChart" style="margin:auto;">
+        <h3>Ratio Santé/level des combattans.</h3>
+        <div id="ratio" ></div>
+    </div>
+    
  <?php
 /** KRA: mandatory files **/
 
@@ -77,6 +82,7 @@ echo $this->Html->script('JQPlot.shBrushXml.min');
 /** KRA: additional plugins **/
 echo $this->Html->script('JQPlot.jqplot.barRenderer.min');
 echo $this->Html->script('JQPlot.jqplot.pieRenderer.min');
+echo $this->Html->script('JQPlot.jqplot.bubbleRenderer.min');
 echo $this->Html->script('JQPlot.jqplot.categoryAxisRenderer.min');
 echo $this->Html->script('JQPlot.jqplot.pointLabels.min');
 
@@ -238,6 +244,25 @@ $(document).ready(function(){
       legend: { show:true, location: 'e' }
     }
   );
+  
+  
+  /** PLayer ratio **/
+  var arr = [[3, 9, 3, "Aragorn"], [8, 10, 4, "Angmar"], 
+    [4, 7, 1, "Gandalf"]];
+     
+    plot4 = $.jqplot('ratio',[arr],{
+        title: 'Transparent Bubbles',
+        seriesDefaults:{
+            renderer: $.jqplot.BubbleRenderer,
+            rendererOptions: {
+                bubbleAlpha: 0.6,
+                highlightAlpha: 0.8
+            },
+            shadow: true,
+            shadowAlpha: 0.05
+        }
+    });   
+  
 
 });
 
