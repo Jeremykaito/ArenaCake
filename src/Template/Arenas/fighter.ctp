@@ -46,35 +46,27 @@
     
     
     
-    <div class="fighters form large-9 medium-8 columns content">
-    <form method="post" accept-charset="utf-8" action="/WebArenaGoupSIA-01-AE/fighters/edit/1"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div>    <fieldset>
-        <legend>Edit Fighter</legend>
-            <div class="input text required">
-            <label for="name">Name</label>
-            <input type="text" name="name" required="required" maxlength="45" id="name" value="Aragorn">
-            </div>
-            <div class="input select">
-                <label for="player-id">Player</label>
-                <select name="player_id" id="player-id">
-                    <option value="4e7b8797-5a3c-2df1-c077-3a31b4715557">4e7b8797-5a3c-2df1-c077-3a31b4715557</option>
-                    <option value="545f827c-576c-4dc5-ab6d-27c33186dc3e" selected="selected">545f827c-576c-4dc5-ab6d-27c33186dc3e</option>
-                    <option value="b1ee586e-942e-f23b-e352-2948ee614e93">b1ee586e-942e-f23b-e352-2948ee614e93</option></select>
-            </div>
-            <div class="input number required">
-                <label for="coordinate-x">Coordinate X</label>
-                <input type="number" name="coordinate_x" required="required" id="coordinate-x" value="2">
-            </div>
-            <div class="input number required">
-                <label for="coordinate-y">Coordinate Y</label>
-                <input type="number" name="coordinate_y" required="required" id="coordinate-y" value="3">
-            </div><div class="input number required">
-                <label for="level">Level</label>
-                <input type="number" name="level" required="required" id="level" value="6">
-            </div><div class="input number required"><label for="xp">Xp</label>
-                <input type="number" name="xp" required="required" id="xp" value="14">
-            </div>
-        <button type="submit">Submit</button>    
-    </form></div>
+            <section>             
+                <?= $this->Form->create($fighter) ?>
+                <fieldset>
+                    <legend><?= __('Edit Fighter') ?></legend>
+                    <?php
+                        echo $this->Form->input('name', ['options' => $fighter->name]);
+                        echo $this->Form->input('level');
+                        echo $this->Form->input('xp');
+                      //  echo $this->Form->input('skill_sight');
+                      //  echo $this->Form->input('skill_strength');
+                      //  echo $this->Form->input('skill_health');
+                      //  echo $this->Form->input('current_health');
+                      //  echo $this->Form->input('next_action_time', ['empty' => true]);
+                      //  echo $this->Form->input('guild_id', ['options' => $guilds, 'empty' => true]);
+                    ?>
+                </fieldset>
+                <?= $this->Form->button(__('Submit')) ?>
+                <?= $this->Form->end() ?>
+
+                
+            </section>
     
     
 </div>
