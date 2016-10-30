@@ -23,27 +23,64 @@
 
 
 <section>
-
+    <p>mouvements<p>
     <?= $this->Form->create() ?>
     <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'move']) ?>
         <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
         <?= $this->Form->button(__('up'), ["value" => 'up']); ?>
     </fieldset>
     <?= $this->Form->end() ?>
     <?= $this->Form->create() ?>
     <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'move']) ?>
         <?= $this->Form->hidden('dir', ['value' => 'down']) ?>
         <?= $this->Form->button(__('down')); ?>
     </fieldset>
     <?= $this->Form->end() ?>
     <?= $this->Form->create() ?>
     <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'move']) ?>
        <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
         <?= $this->Form->button(__('left')); ?>
     </fieldset>
     <?= $this->Form->end() ?>
     <?= $this->Form->create() ?>
     <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'move']) ?>
+        <?= $this->Form->hidden('dir', ['value' => 'right']) ?>
+        <?= $this->Form->button(__('right')); ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
+
+</section>
+
+<section>
+    <p>attaques<p>
+    <?= $this->Form->create() ?>
+    <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
+        <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
+        <?= $this->Form->button(__('up'), ["value" => 'up']); ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
+    <?= $this->Form->create() ?>
+    <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
+        <?= $this->Form->hidden('dir', ['value' => 'down']) ?>
+        <?= $this->Form->button(__('down')); ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
+    <?= $this->Form->create() ?>
+    <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
+       <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
+        <?= $this->Form->button(__('left')); ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
+    <?= $this->Form->create() ?>
+    <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
         <?= $this->Form->hidden('dir', ['value' => 'right']) ?>
         <?= $this->Form->button(__('right')); ?>
     </fieldset>

@@ -30,6 +30,23 @@ class FightersTable extends Table {
         return $yo;
     }
     
+    public function getFighterByCo($x, $y){
+        $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
+        return $yo;
+    }
+    
+    
+    public function kill($fighterid){
+        $entity = $this->get($fighterid);
+        pr($entity->name."c'est bien battu mais ça n'a pas suffit...");
+        $result = $this->delete($entity);
+    }
+    
+    public function winXp($fighterid, $amount){
+        $entity = $this->get($fighterid);
+        $entity->xp += $amount;
+        $this->save($entity);
+    }
     
     
     public function cerateViewTab(){
@@ -86,14 +103,7 @@ class FightersTable extends Table {
     }
     
     
-    
-
-    public function move($dir, $fighterid) {
-        $toolsTable = TableRegistry::get('Tools');
-        $surroundingsTable = TableRegistry::get('Surroundings');
-        
-        $fighter = $this->getFighterById($fighterid);
-
+    public function dirToCo($dir){
         $dirToCo = array();
         switch ($dir) {
             case 'up':
@@ -109,6 +119,20 @@ class FightersTable extends Table {
                 $dirToCo = array("x" => 1, "y" => 0);
                 break;
         }
+        return $dirToCo;
+    }
+    
+    
+
+    public function move($dir, $fighterid) {
+        $toolsTable = TableRegistry::get('Tools');
+        $surroundingsTable = TableRegistry::get('Surroundings');
+        
+        $fighter = $this->getFighterById($fighterid);
+        
+        $dirToCo = $this->dirToCo($dir);
+
+        
         $nextPos = array('x' => $fighter->coordinate_x += $dirToCo["x"], 'y' => $fighter->coordinate_y += $dirToCo["y"]);
 
         if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
@@ -147,6 +171,43 @@ class FightersTable extends Table {
         $fighter->coordinate_x = $nextPos["x"];
         $fighter->coordinate_y = $nextPos["y"];
         $this->save($fighter);
+    }
+    
+    
+    public function attack($dir, $fighterid){
+        $toolsTable = TableRegistry::get('Tools');
+        $currentfighter = $this->getFighterById($fighterid);
+        
+        
+        $dirToCo = $this->dirToCo($dir);
+        $attackSpot = array('x' => $currentfighter->coordinate_x += $dirToCo["x"], 'y' => $currentfighter->coordinate_y += $dirToCo["y"]);
+        
+        if($this->exist($attackSpot['x'], $attackSpot['x'])){
+            $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['x']);
+            
+            $mystrength = $currentfighter->skill_strength + $toolsTable->getBonus($fighterid, 'D');
+           
+            if(rand(1,20)>(10 + $oponent->level - $currentfighter->level)){ //test de la réuissite de l'attaque
+                pr("l'attaque a atteind sa cible !");//ajouter une phrase du type "joueur 1 a touché joueur 2"
+                $this->touchedByAttack($oponent->id,$fighterid, $mystrength);
+            }else{
+                pr("l'attaque a échouée");
+            }
+        }else{
+            pr($currentfighter->name.' se bat contre le vent, et il espère gagner...');
+        }
+    }
+    
+    public function touchedByAttack($defenderid, $attackerid, $strength){
+        $defender=$this->getFighterById($defenderid);
+        if ($defender->current_health> $strength){
+            $defender->current_health -=  $strength;
+            $this->save($defender);
+            $this->winXp($attackerid, 1);
+        }else{
+            $this->winXp($attackerid, $defender->level);
+            $this->kill($defenderid);
+        }
     }
 
 }

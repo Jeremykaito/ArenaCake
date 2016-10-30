@@ -34,7 +34,7 @@ class SurroundingsTable extends Table {
         $Surrounding->coordinate_y = $y;
         $Surrounding->type = $type;
 
-        $Surrounding->save();
+        $this->save();
     }
 
     public function generateSurroundings($gametab) {

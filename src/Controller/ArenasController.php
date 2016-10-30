@@ -27,7 +27,12 @@ class ArenasController extends AppController {
 
         //déplacements:
         if ($this->request->is('post')) {
+            if($this->request->data['action'] == 'move'){
             $this->Fighters->move($this->request->data['dir'], 1); // le deuxième paramètre est le fighter id
+            }
+            if($this->request->data['action'] == 'attack'){
+                $this->Fighters->attack($this->request->data['dir'], 1);// le deuxième paramètre est le fighter id
+            }
         }
 
         //$gametab = $this->createGameTab($gametab); //à mettre dans le controleur qui appel vision

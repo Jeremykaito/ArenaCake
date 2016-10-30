@@ -32,10 +32,13 @@ class ToolsTable extends Table {
         $tool->type = $type;
         $tool->bonus = $bonus;
 
-        $tool->save();
+        $this->save();
     }
 
     public function takeTool($j, $i, $fighterid) {
+        /*
+         * attention il reste à gérer le nb max de tool par fighter, l'écrasement des tools en trop...etc
+         */
         $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
         $tool->fighter_id = $fighterid;
         $tool->coordinate_x = null;
@@ -44,6 +47,10 @@ class ToolsTable extends Table {
     }
     
     public function getBonus($id, $type){
+        /*
+         * attention, en fonction du nb de tool autorisé par fighter etc. à modifier
+         * ici, fonction si il n'y a qu'un seul tool par fighter
+         */
         $tool = $this->find()->where(['fighter_id' => $id, 'type' => $type])->toArray();
         if(empty($tool)){
           $bonus = 0;
