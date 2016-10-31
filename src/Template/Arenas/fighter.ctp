@@ -43,10 +43,12 @@
     <div class="fighters index large-9 medium-8 columns content">
     <h3><?= __('Combattants') ?></h3>
     
-    <p>
+    <?php
+    if(!empty($fighters)){?>
+   <p>
         Vous pouvez gérer tous les paramètres de vos combattants sur cette page.
         Vous pouvez customizer vos combattants, choisir le niveau souhaité.
-    </p>
+    </p> 
     
     <table cellpadding="0" cellspacing="0">
         <thead>
@@ -77,5 +79,9 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-  
+    
+    <?php    } else {    ?>
+    <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
+    <?php }    ?>
+    
 </div>

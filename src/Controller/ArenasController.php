@@ -23,10 +23,6 @@ class ArenasController extends AppController {
         $fighters = $this->Fighters->getFightersByPlayer($playerId);
         $this->set(compact('fighters'));
         
-       
-        
-        
-        
         /* set default value of skin */
         $session = $this->request->session();
         $session->write('PlayerFighterSkin', "rogue");
