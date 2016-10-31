@@ -13,21 +13,64 @@
 <script>
 $(document).ready(function () {
   $('#tab_stat').DataTable({
-    "order": [[3, "desc"]]
+    "paging":   false,
+    "info":     false,
+    "filter":   false
   });
 });
 </script>
 <script>
 $(document).ready(function () {
   $('#tab_obj').DataTable({
-    "order": [[3, "desc"]]
+    "paging":   false,
+    "info":     false,
+    "filter":   false
   });
 });
 </script>
 
 <!-- Interface fighter -->
 <section class="cadre_gris" id="interface_fighter">
-  <h3>Fighter</h3>
+  <h3><?= $fighter->name ?><h3>
+    <p>Niveau : <?= $fighter->level ?></p>
+    <p>Expérience : <?= $fighter->xp ?></p>
+    <!-- Tableau des compétences -->
+    <table id="tab_stat" class="display">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr>
+        <td>Vie</td>
+        <td><?= $fighter->current_health ."/".$fighter->skill_health ?></td>
+      </tr>
+      <tr>
+        <td>Force</td>
+        <td><?= $fighter->skill_strength ?></td>
+      </tr>
+      <tr>
+        <td>Vue</td>
+        <td><?= $fighter->skill_sight ?></td>
+      </tr>
+    </table>
+
+    <!-- Tableau des objets -->
+    <table id="tab_obj" class="display">
+      <thead>
+        <tr>
+          <th>Type d'objet</th>
+          <th>Bonus</th>
+        </tr>
+      </thead>
+      <?php foreach ($tools as $tool): ?>
+        <tr>
+          <td><?= $tool->type ?></td>
+          <td><?= $tool->bonus ?></td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
 </section>
 <!-- Matrice de jeu -->
 <table id="damier">
@@ -159,45 +202,5 @@ $(document).ready(function () {
 </section>
 <!-- Feuille de personnage -->
 <section>
-  <h3><?= $fighter->name ?><h3>
-    <p>Niveau : <?= $fighter->level ?></p>
-    <p>Expérience : <?= $fighter->xp ?></p>
 
-    <!-- Tableau des compétences -->
-    <table id="tab_stat">
-      <thead>
-        <tr>
-          <th>Compétences</th>
-          <th>Valeur</th>
-        </tr>
-      </thead>
-      <tr>
-        <td>Vie</td>
-        <td><?= $fighter->current_health ."/".$fighter->skill_health ?></td>
-      </tr>
-      <tr>
-        <td>Force</td>
-        <td><?= $fighter->skill_strength ?></td>
-      </tr>
-      <tr>
-        <td>Vue</td>
-        <td><?= $fighter->skill_sight ?></td>
-      </tr>
-    </table>
-
-    <!-- Tableau des objets -->
-    <table id="tab_obj">
-      <thead>
-        <tr>
-          <th>Type d'objet</th>
-          <th>Bonus</th>
-        </tr>
-      </thead>
-      <?php foreach ($tools as $tool): ?>
-        <tr>
-          <td><?= $tool->type ?></td>
-          <td><?= $tool->bonus ?></td>
-        </tr>
-      <?php endforeach; ?>
-    </table>
   </section>
