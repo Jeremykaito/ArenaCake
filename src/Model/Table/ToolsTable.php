@@ -34,10 +34,22 @@ class ToolsTable extends Table {
         $this->save($tool);
     }
     
+    public function dropTool($fighterid){
+        $fightersTable = TableRegistry::get('Fighters');
+        $fighter = $fightersTable->getFighterById($fighterid);
+        $tool = $this->find()->where(['fighter_id' => $fighterid])->first();
+        $tool->coordinate_x = $fighter->coordinate_x;
+        $tool->coordinate_y = $fighter->coordinate_y;
+        $tool->fighter_id = null;
+        
+        $this->save($tool);
+    }
+    
     public function takeTool($j, $i, $fighterid) {
         /*
-         * attention il reste à gérer le nb max de tool par fighter, l'écrasement des tools en trop...etc
+         * on part du principe qu'un fighter ne peux avoir qu'un seul tool 
          */
+        $this->dropTool($fighterid);
         $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
         $tool->fighter_id = $fighterid;
         $tool->coordinate_x = NULL;
@@ -46,10 +58,6 @@ class ToolsTable extends Table {
     }
 
     public function getBonus($id, $type) {
-        /*
-         * attention, en fonction du nb de tool autorisé par fighter etc. à modifier
-         * ici, fonction si il n'y a qu'un seul tool par fighter
-         */
         $tool = $this->find()->where(['fighter_id' => $id, 'type' => $type])->first();
         if (empty($tool)) {
             $bonus = 0;
