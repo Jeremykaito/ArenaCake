@@ -9,6 +9,8 @@ use Cake\ORM\RulesChecker;
 
 class PlayersTable extends Table {
 
+    /* Fonctions pour la validation des données*/
+    
     public function validationDefault(Validator $validator) {
         return $validator
                         ->notEmpty('email', "Un nom d'utilisateur est nécessaire")
@@ -22,6 +24,17 @@ class PlayersTable extends Table {
         }
     }
 
+    public function buildRules(RulesChecker $rules) {
+        $rules->add($rules->isUnique(['email']), ['message' => 'Cet e-mail est déjà utilisé.']);
+        return $rules;
+    }
+
+    /* Fonctions pour trouver un ou plusieurs joueurs */
+
+    public function getPlayers() {
+        return $this->find('all')->toArray();
+    }
+
     public function findPlayerByEmail($email) {
         $player = $this
                 ->find()
@@ -30,6 +43,8 @@ class PlayersTable extends Table {
 
         return $player;
     }
+
+    /* Fonctions pour générer des données */
 
     public function generateId() {
         $s = strtoupper(md5(uniqid(rand(), true)));
@@ -50,15 +65,6 @@ class PlayersTable extends Table {
             $pwd[] = $alphabet[$n];
         }
         return (implode($pwd));
-    }
-
-    public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->isUnique(['email']), ['message' => 'Cet e-mail est déjà utilisé.']);
-        return $rules;
-    }
-
-    public function getPlayers() {
-        return $this->find('all')->toArray();
     }
 
 }

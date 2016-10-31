@@ -6,7 +6,7 @@
 	echo $this->Html->css('Arenas/index.css');
         echo $this->Html->css('champions/fighters.css');
         
-	$this->assign('title', 'WebArena - Accueil');	
+	$this->assign('title', 'WebArena - Modifier un combattant');	
 	$this->assign('header_title', 'Champions');?>
 	
 	<!--Script pour afficher le slider-->
@@ -31,18 +31,10 @@
                 <fieldset>
                     <legend><?= __('Edit Fighter') ?></legend>
                     <?php
-                        echo $this->Form->input('name');
-                        echo $this->Form->input('level');
-                        echo $this->Form->input('xp');
-                        //echo $this->Form->input('skill_sight');
-                       // echo $this->Form->input('skill_strength');
-                       // echo $this->Form->input('skill_health');
-                       // echo $this->Form->input('current_health');
-                        //echo $this->Form->input('next_action_time', ['empty' => true]);
-                        //echo $this->Form->input('guild_id', ['options' => $guilds, 'empty' => true]);
+                        echo $this->Form->input('name',['label' => 'Nom']);
                     ?>
                 </fieldset>
-                <?= $this->Form->button(__('Submit')) ?>
+                <?= $this->Form->button(__('Modifier')) ?>
                 <?= $this->Form->end() ?>
 
                 

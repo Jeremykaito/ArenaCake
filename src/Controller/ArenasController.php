@@ -18,17 +18,23 @@ class ArenasController extends AppController {
     }
 
     public function fighter() {
+        
+        //On récupère l'id du joueur connecté
         $playerId = $this->Auth->user('id');
+        
+        //On récupère tous les combattants du joueur
         $this->loadModel('Fighters');
         $fighters = $this->Fighters->getFightersByPlayer($playerId)->toArray();
        
+        //On récupère l'id du combattant actuel
         $PlayerFighterId = $this->request->session()->read('PlayerLoggedIn')['id'];
         $this->set("PlayerFighterId", $PlayerFighterId);
         
-        /* set default value of skin */
+        //On écrit dans la session l'avatar choisi
         $session = $this->request->session();
         $session->write('PlayerFighterSkin', "rogue");
         
+        //On envoie les combattants à la vue
         $this->set(compact('fighters'));
     }
 
@@ -104,11 +110,17 @@ class ArenasController extends AppController {
 
     public function fighterEdit($id) {
 
+        //On récupère le combattant à modifier
         $this->loadModel('Fighters');
         $fighter = $this->Fighters->get($id);
 
+        //Si le formulaire n'est pas vide
         if ($this->request->is(['patch', 'post', 'put'])) {
+            
+            //On modifie l'entité
             $this->Fighters->patchEntity($fighter, $this->request->data(), ['validate'=>false]);
+            
+            //On sauvegarde la modification
             if ($this->Fighters->save($fighter)) {
                 $this->Flash->success(__('Vos modifications ont bien été enregistrées'));
                 return $this->redirect(['action' => 'fighter']);
@@ -116,49 +128,59 @@ class ArenasController extends AppController {
                 $this->Flash->error(__('Un problème est survenu, veuillez réessayer.'));
             }
         }
-
+        
+        //On envoie le combattant à la vue
         $this->set('fighter',$fighter);
     }
 
     public function fighterDelete($id) {
+        
         $this->request->allowMethod(['post', 'delete']);
+        
+        //On récupère le combattant à supprimer
         $this->loadModel('Fighters');
         $fighter = $this->Fighters->get($id);
+        
+        //On supprime le combattant
         if ($this->Fighters->delete($fighter)) {
             $this->Flash->success(__('Le combattant a bien été supprimé.'));
         } else {
             $this->Flash->error(__('Impossssible de supprimer le personnage, veuillez réessayer.'));
         }
 
+        //On redirige vers la page champions
         return $this->redirect(['action' => 'fighter']);
     }
     
     public function fighterNew(){
         
-        $this->loadModel('Fighters');
-        $fighter = $this->Fighters->newEntity();
-        
-        $fighter->player_id = $this->request->session()->read('PlayerLoggedIn')['id'];
-        $fighter->coordinate_x =5;
-        $fighter->coordinate_y =5;
-        $fighter->skill_sight = 2 ;
-        $fighter->skill_strength= 1;
-        $fighter->skill_health=3;
-        $fighter->current_health=3;
-        $fighter->next_action_time=Time::now();
-        $fighter->guild_id=NULL;
-        
-        
+        //Si le formulaire est rempli
         if ($this->request->is('post')) {
+            
+            //On charge le modèle fighter
+            $this->loadModel('Fighters');
+
+            //On crée un nouveau combattant
+            $fighter = $this->Fighters->newEntity();
+            
+            //On renseigne l'id avec celle du joueur connecté
+            $fighter->player_id = $this->request->session()->read('PlayerLoggedIn')['id'];
+            
+            //On entre les données entrées dans le formulaire
             $fighter = $this->Fighters->patchEntity($fighter, $this->request->data);
+                    
+            //On sauvegarde le combattant
             if ($this->Fighters->save($fighter)) {
                 $this->Flash->success(__('Votre personnage a bien été crée.'));
+                
+                //On redirige vers la page combattants
                 return $this->redirect(['action' => 'fighter']);
             } else {
                 $this->Flash->error(__('Impossssible de créer le personnage, veuillez réessayer.'));
             }
         }
         
+        //On envoie le combattant à la vue
         $this->set('fighter',$fighter);
     }
 

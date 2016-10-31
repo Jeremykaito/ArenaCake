@@ -7,15 +7,8 @@ use Cake\ORM\TableRegistry;
 
 class SurroundingsTable extends Table {
 
-    public function exist($x, $y) {
-        if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
-            $exist = false;
-        } else {
-            $exist = true;
-        }
-        return $exist;
-    }
-
+    /*Fonctions pour trouver des décors*/
+    
     public function getSurroundings() {
         $yo = $this->find('all')->toArray();
         return $yo;
@@ -25,6 +18,8 @@ class SurroundingsTable extends Table {
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray();
         return $yo;
     }
+    
+    /*Fonctions pour gérer les décors*/
 
     public function addSurrounding($x, $y, $type) {
 
@@ -42,14 +37,29 @@ class SurroundingsTable extends Table {
         $this->deleteAll(['type' => 'T']);
         $this->deleteAll(['type' => 'P']);
     }
+    
+    public function exist($x, $y) {
+        if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
+            $exist = false;
+        } else {
+            $exist = true;
+        }
+        return $exist;
+    }
+    
+    /*Fonctions utilitaires*/
 
     public function generateSurroundings() {
+        
+        //On détruit tous les décors
         $this->flushSurroundings();
 
+        //On charge les modèles
         $fightersTable = TableRegistry::get('Fighters');
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
 
+        //On remplit la carte de décors
         for ($i = 0; $i < 10; $i++) {
             for ($j = 0; $j < 15; $j++) {
                 if (!$fightersTable->exist($j, $i) && !$toolsTable->exist($j, $i) && !$surroundingsTable->exist($j, $i)) {

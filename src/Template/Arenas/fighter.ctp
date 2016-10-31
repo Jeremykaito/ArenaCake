@@ -83,7 +83,7 @@
     <?php }    ?>
      
     
-    <?= $this->Html->link(__('Nouveau combattant'), ['action' => 'fighterNew']) ?>
+    <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
     </div>
   
  
