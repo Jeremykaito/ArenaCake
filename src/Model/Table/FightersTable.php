@@ -113,16 +113,16 @@ class FightersTable extends Table {
         $nextPos = array('x' => $fighter->coordinate_x += $dirToCo["x"], 'y' => $fighter->coordinate_y += $dirToCo["y"]);
 
         //On vérifie si le déplacement est possible
-        if (moveIsPossible($nextPos)) {
+        if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighterid, $nextPos);
 
             //On vérifie s'il y a un objet à prendre
-            if (toolIsThere($nextPos)) {
+            if ($this->toolIsThere($nextPos)) {
                 $toolsTable->takeTool($nextPos["x"], $nextPos["y"], $fighterid);
             }
 
             //On vérifie s'il y a un décor
-            else if (surroundingIsThere($nextPos)) {
+            else if ($this->surroundingIsThere($nextPos)) {
 
                 switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])) {
                    
@@ -153,11 +153,13 @@ class FightersTable extends Table {
 
     public function moveIsPossible($nextPos) {
 
+        $surroundingsTable = TableRegistry::get('Surroundings');
+        
         //Si le joueur est dans l'arène
         if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
-            
+
             //Si la case ne contient pas un autre combattant ou une colonne
-            if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$this->$surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"]->type=="P")) {
+            if (!$this->exist($nextPos["x"], $nextPos["y"]) && !($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"]))=='P') {
                 return true;
             }
         }
@@ -166,8 +168,10 @@ class FightersTable extends Table {
 
     public function toolIsThere($nextPos) {
         
+        $toolsTable = TableRegistry::get('Tools');
+        
         //Si un objet est présent aux coordonnées données
-        if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$surroundingsTable->exist($nextPos["x"], $nextPos["y"])) {
+        if ($toolsTable->exist($nextPos["x"], $nextPos["y"])) {
             return true;
         }
         return false;
@@ -175,8 +179,10 @@ class FightersTable extends Table {
 
     public function surroundingIsThere($nextPos) {
         
+        $surroundingsTable = TableRegistry::get('Surroundings');
+        
         //Si un décor est présent aux coordonnées données
-        if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$toolsTable->exist($nextPos["x"], $nextPos["y"])) {
+        if ($surroundingsTable->exist($nextPos["x"], $nextPos["y"])) {
             return true;
         }
         return false;
