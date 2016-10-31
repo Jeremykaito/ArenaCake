@@ -32,39 +32,50 @@ class FightersTable extends Table {
 
         return $fighters;
     }
-
-    public function checkCoordinates($coord1X, $coord1Y, $coord2X, $coord2Y) {
-        if (abs($coord1X - $coord2X) + abs($coord1Y - $coord2Y) < 2) {
-            return true;
-        } else {
+    
+    public function checkAdjacentCoordinates($coord1X,$coord1Y,$coord2X,$coord2Y){
+        if(abs($coord1X-$coord2X) + abs($coord1Y-$coord2Y) <2 ){
+          return true;  
+        }
+        else{
             return false;
         }
     }
-
-    public function getEventByFighter($fighters, $events) {
-
-        $found_events = array();
-        $i = 0;
-
-        foreach ($events as $event):
-            foreach ($fighters as $fighter):
-                if ($this->checkCoordinates($fighter->coordinate_x, $fighter->coordinate_y, $event->coordinate_x, $event->coordinate_y)) {
-                    if (!in_array($event, $found_events)) {
-                        $found_events[$i] = $event;
-                        $i++;
-                    }
-                }
-            endforeach;
-        endforeach;
-
-        return $found_events;
+    
+    public function checkInViewCoordinates($fighter, $coordX,$coordY){
+        $toolsTable = TableRegistry::get('Tools');
+        $distance = $fighter->skill_sight + $toolsTable->getBonus($fighter->id, 'V');
+              
+        if(abs($coordX-($fighter->coordinate_x)) + abs($coordY-($fighter->coordinate_y)) <=$distance ){
+          return true;  
+        }
+        else{
+            return false;
+        }
     }
-
+    
+    public function getEventByFighter($fighters,$events){
+       $found_events=array();
+       $i=0;
+       foreach ($events as $event):
+           foreach ($fighters as $fighter):
+                if ($this->checkInViewCoordinates($fighter,$event->coordinate_x,$event->coordinate_y)){
+                   if (!in_array($event, $found_events)){
+                       $found_events[$i]=$event;
+                       $i++;
+                   }
+                }
+           endforeach;
+       endforeach; 
+       
+       return $found_events;
+    }
+    
     public function getFighterById($id) {
         $yo = $this->find()->where(['id' => $id])->first();
         return $yo;
     }
-
+    
     public function getFighterByCo($x, $y) {
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
         return $yo;

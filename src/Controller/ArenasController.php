@@ -59,14 +59,14 @@ class ArenasController extends AppController {
 
         //On récupère les personnages de ce joueur
         $this->loadModel('Fighters');
-        $fighters = $this->Fighters->getFightersByPlayer('545f827c-576c-4dc5-ab6d-27c33186dc3e');
-
+        $fighters = $this->Fighters->getFightersByPlayer($playerId);
+        
         //On récupère tous les évènements de moins de 24h
         $this->loadModel('Events');
-        $allevents = $this->Events->getEvents24h();
-
-        //On récupère les évènements à proximité des personnages du joueur
-        $events = $this->Fighters->getEventByFighter($fighters, $allevents);
+        $allevents=$this->Events->getEvents24h();
+        
+        //On récupère les évènements à portée de vue des personnages du joueur
+        $events =$this->Fighters->getEventByFighter($fighters,$allevents);
 
         //On envoie les évènements à la vue
         $this->set(compact('events'));
