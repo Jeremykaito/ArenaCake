@@ -1,7 +1,5 @@
-<?=
-
-$this->Html->css('Datatables.jquery.dataTables.min');?>
-<?=	$this->Html->script('jquery.min.js');?>
+<?=$this->Html->css('Datatables.jquery.dataTables.min');?>
+<?= $this->Html->script('jquery.min.js');?>
 <?= $this->Html->script('Datatables.jquery.dataTables.min');?>
 <?= $this->Html->script('Datatables.shCore'); ?>
 <?=$this->assign('title', 'WebArena - Journal');?>	

@@ -6,7 +6,7 @@
 	echo $this->Html->css('Arenas/index.css');
         echo $this->Html->css('champions/fighters.css');
         
-	$this->assign('title', 'WebArena - Accueil');	
+	$this->assign('title', 'WebArena - Champions');	
 	$this->assign('header_title', 'Champions');?>
 	
 	<!--Script pour afficher le slider-->
@@ -20,10 +20,6 @@
 		});
 		});
 	</script>
-
-
-
-
 
 <div id="main-content">
     <!-- access session variables-->
@@ -48,8 +44,8 @@
     <?php
     if(!empty($fighters)){?>
    <p>
-        Vous pouvez gérer tous les paramètres de vos combattants sur cette page.
-        Vous pouvez customizer vos combattants, choisir le niveau souhaité.
+        Sur cette page, vous pouvez visualiser vos combattants et les modifier.
+        Vous pouvez aussi choisir un combattant, en créer un nouveau ou bien passer au niveau suivant.
     </p> 
     
     <table cellpadding="0" cellspacing="0">
@@ -74,8 +70,8 @@
 
                 <td><?= $this->Number->format($fighter->current_health) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('afficher'), ['action' => 'fighterEdit', $fighter->id]) ?>
-                    <?= $this->Form->postLink(__('supprimer'), ['action' => 'fighterDelete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
+                    <?= $this->Html->link(__('Modifier'), ['action' => 'fighterEdit', $fighter->id]) ?>
+                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'fighterDelete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

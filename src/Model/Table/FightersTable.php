@@ -54,9 +54,15 @@ class FightersTable extends Table {
         }
     }
     
-    public function getEventByFighter($fighters,$events){
-       $found_events=array();
-       $i=0;
+    public function getEventByFighter($playerId,$events){
+        
+        //Déclaration des variables
+        $found_events=array();
+        $i=0;
+       
+        //On récupère tous les personnages du joueur
+        $fighters = $this->getFightersByPlayer($playerId);
+
        foreach ($events as $event):
            foreach ($fighters as $fighter):
                 if ($this->checkInViewCoordinates($fighter,$event->coordinate_x,$event->coordinate_y)){

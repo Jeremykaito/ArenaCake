@@ -7,14 +7,14 @@ use Cake\Event\Event;
 use Cake\Mailer\Email;
 
 class PublicController extends AppController {
-
+    
+    public function index() {
+        
+    }
+    
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
         $this->Auth->allow(['login', 'add', 'logout', 'resetPassword', 'hall']);
-    }
-
-    public function index() {
-        
     }
 
     public function add() {
