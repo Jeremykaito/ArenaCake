@@ -1,0 +1,53 @@
+#damier tbody td,tr{
+    border: 1px solid black;
+    width: 48px;
+    height: 48px;
+    max-width: 48px;
+    max-height: 48px;
+    padding: 2px;
+    margin  : 0;
+}
+
+#damier {
+    max-width: 720px;
+    max-height: 480px;
+    float:left;
+    margin  : 20px;
+}
+
+.game_form{
+    width:180px;
+    display: inline-block;
+    height:60px;
+}
+
+fieldset{
+    border:none;
+    width:180px;
+    height:60px;
+}
+
+.cadre_gris {
+    width: 400px;
+    height:260px;
+    padding: 5px;
+}
+
+.button_red {
+    width: 140px;
+    height:60px;
+}
+
+.button_generate {
+    width: 140px;
+    height:70px;
+}
+
+#interface{
+    width: 200px;
+    float: left;
+}
+
+.section_generate{
+    height: 180px;
+}
