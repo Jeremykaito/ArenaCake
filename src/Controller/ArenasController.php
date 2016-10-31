@@ -61,6 +61,14 @@ class ArenasController extends AppController {
                 $this->Surroundings->generateSurroundings();
             }
         }
+        
+        //On envoie le joueur à la vue
+        $fighter=$this->Fighters->getFighterById(3);
+        $this->set(compact('fighter',$fighter));
+        
+        //On envoie les objets du combattant à la vue
+        $tools=$this->Tools->getToolsByFighter(3);
+        $this->set(compact('tools',$tools));
     }
 
     public function diary() {

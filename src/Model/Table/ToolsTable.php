@@ -19,6 +19,14 @@ class ToolsTable extends Table {
         $yo = $this->find('all')->toArray();
         return $yo;
     }
+    
+    public function getToolsByFighter($fighterId) {
+        $tools = $this
+        ->find()
+        ->where(['fighter_id' => $fighterId]);
+
+        return $tools;
+    }
 
     public function addTool($x, $y, $type, $bonus) {
         /* $toolsTable = TableRegistry::get('Tools');
