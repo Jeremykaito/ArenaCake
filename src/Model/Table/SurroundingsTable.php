@@ -21,30 +21,38 @@ class SurroundingsTable extends Table {
         return $yo;
     }
 
-    public function getSurrounding($x, $y) {
+    public function getSurroundingByCo($x, $y) {
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray();
         return $yo;
     }
 
     public function addSurrounding($x, $y, $type) {
-        $SurroundingsTable = TableRegistry::get('Surroundings');
-        $Surrounding = $SurroundingsTable->newEntity();
+
+        $Surrounding = $this->newEntity();
 
         $Surrounding->coordinate_x = $x;
         $Surrounding->coordinate_y = $y;
         $Surrounding->type = $type;
 
-        $this->save();
+        $this->save($Surrounding);
     }
 
-    public function generateSurroundings($gametab) {
+    public function flushSurroundings() {
+        $this->deleteAll(['type' => 'W']);
+        $this->deleteAll(['type' => 'T']);
+        $this->deleteAll(['type' => 'P']);
+    }
+
+    public function generateSurroundings() {
+        $this->flushSurroundings();
+
         $fightersTable = TableRegistry::get('Fighters');
         $toolsTable = TableRegistry::get('Tools');
-        $surroundingsTable = TableRegistry::get('Surroundins');
+        $surroundingsTable = TableRegistry::get('Surroundings');
 
         for ($i = 0; $i < 10; $i++) {
             for ($j = 0; $j < 15; $j++) {
-                if (!$fightersTable->exsit($j, $i) && !$toolsTable->exsit($j, $i) && !$surroundingsTable->exsit($j, $i)) {
+                if (!$fightersTable->exist($j, $i) && !$toolsTable->exist($j, $i) && !$surroundingsTable->exist($j, $i)) {
                     $r = rand(0, 90);
                     switch ($r) {
                         case 12:
