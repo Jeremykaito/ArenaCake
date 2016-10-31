@@ -57,7 +57,12 @@ nav ul li a {
 	background-color: #6e0b14;
 	color : #ffd200;
 }
-
+#connexion a {
+	color : #ffd200;
+}
+#connexion a:hover, a:focus {
+	color : #dddddd;
+}
 /*Fin header et menu*/
 /*Footer*/
 footer {
@@ -167,6 +172,7 @@ p {
 	color : #202020;
 }
 /*Fin titre et texte*/
+/*Boutons et liens*/
 .button_red {
 	font-family : Arial;
 	color : #FFB800;
@@ -175,6 +181,10 @@ p {
 	width: 7em;
 	border-radius: 2px;
 }
+a:hover, a:focus {
+	color : #dddddd;
+}
+/*Fin boutons et liens*/
 /*Formulaire*/
 .form_normal {
 
