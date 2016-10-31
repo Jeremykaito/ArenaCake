@@ -9,9 +9,9 @@
 				<legend><?= __("Se connecter") ?></legend>
 				<?= $this->Form->input('email',['label' => 'E-mail']) ?>
 				<?= $this->Form->input('password',['label' => 'Mot de passe']) ?>
+				<?= $this->Form->button(__('Se Connecter')); ?>
+				<p><?php echo $this->Html->link('Mot de passe oublié', array('controller' => 'Public', 'action' => 'resetPassword')); ?></p>
 			</fieldset>
-			<?= $this->Form->button(__('Se Connecter')); ?>
 			<?= $this->Form->end() ?>
-		</section>
 
-		<p><?php echo $this->Html->link('Mot de passe oublié', array('controller' => 'Public', 'action' => 'resetPassword')); ?></p>
+		</section>

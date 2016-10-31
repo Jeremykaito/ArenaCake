@@ -9,7 +9,7 @@
 				<legend><?= __('S\'inscrire') ?></legend>
 				<?= $this->Form->input('email',['label' => 'E-mail']) ?>
 				<?= $this->Form->input('password',['label' => 'Mot de passe']) ?>
+        <?= $this->Form->button(__('Inscription')); ?>
 			</fieldset>
-			<?= $this->Form->button(__('Inscription')); ?>
 			<?= $this->Form->end() ?>
 		</section>
