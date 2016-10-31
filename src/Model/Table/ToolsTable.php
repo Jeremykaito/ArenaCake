@@ -43,11 +43,15 @@ class ToolsTable extends Table {
         $tool->fighter_id = null;
         
         $this->save($tool);
+        
+        //Création d'un évènement
+        $eventsTables = TableRegistry::get('Events');
+        $eventsTables->createEvent($fighter->name.' a laché un équipement.',$fighter->coordinate_x,$fighter->coordinate_y);
     }
     
     public function takeTool($j, $i, $fighterid) {
         /*
-         * on part du principe qu'un fighter ne peux avoir qu'un seul tool 
+         * on part du principe qu'un fighter ne peut avoir qu'un seul tool 
          */
         $this->dropTool($fighterid);
         $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
@@ -55,6 +59,12 @@ class ToolsTable extends Table {
         $tool->coordinate_x = NULL;
         $tool->coordinate_y = NULL;
         $this->save($tool);
+        
+        //Création d'un évènement
+        $eventsTables = TableRegistry::get('Fighters');
+        $eventsTables = TableRegistry::get('Events');
+        $currentfighter = $this->getFighterById($fighterid);
+        $eventsTables->createEvent($fighter->name.' a ramassé un équipement.',$j,$i);
     }
 
     public function getBonus($id, $type) {
