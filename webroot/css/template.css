@@ -3,7 +3,8 @@ body {
 	padding : 0;
 	background-color : #14111e;
 	padding-top : 20px;
-	min-width : 830px;
+	width : 100%;
+	min-width : 1200px;
 }
 /*Header et Menu*/
 header {
@@ -79,7 +80,8 @@ footer p {
 }
 
 #information {
-	margin : 20px;
+	padding : 20px;
+	width : 900px;
 }
 #information p{
 	margin : 0;
@@ -96,10 +98,10 @@ footer p {
 /*Fin Footer*/
 /*Main conteneur*/
 main {
-	margin-left : 80px;
-	margin-right : 80px;
-	margin-top : 20px;
+	margin-left : 50px;
+	margin-right : 50px;
 	min-width: 730px;
+	margin-top : 20px;
 }
 /*Fin main*/
 /*Conteneurs classiques*/
@@ -178,17 +180,27 @@ p {
 	color : #FFB800;
 	background-color : #6e0b14;
 	padding:1.3em;
-	width: 7em;
 	border-radius: 2px;
 }
+.button_gold {
+	font-family : Arial;
+	color : #fff;
+	background-color : #DE8B0E;
+	padding:1.3em;
+	border-radius: 2px;
+}
+.button_gold:hover, .button_gold:focus {
+		background-color : #FFB800;
+}
+.button_red:hover, .button_red:focus {
+		background-color : #b10010;
+}
+
 a:hover, a:focus {
 	color : #dddddd;
 }
 /*Fin boutons et liens*/
 /*Formulaire*/
-.form_normal {
-
-}
 fieldset {
 	border: 1px solid #DE8B0E;
 }
