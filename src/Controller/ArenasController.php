@@ -31,17 +31,17 @@ class ArenasController extends AppController {
         $this->loadModel('Fighters');
         $this->loadModel('Tools');
         $this->loadModel('Surroundings');
-        $viewtab = $this->Fighters->cerateViewTab();
+        $viewtab = $this->Fighters->createViewTab();
         $this->set("viewtab", $viewtab);
 
 
         //déplacements:
         if ($this->request->is('post')) {
             if ($this->request->data['action'] == 'move') {
-                $this->Fighters->move($this->request->data['dir'], 1); // le deuxième paramètre est le fighter id
+                $this->Fighters->move($this->request->data['dir'], 3); // le deuxième paramètre est le fighter id
             }
             if ($this->request->data['action'] == 'attack') {
-                $this->Fighters->attack($this->request->data['dir'], 1); // le deuxième paramètre est le fighter id
+                $this->Fighters->attack($this->request->data['dir'], 3); // le deuxième paramètre est le fighter id
             }
             if ($this->request->data['action'] == 'generateTools') {
                 $this->Tools->generateTools();
@@ -98,7 +98,7 @@ class ArenasController extends AppController {
         if ($this->Fighters->delete($fighter)) {
             $this->Flash->success(__('Le combattant a bien été supprimé.'));
         } else {
-            $this->Flash->error(__('Impossssible de supprimé le personnage, veuillez réessayeer.'));
+            $this->Flash->error(__('Impossssible de supprimer le personnage, veuillez réessayer.'));
         }
 
         return $this->redirect(['action' => 'fighter']);

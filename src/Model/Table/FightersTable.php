@@ -83,7 +83,11 @@ class FightersTable extends Table {
 
     public function kill($fighterid) {
         $entity = $this->get($fighterid);
-        pr($entity->name . "c'est bien battu mais ça n'a pas suffit...");
+        
+        //Création d'un évènement
+        $eventsTables = TableRegistry::get('Events');
+        $eventsTables->createEvent($entity->name.' est mort.',$entity->coordinate_x,$entity->coordinate_y);
+        
         $result = $this->delete($entity);
     }
 
@@ -93,16 +97,24 @@ class FightersTable extends Table {
         $this->save($entity);
     }
 
-    public function cerateViewTab() {
+    public function createViewTab() {
+        
+        //On cherche les différents modèles
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
+        
+        //On créée les listes à partir de ces modèles
         $fighterlist = $this->getFighters();
         $toollist = $toolsTable->getTools();
         $surroundinglist = $surroundingsTable->getSurroundings();
-        $idFighter = 1; // à remplacer par : 1)une var de cession 2)un paramètre de la fonction----------------------
+        
+        //Autres variables
+        $idFighter = 3; // à remplacer par : 1)une var de cession 2)un paramètre de la fonction----------------------
         $viewtab = array(array());
         $currentfighter = $this->getFighterById($idFighter);
         $distance = $currentfighter->skill_sight + $toolsTable->getBonus($idFighter, 'V'); // definition de la distance de vue du fighter.
+        
+        //On vérifie les cases à portée de vue du joueur
         for ($y = 0; $y < 10; $y++) {
             for ($x = 0; $x < 15; $x++) {
                 if (abs($x - ($currentfighter->coordinate_x)) + abs($y - ($currentfighter->coordinate_y)) <= $distance) {
@@ -162,6 +174,7 @@ class FightersTable extends Table {
     public function move($dir, $fighterid) {
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
+        $eventsTables = TableRegistry::get('Events');
         $fighter = $this->getFighterById($fighterid);
         $dirToCo = $this->dirToCo($dir);
         $nextPos = array('x' => $fighter->coordinate_x += $dirToCo["x"], 'y' => $fighter->coordinate_y += $dirToCo["y"]);
@@ -174,21 +187,18 @@ class FightersTable extends Table {
             } else if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$toolsTable->exist($nextPos["x"], $nextPos["y"])) {
                 switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])) {
                     case "W"://monstre
+                        //Création d'un évènement
+                        $eventsTables->createEvent('Un monstre a dévoré '.$fighter->name,$nextPos["x"],$nextPos["y"]);
                         $this->kill($fighterid);
-                        pr("vous avez été mangé par un monstre");
                         break;
                     case "T"://trou
+                        $eventsTables->createEvent('Un trou a aspiré '.$fighter->name,$nextPos["x"],$nextPos["y"]);
                         $this->kill($fighterid);
-                        pr("vous êtes tombé dans un trou");
                         break;
                     default:
                         break;
                 }
-            } else {
-                pr("mouvement impossible");
             }
-        } else {
-            pr("mouvement impossible hors cadre");
         }
     }
 
@@ -199,10 +209,15 @@ class FightersTable extends Table {
         $fighter->coordinate_x = $nextPos["x"];
         $fighter->coordinate_y = $nextPos["y"];
         $this->save($fighter);
+        
+        //Création d'un évènement
+        $eventsTables = TableRegistry::get('Events');
+        $eventsTables->createEvent($fighter->name.' avance.',$nextPos["x"],$nextPos["y"]);
     }
 
     public function attack($dir, $fighterid) {
         $toolsTable = TableRegistry::get('Tools');
+        $eventsTables = TableRegistry::get('Events');
         $currentfighter = $this->getFighterById($fighterid);
         $dirToCo = $this->dirToCo($dir);
         $attackSpot = array('x' => $currentfighter->coordinate_x += $dirToCo["x"], 'y' => $currentfighter->coordinate_y += $dirToCo["y"]);
@@ -210,13 +225,15 @@ class FightersTable extends Table {
             $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['x']);
             $mystrength = $currentfighter->skill_strength + $toolsTable->getBonus($fighterid, 'D');
             if (rand(1, 20) > (10 + $oponent->level - $currentfighter->level)) { //test de la réuissite de l'attaque
-                pr("l'attaque a atteind sa cible !"); //ajouter une phrase du type "joueur 1 a touché joueur 2"
                 $this->touchedByAttack($oponent->id, $fighterid, $mystrength);
+                //Création d'un évènement
+                $eventsTables->createEvent($currentfighter->name.' attaque et touche '.$oponent->name,$attackSpot['x'],$attackSpot['y']);
             } else {
-                pr("l'attaque a échouée");
+                //Création d'un évènement
+                $eventsTables->createEvent($currentfighter->name.' attaque et rate '.$oponent->name,$attackSpot['x'],$attackSpot['y']);
             }
         } else {
-            pr($currentfighter->name . ' se bat contre le vent, et il espère gagner...');
+            $eventsTables->createEvent($currentfighter->name.' se bat contre le vent et espère gagner... ',$attackSpot['x'],$attackSpot['y']);
         }
     }
 
