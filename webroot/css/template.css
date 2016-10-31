@@ -13,11 +13,11 @@ header {
 	margin-bottom: 40px;
 }
 figure.header_left {
-	margin-right : 140px ;
+	margin-right : 150px ;
 	display : inline-block;
 }
 figure.header_right {
-	margin-left : 140px ;
+	margin-left : 150px ;
 	display : inline-block;
 }
 
@@ -48,8 +48,15 @@ color : #222222;
 	float : right;
 	margin-top : -10px;
 	font-size : 20px;
-
 }
+#connexion {
+	float : right;
+	height: 36px;
+	font-size : 20px;
+	background-color: #6e0b14;
+	color : #ffd200;
+}
+
 /*Fin header et menu*/
 /*Footer*/
 footer {

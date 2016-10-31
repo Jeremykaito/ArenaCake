@@ -65,7 +65,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
   //If the player is NOT logged in
   else { ?>
     <ul>
-      <li><?= $this->Html->link('Connexion', array('controller' => 'Public', 'action' => 'login')); ?></li>
+      <li><?= $this->Html->link('Inscription', array('controller' => 'Public', 'action' => 'add')); ?></li>
       <li id="logo">
         <?= $this->Html->link(
         $this->Html->image('menu/logo.png', array('alt' => "Web ARENA")),
@@ -73,8 +73,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         array('escape' => false)
         );?>
       </li>
-      <li><?= $this->Html->link('Inscription', array('controller' => 'Public', 'action' => 'add')); ?></li>
       <li><?= $this->Html->link('Hall of fame', array('controller' => 'Public', 'action' => 'hall')); ?></li>
+      <li id="connexion"><?= $this->Html->link('Connexion', array('controller' => 'Public', 'action' => 'login')); ?></li>
     </ul>
   <?php } ?>
 </nav>

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
@@ -21,8 +22,6 @@ class ToolsTable extends Table {
     }
 
     public function addTool($x, $y, $type, $bonus) {
-        /* $toolsTable = TableRegistry::get('Tools');
-          $tool = $toolsTable->newEntity(); */
 
         $tool = $this->newEntity();
 
@@ -31,18 +30,18 @@ class ToolsTable extends Table {
         $tool->type = $type;
         $tool->bonus = $bonus;
 
-        $this->save();
+        $this->save($tool);
     }
-
+    
     public function takeTool($j, $i, $fighterid) {
         /*
          * attention il reste à gérer le nb max de tool par fighter, l'écrasement des tools en trop...etc
          */
         $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
         $tool->fighter_id = $fighterid;
-        $tool->coordinate_x = null;
-        $tool->coordinate_y = null;
-        $tool->save();
+        $tool->coordinate_x = NULL;
+        $tool->coordinate_y = NULL;
+        $this->save($tool);
     }
 
     public function getBonus($id, $type) {
@@ -50,25 +49,29 @@ class ToolsTable extends Table {
          * attention, en fonction du nb de tool autorisé par fighter etc. à modifier
          * ici, fonction si il n'y a qu'un seul tool par fighter
          */
-        $tool = $this->find()->where(['fighter_id' => $id, 'type' => $type])->toArray();
+        $tool = $this->find()->where(['fighter_id' => $id, 'type' => $type])->first();
         if (empty($tool)) {
             $bonus = 0;
         } else {
-            $bonus = $tool['bonus'];
+            $bonus = $tool->bonus;
         }
         return $bonus;
     }
 
-    public function generateTools($gametab) {
-        /* $this->loadModel('Fighters');
-          $this->loadModel('Tools');
-          $this->loadModel('Surroundings'); */
+    public function flushTools() {
+        $this->deleteAll(['fighter_id IS' => NULL]);
+    }
+
+    public function generateTools() {
+        $this->flushTools();
+
         $fightersTable = TableRegistry::get('Fighters');
         $toolsTable = TableRegistry::get('Tools');
-        $surroundingsTable = TableRegistry::get('Surroundins');
+        $surroundingsTable = TableRegistry::get('Surroundings');
+
         for ($i = 0; $i < 10; $i++) {
             for ($j = 0; $j < 15; $j++) {
-                if (!$fightersTable->exsit($j, $i) && !$toolsTable->exsit($j, $i) && !$surroundingsTable->exsit($j, $i)) {
+                if (!$fightersTable->exist($j, $i) && !$toolsTable->exist($j, $i) && !$surroundingsTable->exist($j, $i)) {
                     $r = rand(0, 90);
                     switch ($r) {
                         case 12:
@@ -85,4 +88,5 @@ class ToolsTable extends Table {
             }
         }
     }
+
 }
