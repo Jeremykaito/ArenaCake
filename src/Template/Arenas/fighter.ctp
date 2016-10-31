@@ -27,7 +27,7 @@
 
 <div id="main-content">
     <!-- access session variables-->
-    <?php pr( $this->request->session()->read('PlayerLoggedIn'))?>
+    <?php pr( $this->request->session()->read('PlayerLoggedIn')['id'])?>
     <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
   <!-- 
     <div id="sliderPerso">
@@ -43,6 +43,8 @@
     <div class="fighters index large-9 medium-8 columns content">
     <h3><?= __('Combattants') ?></h3>
     
+    
+    
     <?php
     if(!empty($fighters)){?>
    <p>
@@ -53,12 +55,12 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+                <th scope="col">Name</th>
           
-                <th scope="col"><?= $this->Paginator->sort('level') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('xp') ?></th>
+                <th scope="col">Level</th>
+                <th scope="col">Exp.</th>
                 
-                <th scope="col"><?= $this->Paginator->sort('current_health') ?></th>
+                <th scope="col">Health</th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -84,4 +86,8 @@
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
     <?php }    ?>
     
+    </div>
+  
+ 
+  
 </div>
