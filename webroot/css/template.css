@@ -67,7 +67,7 @@ footer {
 	/*background-color : #6e0b14;*/
 	border-top : 3px solid;
 	border-color : black;
-	height : 190px;
+	height : 230px;
 }
 footer p {
 	color : #ffba00;
@@ -174,4 +174,21 @@ p {
 	padding:1.3em;
 	width: 7em;
 	border-radius: 2px;
+}
+/*Formulaire*/
+.form_normal {
+
+}
+fieldset {
+	border: 1px solid #DE8B0E;
+}
+fieldset legend {
+	background-color : #DE8B0E;
+}
+form label {
+	color : #bbbbbb;
+	font-size : 1em;
+}
+form button {
+	background-color : #12598d;
 }
