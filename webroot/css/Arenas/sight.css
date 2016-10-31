@@ -1,53 +1,60 @@
+
+/*Damier carte*/
 #damier tbody td,tr{
-    border: 1px solid black;
-    width: 48px;
-    height: 48px;
-    max-width: 48px;
-    max-height: 48px;
-    padding: 2px;
-    margin  : 0;
-}
+  border: 1px solid black;
+  width: 48px;
+  height: 48px;
+  max-width: 48px;
+  max-height: 48px;
+  padding: 2px;
+  margin  : 0;
 
+}
 #damier {
-    max-width: 720px;
-    max-height: 480px;
-    float:left;
-    margin  : 20px;
+  vertical-align:top;
+  display : inline-block;
+}
+/*Fin damier*/
+/*Conteneurs Interface*/
+#interface_action{
+  width: 200px;
+  display : inline-block;
+  margin : 0px;
+  padding : 5px;  vertical-align:top;
+}
+#interface_fighter{
+  width: 120px;
+  display : inline-block;  vertical-align:top;
+  margin : 0px;
+  padding : 5px;
+  height : 490px;
+}
+/*Fin conteneurs*/
+.tab_action {
+  background-color: transparent;
+  border : none;
+}
+.tab_action td,.tab_action tr {
+  margin : 0px;
+  padding : 0px;
+  border: none;
+  background: transparent !important;
+  max-height: 58px;
+}
+.tab_action td{
+  width : 58px;
+  height : 58px;
+  max-width: 58px;
+  background-color: transparent;
+  padding : 0px;
+  text-align: center !important;
 }
 
-.game_form{
-    width:180px;
-    display: inline-block;
-    height:60px;
-}
-
-fieldset{
-    border:none;
-    width:180px;
-    height:60px;
-}
-
-.cadre_gris {
-    width: 400px;
-    height:260px;
-    padding: 5px;
-}
-
-.button_red {
-    width: 140px;
-    height:60px;
-}
-
-.button_generate {
-    width: 140px;
-    height:70px;
-}
-
-#interface{
-    width: 200px;
-    float: left;
-}
-
-.section_generate{
-    height: 180px;
+.button_action {
+  width : 55px;
+  height : 55px;
+  padding : 0px;
+  margin : 0px;
+  font-size: 1em;
+  border-radius: 2px;
 }
