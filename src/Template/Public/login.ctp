@@ -14,5 +14,5 @@
 			<?= $this->Form->end() ?>
 		</section>
 		
-		<p><?php echo $this->Html->link('Mot de passe oublié', array('controller' => 'Players', 'action' => 'resetPassword')); ?></p>
+		<p><?php echo $this->Html->link('Mot de passe oublié', array('controller' => 'Public', 'action' => 'resetPassword')); ?></p>
 

@@ -1,0 +1,11 @@
+
+/** sylesheet of champions page **/
+#main-content{
+    min-width:650px;
+    max-width:800px;
+    margin: auto;
+}
+
+#main-content p{
+    color:#e9ebee;
+}

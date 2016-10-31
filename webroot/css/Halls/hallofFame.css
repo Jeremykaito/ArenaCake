@@ -1,0 +1,31 @@
+
+
+/** hack for JPLOT **/
+.jqplot-table-legend {
+	width:auto;
+        margin:0px;
+        padding:0px;
+	/* hack to override cake.css stylesheet */
+}
+
+/** syleshee of hall of fame **/
+#main-content{
+    min-width:650px;
+    max-width:800px;
+    margin: auto;
+}
+
+.graphChart{
+    margin:auto;
+    padding:20px;
+    width: 620px;
+    background-color: #e9ebee ;
+    border:2px solid #DE8B0E;
+}
+
+#levelchart, #skillchart, #pieChart{
+    height:400px;
+    width:450px;
+    margin:auto;
+   
+}

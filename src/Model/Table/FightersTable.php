@@ -25,6 +25,44 @@ class FightersTable extends Table {
         return $yo;
     }
 
+       public function getFightersByPlayer($playerId) {
+        $fighters = $this
+                ->find()
+                ->where(['player_id' => $playerId]);
+
+        return $fighters;
+    }
+    
+    public function checkCoordinates($coord1X,$coord1Y,$coord2X,$coord2Y){
+        if(abs($coord1X-$coord2X) + abs($coord1Y-$coord2Y) <2 ){
+          return true;  
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public function getEventByFighter($fighters,$events){
+        
+       $found_events=array();
+       $i=0;
+
+       foreach ($events as $event):
+           foreach ($fighters as $fighter):
+                if ($this->checkCoordinates($fighter->coordinate_x, $fighter->coordinate_y,$event->coordinate_x,$event->coordinate_y)){
+                   if (!in_array($event, $found_events)){
+                       $found_events[$i]=$event;
+                       $i++;
+                   }
+                }
+           endforeach;
+       endforeach; 
+       
+       return $found_events;
+    }
+    
+    
+    
     public function getFighterById($id) {
         $yo = $this->find()->where(['id' => $id])->first();
         return $yo;
@@ -204,4 +242,5 @@ class FightersTable extends Table {
         }
     }
 
+    
 }
