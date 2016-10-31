@@ -6,6 +6,7 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 
 class FightersTable extends Table {
+
     public function exist($x, $y) {
         if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
             $exist = false;
@@ -14,71 +15,73 @@ class FightersTable extends Table {
         }
         return $exist;
     }
+
     public function getBestFighter() {
         return $this->find('all')->order('level')->first();
     }
-    
+
     public function getFighters() {
         $yo = $this->find('all')->toArray();
         return $yo;
     }
-    
-       public function getFightersByPlayer($playerId) {
+
+    public function getFightersByPlayer($playerId) {
         $fighters = $this
                 ->find()
                 ->where(['player_id' => $playerId]);
-        
+
         return $fighters;
     }
-    
-    public function checkCoordinates($coord1X,$coord1Y,$coord2X,$coord2Y){
-        if(abs($coord1X-$coord2X) + abs($coord1Y-$coord2Y) <2 ){
-          return true;  
-        }
-        else{
+
+    public function checkCoordinates($coord1X, $coord1Y, $coord2X, $coord2Y) {
+        if (abs($coord1X - $coord2X) + abs($coord1Y - $coord2Y) < 2) {
+            return true;
+        } else {
             return false;
         }
     }
-    
-    public function getEventByFighter($fighters,$events){
-        
-       $found_events=array();
-       $i=0;
-       
-       foreach ($events as $event):
-           foreach ($fighters as $fighter):
-                if ($this->checkCoordinates($fighter->coordinate_x, $fighter->coordinate_y,$event->coordinate_x,$event->coordinate_y)){
-                   if (!in_array($event, $found_events)){
-                       $found_events[$i]=$event;
-                       $i++;
-                   }
+
+    public function getEventByFighter($fighters, $events) {
+
+        $found_events = array();
+        $i = 0;
+
+        foreach ($events as $event):
+            foreach ($fighters as $fighter):
+                if ($this->checkCoordinates($fighter->coordinate_x, $fighter->coordinate_y, $event->coordinate_x, $event->coordinate_y)) {
+                    if (!in_array($event, $found_events)) {
+                        $found_events[$i] = $event;
+                        $i++;
+                    }
                 }
-           endforeach;
-       endforeach; 
-       
-       return $found_events;
+            endforeach;
+        endforeach;
+
+        return $found_events;
     }
-    
-    
-    
+
     public function getFighterById($id) {
         $yo = $this->find()->where(['id' => $id])->first();
         return $yo;
     }
+
     public function getFighterByCo($x, $y) {
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
         return $yo;
     }
+
     public function kill($fighterid) {
         $entity = $this->get($fighterid);
         pr($entity->name . "c'est bien battu mais ça n'a pas suffit...");
         $result = $this->delete($entity);
     }
+
     public function winXp($fighterid, $amount) {
         $entity = $this->get($fighterid);
         $entity->xp += $amount;
         $this->save($entity);
     }
+
     public function cerateViewTab() {
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
@@ -125,6 +128,7 @@ class FightersTable extends Table {
         }
         return $viewtab;
     }
+
     public function dirToCo($dir) {
         $dirToCo = array();
         switch ($dir) {
@@ -143,6 +147,7 @@ class FightersTable extends Table {
         }
         return $dirToCo;
     }
+
     public function move($dir, $fighterid) {
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
@@ -156,7 +161,7 @@ class FightersTable extends Table {
                 $toolsTable->takeTool($nextPos["x"], $nextPos["y"], $fighterid);
                 $this->doMove($fighterid, $nextPos);
             } else if (!$this->exist($nextPos["x"], $nextPos["y"]) && !$toolsTable->exist($nextPos["x"], $nextPos["y"])) {
-                switch ($surroundingsTable->getSurrounding($nextPos["x"], $nextPos["y"])["type"]) {
+                switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])) {
                     case "W"://monstre
                         $this->kill($fighterid);
                         pr("vous avez été mangé par un monstre");
@@ -175,6 +180,7 @@ class FightersTable extends Table {
             pr("mouvement impossible hors cadre");
         }
     }
+
     public function doMove($fighterid, $nextPos) {
         /* $fightersTable = TableRegistry::get('Fighters');
           $fighter = $fightersTable->get($fighterid);//ici on utilise fighterid en tant que clé */
@@ -183,6 +189,7 @@ class FightersTable extends Table {
         $fighter->coordinate_y = $nextPos["y"];
         $this->save($fighter);
     }
+
     public function attack($dir, $fighterid) {
         $toolsTable = TableRegistry::get('Tools');
         $currentfighter = $this->getFighterById($fighterid);
@@ -201,6 +208,7 @@ class FightersTable extends Table {
             pr($currentfighter->name . ' se bat contre le vent, et il espère gagner...');
         }
     }
+
     public function touchedByAttack($defenderid, $attackerid, $strength) {
         $defender = $this->getFighterById($defenderid);
         if ($defender->current_health > $strength) {
@@ -212,5 +220,5 @@ class FightersTable extends Table {
             $this->kill($defenderid);
         }
     }
-    
+
 }

@@ -18,7 +18,22 @@
     </table>
 </section>
 
-
+<section>
+    <?= $this->Form->create() ?>
+    <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'generateTools']) ?>
+        <?= $this->Form->button(__('Generate Tools')); ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
+</section>
+<section>
+    <?= $this->Form->create() ?>
+    <fieldset>
+        <?= $this->Form->hidden('action', ['value' => 'generateSurroundings']) ?>
+        <?= $this->Form->button(__('Generate Surroundings')); ?>
+    </fieldset>
+    <?= $this->Form->end() ?>
+</section>
 
 
 
