@@ -1,44 +1,45 @@
 body {
-margin : 0;
-padding : 0;
-background-color : #14111e;
-padding-top : 20px;
-min-width : 850px;
+	margin : 0;
+	padding : 0;
+	background-color : #14111e;
+	padding-top : 20px;
+	min-width : 830px;
 }
 /*Header et Menu*/
 header {
 	width : 100%;
-	height : 130px;
+	height : 150px;
 	text-align: center;
-	margin-bottom: 40px;
 }
 figure.header_left {
-	margin-right : 150px ;
+	margin-right : 100px ;
 	display : inline-block;
+	margin-left : 100px ;
 }
 figure.header_right {
-	margin-left : 150px ;
+	margin-left : 100px ;
 	display : inline-block;
 }
 
 nav {
-width :100%;
-background-image : url("../img/menu/bandeau_menu.png");
-height : 35px;
+	width :100%;
+	background-image : url("../img/menu/bandeau_menu.png");
+	height : 35px;
 }
 nav ul {
-list-style-type:none;
+	list-style-type:none;
+	margin-left : 100px;
 }
 nav ul li {
-display: inline-block;
-font-size : 22px;
-vertical-align : top;
-padding-right : 7px;
-padding-left : 7px;
+	display: inline-block;
+	font-size : 22px;
+	vertical-align : top;
+	padding-right : 7px;
+	padding-left : 7px;
 }
 nav ul li a {
-font-style : none;
-color : #222222;
+	font-style : none;
+	color : #222222;
 }
 
 #logo {
@@ -60,109 +61,117 @@ color : #222222;
 /*Fin header et menu*/
 /*Footer*/
 footer {
-position : relative;
-bottom : 0px;
-background-image:linear-gradient(#6e0b14, #1A0000);
-/*background-color : #6e0b14;*/
-border-top : 3px solid;
-border-color : black;
-height : 190px;
+	position : relative;
+	bottom : 0px;
+	background-image:linear-gradient(#6e0b14, #1A0000);
+	/*background-color : #6e0b14;*/
+	border-top : 3px solid;
+	border-color : black;
+	height : 190px;
 }
 footer p {
 	color : #ffba00;
 }
+
 #information {
 	margin : 20px;
 }
 #information p{
 	margin : 0;
 }
-
 #copyright {
-position : absolute;
-bottom : 0px;
-margin : 0px;
-width : 100%;
-text-align: center;
-background-color: #222222;
-color : #9f9f9f;
+	position : absolute;
+	bottom : 0px;
+	margin : 0px;
+	width : 100%;
+	text-align: center;
+	background-color: #222222;
+	color : #9f9f9f;
 }
 /*Fin Footer*/
-
-aside.details {
-background-color :  #DE8B0E;
-border : dotted 2px;
-border-color : #e76a00;
-width : 300px;
-padding : 20px;
+/*Main conteneur*/
+main {
+	margin-left : 80px;
+	margin-right : 80px;
+	margin-top : 20px;
+	min-width: 730px;
 }
+/*Fin main*/
+/*Conteneurs classiques*/
+section {
+	padding : 30px;
+	width : 100%;
+	margin : 10px;
+	margin-bottom : 20px;
+	margin-top : 20px;
+}
+aside {
+	padding : 20px;
+	margin : 10px;
+	margin-bottom : 20px;
+	margin-top : 20px;
+}
+/*Fin conteneurs classiques*/
 
+/*Classe conteneurs*/
+.cadre_gris {
+	background-color : #e1e1e1;
+	border: 5px solid;
+	border-color: #f8f8f8 #838383 #787878 #dedede;
+
+}
+.cadre_jaune {
+	background-color :  #DE8B0E;
+	border : 4px solid;
+	border-color : #f6c653 #bd6a23 #b6631f #e8ab4a;
+}
+/*Fin classe conteneurs*/
+/*Titre et texte*/
 h1, h2, h3, h4, h5, h6 {
-color : #DE8B0E;
+	color : #DE8B0E;
 }
 
 h1 {
-font-size: 50px;
+	font-size: 50px;
 }
 h2 {
-font-family: Arial;
-font-size: 40px;
+	font-family: Arial;
+	font-size: 40px;
 }
 h3 {
-font-size: 25px;
+	font-size: 25px;
 }
 h4 {
-font-size: 20px;
+	font-size: 20px;
 }
 h5 {
-font-size: 15px;
+	font-size: 15px;
 }
 h6 {
-font-size: 10px;
+	font-size: 10px;
 }
 .title_red {
-color : #c20000;
+	color : #c20000;
 }
 
 .title_grey {
-color : #202020;
+	color : #202020;
 }
 
 .text_light {
-color : #fff;
+	color : #fff;
 }
-
 
 p {
-font-family: Arial;
-color : #202020;
+	font-family: Arial;
+	color : #202020;
 }
-
-
-
-section.cadre_gris {
-border: 5px solid;
-border-color: #f8f8f8 #838383 #787878 #dedede;
-background-color : #e1e1e1;
-margin : 50px;
-padding : 30px;
-}
-
-section.petit {
-border: 5px solid;
-border-color : #f6c653 #bd6a23 #b6631f #e8ab4a;
-background-color : #e1e1e1;
-margin : 50px;
-padding : 30px;
-width : 50%;
-float : left;
-}
-
+/*Fin titre et texte*/
 .button_red {
-font-family : Arial;
-color : #FFB800;
-background-color : #6e0b14;
-padding:1.3em;
-width: 7em;
-border-radius: 2px;
+	font-family : Arial;
+	color : #FFB800;
+	background-color : #6e0b14;
+	padding:1.3em;
+	width: 7em;
+	border-radius: 2px;
 }

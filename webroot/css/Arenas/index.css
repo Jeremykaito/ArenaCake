@@ -15,22 +15,14 @@ dt img{
     margin-right: 1em;
 }
 
-.news{
-
+#intro {
+	float : left;
+	width : 60%;
+	min-width: 700px;
+	padding-right : 10px;
 }
-
-aside.news {
-background-color :  #DE8B0E;
-border : solid 4px;
-border-color : #f6c653 #bd6a23 #b6631f #e8ab4a;
-width : 35%;
-margin : 50px;
-padding : 20px;
-height : 200px;
-float : left;
-}
-
-section.cadre_gris {
-width: 55%;
-min-width: 500px;
+.news {
+	float : left;
+	width : 20%;
+	min-width : 200px;
 }
