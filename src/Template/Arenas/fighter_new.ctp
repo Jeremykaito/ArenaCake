@@ -29,7 +29,7 @@
             <section>             
                 <?= $this->Form->create($fighter) ?>
                 <fieldset>
-                    <legend><?= __('Edit Fighter') ?></legend>
+                    <legend><?= __('Nouveau combattant') ?></legend>
                     <?php
                         echo $this->Form->input('name');
                         echo $this->Form->input('level');

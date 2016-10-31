@@ -53,6 +53,7 @@ class PublicController extends AppController {
 
     public function logout() {
         $this->request->session()->write('PlayerLoggedIn', null);
+        $this->request->session()->destroy();
         return $this->redirect($this->Auth->logout());
     }
 

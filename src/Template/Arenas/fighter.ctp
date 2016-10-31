@@ -27,7 +27,7 @@
 
 <div id="main-content">
     <!-- access session variables-->
-    <?php pr( $this->request->session()->read('PlayerLoggedIn')['id'])?>
+    <?php pr( $PlayerFighterId ) ?>
     <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
   <!-- 
     <div id="sliderPerso">
@@ -85,7 +85,9 @@
     <?php    } else {    ?>
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
     <?php }    ?>
+     
     
+    <?= $this->Html->link(__('Nouveau combattant'), ['action' => 'fighterNew']) ?>
     </div>
   
  

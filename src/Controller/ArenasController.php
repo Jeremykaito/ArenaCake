@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\I18n\Time;
 
 class ArenasController extends AppController {
 
@@ -21,7 +22,9 @@ class ArenasController extends AppController {
         $this->loadModel('Fighters');
         $fighters = $this->Fighters->getFightersByPlayer($playerId)->toArray();
        
-
+        $PlayerFighterId = $this->request->session()->read('PlayerLoggedIn')['id'];
+        $this->set("PlayerFighterId", $PlayerFighterId);
+        
         /* set default value of skin */
         $session = $this->request->session();
         $session->write('PlayerFighterSkin', "rogue");
@@ -30,6 +33,12 @@ class ArenasController extends AppController {
     }
 
     public function sight() {
+        /* get player id from session() */
+        $PlayerFighterId    = $this->request->session()->read('PlayerLoggedIn')['id'];
+        $PlayerFighterSkin  = $this->request->session()->read('PlayerFighterSkin');
+        $this->set("PlayerFighterId", $PlayerFighterId);
+        $this->set("PlayerFighterSkin", $PlayerFighterSkin);
+        
         $this->loadModel('Fighters');
         $this->loadModel('Tools');
         $this->loadModel('Surroundings');
@@ -79,9 +88,8 @@ class ArenasController extends AppController {
         $this->loadModel('Fighters');
         $fighter = $this->Fighters->get($id);
 
-        if ($this->request->is('post')) {
-            pr($this->request->data);
-            $this->Fighters->patchEntity($fighter, $this->request->data);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->Fighters->patchEntity($fighter, $this->request->data(), ['validate'=>false]);
             if ($this->Fighters->save($fighter)) {
                 $this->Flash->success(__('Vos modifications ont bien été enregistrées'));
                 return $this->redirect(['action' => 'fighter']);
@@ -90,7 +98,7 @@ class ArenasController extends AppController {
             }
         }
 
-        $this->set(compact('fighter'));
+        $this->set('fighter',$fighter);
     }
 
     public function fighterDelete($id = null) {
@@ -104,6 +112,35 @@ class ArenasController extends AppController {
         }
 
         return $this->redirect(['action' => 'fighter']);
+    }
+    
+    public function fighterNew(){
+        
+        $this->loadModel('Fighters');
+        $fighter = $this->Fighters->newEntity();
+        
+        $fighter->player_id = $this->request->session()->read('PlayerLoggedIn')['id'];
+        $fighter->coordinate_x =5;
+        $fighter->coordinate_y =5;
+        $fighter->skill_sight = 2 ;
+        $fighter->skill_strength= 1;
+        $fighter->skill_health=3;
+        $fighter->current_health=3;
+        $fighter->next_action_time=Time::now();
+        $fighter->guild_id=NULL;
+        
+        
+        if ($this->request->is('post')) {
+            $fighter = $this->Fighters->patchEntity($fighter, $this->request->data);
+            if ($this->Fighters->save($fighter)) {
+                $this->Flash->success(__('Votre personnage a bien été crée.'));
+                return $this->redirect(['action' => 'fighter']);
+            } else {
+                $this->Flash->error(__('Impossssible de créer le personnage, veuillez réessayer.'));
+            }
+        }
+        
+        $this->set('fighter',$fighter);
     }
 
 }
