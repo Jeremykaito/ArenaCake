@@ -6,7 +6,7 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 
 class ArenasController extends AppController {
-
+    
     
     public function beforeFilter(Event $event) {
         parent::beforeFilter($event);
@@ -16,15 +16,15 @@ class ArenasController extends AppController {
     public function index() {
         
     }
-
+    
     public function fighter() {
         $playerId = $this->Auth->user('id');
         $this->loadModel('Fighters');
         $fighters = $this->Fighters->getFightersByPlayer($playerId);
         $this->set(compact('fighters'));
         
+       
         
-
         
         
         /* set default value of skin */
@@ -32,11 +32,22 @@ class ArenasController extends AppController {
         $session->write('PlayerFighterSkin', "rogue");
         
     }
-
+    
     public function sight() {
-        
-    }
+        $this->loadModel('Fighters');
+        $viewtab = $this->Fighters->cerateViewTab();
+        $this->set("viewtab", $viewtab);
 
+        //déplacements:
+        if ($this->request->is('post')) {
+            if ($this->request->data['action'] == 'move') {
+                $this->Fighters->move($this->request->data['dir'], 1); // le deuxième paramètre est le fighter id
+            }
+            if ($this->request->data['action'] == 'attack') {
+                $this->Fighters->attack($this->request->data['dir'], 1); // le deuxième paramètre est le fighter id
+            }
+        }
+    }
     public function diary() {
         
         //On récupère l'id du joueur connecté
@@ -85,7 +96,7 @@ class ArenasController extends AppController {
         } else {
             $this->Flash->error(__('Impossssible de supprimé le personnage, veuillez réessayeer.'));
         }
-
+        
         return $this->redirect(['action' => 'fighter']);
     }
 }

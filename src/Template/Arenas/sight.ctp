@@ -7,8 +7,8 @@
             echo "<tr>";
             for ($x = 0; $x < 15; $x++) {
                 echo "<td>";
-                if(!empty($viewtab[$x][$y])){
-                    echo $this->Html->image('sprites/'.$viewtab[$x][$y].'.png', ['alt' => $viewtab[$x][$y]]);
+                if (!empty($viewtab[$x][$y])) {
+                    echo $this->Html->image('sprites/' . $viewtab[$x][$y] . '.png', ['alt' => $viewtab[$x][$y]]);
                 }
                 echo "</td>";
             }
@@ -24,7 +24,7 @@
 
 <section>
     <p>mouvements<p>
-    <?= $this->Form->create() ?>
+        <?= $this->Form->create() ?>
     <fieldset>
         <?= $this->Form->hidden('action', ['value' => 'move']) ?>
         <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
@@ -41,7 +41,7 @@
     <?= $this->Form->create() ?>
     <fieldset>
         <?= $this->Form->hidden('action', ['value' => 'move']) ?>
-       <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
+        <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
         <?= $this->Form->button(__('left')); ?>
     </fieldset>
     <?= $this->Form->end() ?>
@@ -57,7 +57,7 @@
 
 <section>
     <p>attaques<p>
-    <?= $this->Form->create() ?>
+        <?= $this->Form->create() ?>
     <fieldset>
         <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
         <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
@@ -74,7 +74,7 @@
     <?= $this->Form->create() ?>
     <fieldset>
         <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
-       <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
+        <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
         <?= $this->Form->button(__('left')); ?>
     </fieldset>
     <?= $this->Form->end() ?>
