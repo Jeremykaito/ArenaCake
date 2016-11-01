@@ -117,9 +117,6 @@ class ArenasController extends AppController {
                 $viewtab = $this->Fighters->createViewTab($currentFighter,$PlayerFighterSkin);
                 $this->set("viewtab", $viewtab);
 
-                //On envoie l'avatar du combattant
-                $this->set("PlayerFighterSkin", $PlayerFighterSkin);
-
                 //On envoie le combattant
                 $fighter = $this->Fighters->getFighterById($PlayerFighterId);
                 $this->set(compact('fighter', $fighter));
