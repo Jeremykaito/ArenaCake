@@ -74,7 +74,7 @@ class SurroundingsTable extends Table {
                     $r = rand(0, 90);
                     switch ($r) {
                         case 12:
-                            $this->addSurrounding($j, $i, 'P'); //colonne
+                            $this->addSurrounding($j, $i, 'P'); //Colonne
                             break;
                         case 15:
                             $this->addSurrounding($j, $i, 'W'); //monstre

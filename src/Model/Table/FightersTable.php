@@ -109,15 +109,18 @@ class FightersTable extends Table {
         if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighter, $nextPos);
             
-            //on vérifie si il n'y a pas un monstre ou un trou dans les cases adjacantes
+            //On vérifie si il n'y a pas un monstre ou un trou dans les cases adjacentes
             $surroundingList = $surroundingsTable->getSurroundings();
             foreach ($surroundingList as $sur) {
                 if ($this->checkAdjacentCoordinates($nextPos["x"], $nextPos["y"], $sur["coordinate_x"], $sur["coordinate_y"])) {
                     if ($sur['type'] == 'W') {
-                            pr('Puanteur');
+                        
+                        //Création d'un évènement
+                        $eventsTables->createEvent($fighter->name . ' est asphyxié par une puanteur terrible.', $fighter->coordinate_x, $fighter->coordinate_y);
                     }
                     if ($sur['type'] == 'T') {
-                            pr('Brise Suspect');
+                                                    //Création d'un évènement
+                        $eventsTables->createEvent($fighter->name . ' a senti une brise suspecte.', $fighter->coordinate_x, $fighter->coordinate_y);
                     }
                 }
             }
@@ -267,7 +270,7 @@ class FightersTable extends Table {
         
         //Si le joueur est dans l'arène
         if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
-            //Si la case ne contient pas un autre combattant ou une colonne
+            //Si la case ne contient pas un autre combattant ou une Colonne
             if (!$this->exist($nextPos["x"], $nextPos["y"])) {
                 //pas de combattant : ok
                 if($this->surroundingIsThere($nextPos)){
@@ -382,13 +385,13 @@ class FightersTable extends Table {
                             if ($tool->coordinate_x == $x && $tool->coordinate_y == $y) {
                                 switch ($tool->type){
                                     case "V":
-                                        $viewtab[$x][$y] = "jumelle";
+                                        $viewtab[$x][$y] = "Jumelles";
                                         break;
                                     case "D":
-                                        $viewtab[$x][$y] = "epe";
+                                        $viewtab[$x][$y] = "Epée";
                                         break;
                                     case "L":
-                                        $viewtab[$x][$y] = "armure";
+                                        $viewtab[$x][$y] = "Armure";
                                         break;
                                 }
                                 $unused = false;
@@ -401,16 +404,16 @@ class FightersTable extends Table {
                         foreach ($surroundinglist as $surrounding) {
                             if ($surrounding->coordinate_x == $x && $surrounding->coordinate_y == $y) {
                                 if ($surrounding->type == "P"){ //on ne traite pas les cas des monstres et trous qui sont invisibles
-                                    $viewtab[$x][$y] = "colonne";
+                                    $viewtab[$x][$y] = "Colonne";
                                     $unused = false;
                                 }
                             }
                         }
                     }
 
-                    //On affiche l'herbe
+                    //On affiche l'Herbe
                     if ($unused) {
-                        $viewtab[$x][$y] = 'herbe';
+                        $viewtab[$x][$y] = 'Herbe';
                     }
                 }
             }

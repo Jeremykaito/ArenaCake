@@ -34,9 +34,6 @@
     
 
     <div class="fighters index large-9 medium-8 columns content">
-    <h3><?= __('Combattants') ?></h3>
-
-
 
     <?php
     if(!empty($playerfighters)){?>
@@ -48,12 +45,12 @@
     <table id="fighters" cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col">Name</th>
+                <th scope="col">Nom</th>
 
-                <th scope="col">Level</th>
-                <th scope="col">Exp.</th>
+                <th scope="col">Niveau</th>
+                <th scope="col">Xp</th>
 
-                <th scope="col">Health</th>
+                <th scope="col">Vie</th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -86,10 +83,10 @@
                     <?php  echo $this->Form->input('name',['label'=>'Nom' ,'options' => $fighterslist]); ?>
                         <div id="fighterslider">
                             <ul class="oSlider">
-                                <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
-                                <li><?php  echo $this->Html->image("miniatures/xena.png", ["alt" => "xena"]);?></li>
-                                <li><?php  echo $this->Html->image("miniatures/sorcier.png", ["alt" => "sorcier"]);?></li>
-                                <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
+                                <li><?php  echo $this->Html->image("miniatures/Voleur.png", ["alt" => "Voleur"]);?></li>
+                                <li><?php  echo $this->Html->image("miniatures/Xena.png", ["alt" => "Xena"]);?></li>
+                                <li><?php  echo $this->Html->image("miniatures/Sorcier.png", ["alt" => "Sorcier"]);?></li>
+                                <li><?php  echo $this->Html->image("miniatures/Elfe.png", ["alt" => "Elfe"]);?></li>
                             </ul>
                         </div> 
                     <?php  echo $this->Form->input('avatar',['type' => 'hidden']); ?> 
@@ -97,7 +94,7 @@
                     
                     
                 </fieldset>
-                <?= $this->Form->button(__('Jouer')) ?>
+                <?= $this->Form->button(__('Choisir')) ?>
                 <?= $this->Form->end() ?>
 
 
@@ -134,10 +131,10 @@
             function getCorrespondigAvatar(currentid){
 
                 switch (currentid) {
-                    case 0: avatar = "rogue"; break;
-                    case 1: avatar = "xena"; break;
-                    case 2: avatar = "sorcier";break;
-                    case 3: avatar = "elf";break;
+                    case 0: avatar = "Voleur"; break;
+                    case 1: avatar = "Xena"; break;
+                    case 2: avatar = "Sorcier";break;
+                    case 3: avatar = "Elfe";break;
                 }
                 return avatar;
             }

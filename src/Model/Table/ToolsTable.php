@@ -125,10 +125,10 @@ class ToolsTable extends Table {
                             $this->addTool($j, $i, 'V', rand(1, 3)); //vue  lunettes
                             break;
                         case 15:
-                            $this->addTool($j, $i, 'D', rand(1, 3)); //force  epee
+                            $this->addTool($j, $i, 'D', rand(1, 3)); //force  Epéee
                             break;
                         case 18:
-                            $this->addTool($j, $i, 'L', rand(1, 3)); //vie   armure
+                            $this->addTool($j, $i, 'L', rand(1, 3)); //vie   Armure
                             break;
                     }
                 }

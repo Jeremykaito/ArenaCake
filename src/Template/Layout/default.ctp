@@ -79,12 +79,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
   <?php } ?>
 </nav>
   <figure class="header_left">
-    <?= $this->Html->image('champions/rogue.png', array('alt' => "Rogue")); ?>
-    <?= $this->Html->image('champions/elf.png', array('alt' => "Elf")); ?>
+    <?= $this->Html->image('champions/Voleur.png', array('alt' => "Voleur")); ?>
+    <?= $this->Html->image('champions/Elfe.png', array('alt' => "Elfe")); ?>
   </figure>
   <figure class="header_right">
-    <?= $this->Html->image('champions/xena.png', array('alt' => "Xena")); ?>
-    <?= $this->Html->image('champions/sorcier.png', array('alt' => "Sorcier")); ?>
+    <?= $this->Html->image('champions/Xena.png', array('alt' => "Xena")); ?>
+    <?= $this->Html->image('champions/Sorcier.png', array('alt' => "Sorcier")); ?>
   </figure>
 </header>
 

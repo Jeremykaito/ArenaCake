@@ -43,7 +43,7 @@ class ConsoleShell extends Shell
             $this->err('<info>$ php composer.phar require --dev psy/psysh</info>');
             $this->err('');
 
-            return self::CODE_ERROR;
+            return sElfe::CODE_ERROR;
         }
 
         $this->out("You can exit with <info>`CTRL-C`</info> or <info>`exit`</info>");
