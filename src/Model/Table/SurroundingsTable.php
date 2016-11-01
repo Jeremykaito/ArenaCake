@@ -15,7 +15,7 @@ class SurroundingsTable extends Table {
     }
 
     public function getSurroundingByCo($x, $y) {
-        $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray();
+        $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
         return $yo;
     }
     
@@ -30,6 +30,14 @@ class SurroundingsTable extends Table {
         $Surrounding->type = $type;
 
         $this->save($Surrounding);
+    }
+    
+    public function removeSurrounding($co){
+        //Création d'un évènement
+        $eventsTables = TableRegistry::get('Events');
+        $eventsTables->createEvent('un monstre est mort.', $co['x'], $co['y']);
+
+        $this->delete($this->getSurroundingByCo($co['x'], $co['y']));
     }
 
     public function flushSurroundings() {

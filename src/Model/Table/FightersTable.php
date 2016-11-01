@@ -117,7 +117,7 @@ class FightersTable extends Table {
             //On vérifie s'il y a un décor
             if ($this->surroundingIsThere($nextPos)) {
 
-                switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])[0]['type']) {
+                switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])->type) {
 
                     //Monstre
                     case "W":
@@ -159,14 +159,21 @@ class FightersTable extends Table {
         
         //On charge les modèles
         $toolsTable = TableRegistry::get('Tools');
+        $SurroundingsTable = TableRegistry::get('Surroundings');
         $eventsTables = TableRegistry::get('Events');
 
         //On calcule la case à attaquer
         $dirToCo = $this->dirToCo($dir);
         $attackSpot = array('x' => $currentfighter->coordinate_x + $dirToCo["x"], 'y' => $currentfighter->coordinate_y + $dirToCo["y"]);
-
+        
+        //on verifie si il y a un monstre sur la case
+        if($this->surroundingIsThere($attackSpot)){
+            if($SurroundingsTable->getSurroundingByCo($attackSpot['x'], $attackSpot['y'])->type == 'W'){
+                $SurroundingsTable->removeSurrounding($attackSpot);
+            }
+        }
         //On vérifie s'il y a un combattant sur cette case
-        if ($this->fighterIsThere($attackSpot)) {
+        else if ($this->fighterIsThere($attackSpot)) {
   
             //On récupère le combattant ennemi
             $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['y']);
@@ -194,12 +201,13 @@ class FightersTable extends Table {
 
     public function touchedByAttack($defender, $attacker, $strength) {
 
-        //L'attaquant gagne de l'xp
+        //on calcul la vie que va perdre le defender
+        $degats = $strength - $toolsTable->getBonus($defender->id, 'L');
        
 
         //On retire la force de l'attaque à la vie de l'ennemi
-        if ($defender->current_health > $strength) {
-            $defender->current_health -= $strength;
+        if ($defender->current_health > $degats) {
+            $defender->current_health -= $degats;
             $this->save($defender);
             $this->winXp($attacker, 1); //l'attaquant gagne 1 xp car le coup a reussit
         }
@@ -254,7 +262,7 @@ class FightersTable extends Table {
                 //pas de combattant : ok
                 if($this->surroundingIsThere($nextPos)){
                     // surroundings : ok
-                    if(!($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])[0]['type'] == 'P')){
+                    if(!($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])->type == 'P')){
                     return true;
                    
                     }
