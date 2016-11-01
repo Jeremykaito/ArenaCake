@@ -8,7 +8,7 @@ use Cake\ORM\TableRegistry;
 class SurroundingsTable extends Table {
 
     /*Fonctions pour trouver des décors*/
-    
+
     public function getSurroundings() {
         $yo = $this->find('all')->toArray();
         return $yo;
@@ -18,7 +18,7 @@ class SurroundingsTable extends Table {
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
         return $yo;
     }
-    
+
     /*Fonctions pour gérer les décors*/
 
     public function addSurrounding($x, $y, $type) {
@@ -31,11 +31,11 @@ class SurroundingsTable extends Table {
 
         $this->save($Surrounding);
     }
-    
+
     public function removeSurrounding($co){
         //Création d'un évènement
         $eventsTables = TableRegistry::get('Events');
-        $eventsTables->createEvent('un monstre est mort.', $co['x'], $co['y']);
+        $eventsTables->createEvent('Un monstre est mort.', $co['x'], $co['y']);
 
         $this->delete($this->getSurroundingByCo($co['x'], $co['y']));
     }
@@ -45,7 +45,7 @@ class SurroundingsTable extends Table {
         $this->deleteAll(['type' => 'T']);
         $this->deleteAll(['type' => 'P']);
     }
-    
+
     public function exist($x, $y) {
         if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
             $exist = false;
@@ -54,11 +54,11 @@ class SurroundingsTable extends Table {
         }
         return $exist;
     }
-    
+
     /*Fonctions utilitaires*/
 
     public function generateSurroundings() {
-        
+
         //On détruit tous les décors
         $this->flushSurroundings();
 
