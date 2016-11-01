@@ -3,38 +3,50 @@
 	echo $this->Html->script('jquery.min.js');
 	echo $this->Html->script('BxSlider.jquery.bxslider.min');
 	echo $this->Html->css('BxSlider.jquery.bxslider');
+        
 	echo $this->Html->css('Arenas/index.css');
         echo $this->Html->css('champions/fighters.css');
         
 	$this->assign('title', 'WebArena - Champions');	
 	$this->assign('header_title', 'Champions');?>
 	
-	<!--Script pour afficher le slider-->
-	<script>
-		$(document).ready(function(){
-		$('.bxslider').bxSlider({
-		mode: 'vertical',
-		pause: 1000,
-		speed: 2000,
-		auto: true,
-		});
-		});
-	</script>
+
 
 <div id="main-content">
     <!-- access session variables-->
     <?php pr( $PlayerFighterId ) ?>
     <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
-  <!-- 
-    <div id="sliderPerso">
-        <ul class="bxslider">
-                <li><?php  echo $this->Html->image("champions/rogue.png", ["alt" => "rogue"]);?></li>
-                <li><?php  echo $this->Html->image("champions/xena.png", ["alt" => "xena"]);?></li>
-                <li><?php  echo $this->Html->image("champions/sorcier.png", ["alt" => "sorcier"]);?></li>
-                <li><?php  echo $this->Html->image("champions/elf.png", ["alt" => "elf"]);?></li>
-        </ul>
-    </div> -->
+
+    <h3>Selectionnez votre personnage</h3>
     
+    <div id="fighterslider">
+        <ul class="test">
+                <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
+                <li><?php  echo $this->Html->image("miniatures/xena.png", ["alt" => "xena"]);?></li>
+                <li><?php  echo $this->Html->image("miniatures/sorcier.png", ["alt" => "sorcier"]);?></li>
+                <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
+        </ul>
+    </div> 
+    
+    	<!--Script pour afficher le slider-->
+	<script>
+var slider = $('.test').bxSlider({
+    mode: 'horizontal',
+    autoControls: false,
+    touchEnabled: true,
+    pager: false
+});
+
+$('a.bx-next').click(function () {
+    var current = slider.getCurrentSlide();
+    alert(current+1);
+});
+$('a.bx-next').click(function () {
+    var current = slider.getCurrentSlide();
+    alert(current+1);
+  
+});
+	</script>
     
     <div class="fighters index large-9 medium-8 columns content">
     <h3><?= __('Combattants') ?></h3>

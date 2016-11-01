@@ -27,8 +27,12 @@ class ArenasController extends AppController {
         $fighters = $this->Fighters->getFightersByPlayer($playerId)->toArray();
        
         //On récupère l'id du combattant actuel
-        $PlayerFighterId = $this->request->session()->read('PlayerLoggedIn')['id'];
-        $this->set("PlayerFighterId", $PlayerFighterId);
+        $PlayerId = $this->request->session()->read('PlayerLoggedIn')['id'];
+        
+        
+        $varFighterNumber = $this->Fighters->getSelectedFighter();
+        //$varFighterNumber = 3;
+        $this->set("PlayerFighterId",$varFighterNumber);
         
         //On écrit dans la session l'avatar choisi
         $session = $this->request->session();

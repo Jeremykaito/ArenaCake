@@ -14,6 +14,7 @@ $(document).ready(function(){
 		pause: 1000,
 		speed: 2000,
 		auto: true,
+                controls:false
 	});
 });
 </script>

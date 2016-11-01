@@ -341,5 +341,8 @@ class FightersTable extends Table {
         }
         return $viewtab;
     }
-
+    
+    public function getSelectedFighter(){
+        return 3;
+    }
 }
