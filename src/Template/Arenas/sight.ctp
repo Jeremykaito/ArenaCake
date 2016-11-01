@@ -19,6 +19,7 @@ $(document).ready(function () {
   });
 });
 </script>
+
 <script>
 $(document).ready(function () {
   $('#tab_obj').DataTable({
@@ -73,13 +74,21 @@ $(document).ready(function () {
       <?php endforeach; ?>
     </table>
 </section>
+
+
 <!-- Matrice de jeu -->
 <table id="damier">
   <?php
   for ($y = 0; $y < 10; $y++) {
     echo "<tr>";
     for ($x = 0; $x < 15; $x++) {
-      echo "<td>";
+        if(!empty($viewtab[$x][$y])){ ?>
+            <td title= "<?php echo $viewtab[$x][$y] ; ?>">
+        <?php }
+        else{
+           echo "<td>";
+        }
+      
       if (!empty($viewtab[$x][$y])) {
         echo $this->Html->image('sprites/' . $viewtab[$x][$y] . '.png', ['alt' => $viewtab[$x][$y]]);
       }
@@ -89,6 +98,7 @@ $(document).ready(function () {
   }
   ?>
 </table>
+
 <!-- Interface de jeu -->
 <section id='interface_action' class="cadre_gris">
   <h3>Actions</h3>
@@ -138,6 +148,7 @@ $(document).ready(function () {
       </td>
     </tr>
   </table>
+  
   <!-- Actions d'attaque -->
   <table class="tab_action">
     <tr>
@@ -184,6 +195,7 @@ $(document).ready(function () {
       </td>
     </tr>
   </table>
+  
   <!-- Actions d'ajout d'objets -->
   <h5>Génération<h5>
     <table class="tab_action">

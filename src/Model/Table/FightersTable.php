@@ -16,7 +16,7 @@ class FightersTable extends Table {
             $entity->skill_strength = 1;
             $entity->skill_health = 5;
             $entity->current_health = 5;
-            $entity->level = 1;
+            $entity->level = 0;
             $entity->xp = 0;
             $entity->next_action_time = date('Y-m-d H:i:s');
             $entity->guild_id = NULL;

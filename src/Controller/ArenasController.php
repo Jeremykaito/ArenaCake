@@ -191,8 +191,6 @@ class ArenasController extends AppController {
         //Si le formulaire est rempli
         if ($this->request->is('post')) {
 
-
-
             //On renseigne l'id avec celle du joueur connecté
             $fighter->player_id = $this->request->session()->read('PlayerLoggedIn')['id'];
 
