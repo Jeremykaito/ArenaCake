@@ -31,15 +31,28 @@ class ArenasController extends AppController {
 
         //On écrit en session le combattant sélectionné
         $varFighterNumber = $this->Fighters->getSelectedFighter();
-        $this->request->session()->write("PlayerFighterId", $varFighterNumber);
-
+        $this->set("PlayerFighterId", $varFighterNumber);
+        
+        //gère la recupération des infos depuis la vue
+        if ($this->request->is('post')) {
+            //recupére l'avatar et le fighter a utilisé
+            //$this->request->data['name'] ;
+            //$this->request->data['niveau'] ;
+           //$varFighterSkin= $this->request->data['avatar'] ;
+ 
+        }
+        $varFighterSkin ="xena";
         //On écrit dans la session l'avatar choisi
         $session = $this->request->session();
         $session->write('PlayerFighterId', $varFighterNumber);
-        $session->write('PlayerFighterSkin', "rogue");
-
+        $session->write('PlayerFighterSkin', $varFighterSkin);
+        
+        
+        //liste des fighters du player
+        $fighterslist = $this->Fighters->getFightersByPlayer($playerId)->find('list');
         //On envoie les combattants à la vue
         $this->set('playerfighters',$fighters);
+        $this->set('fighterslist',$fighterslist);
     }
 
     public function sight() {

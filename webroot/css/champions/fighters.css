@@ -24,3 +24,11 @@
 .bx-viewport li{
     width:240px !important;
 }
+
+.bx-wrapper .bx-next {
+    right: -95px !important;
+}
+
+.bx-wrapper .bx-prev {
+    left: 5px !important;
+}

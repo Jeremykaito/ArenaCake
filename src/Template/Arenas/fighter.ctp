@@ -15,37 +15,8 @@
 <div id="main-content">
     <!-- access session variables-->
     <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
-
-    <h3>Selectionnez votre personnage</h3>
     
-    <div id="fighterslider">
-        <ul class="test">
-                <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
-                <li><?php  echo $this->Html->image("miniatures/xena.png", ["alt" => "xena"]);?></li>
-                <li><?php  echo $this->Html->image("miniatures/sorcier.png", ["alt" => "sorcier"]);?></li>
-                <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
-        </ul>
-    </div> 
-    
-    	<!--Script pour afficher le slider-->
-	<script>
-var slider = $('.test').bxSlider({
-    mode: 'horizontal',
-    autoControls: false,
-    touchEnabled: true,
-    pager: false
-});
-
-$('a.bx-next').click(function () {
-    var current = slider.getCurrentSlide();
-    alert(current+1);
-});
-$('a.bx-next').click(function () {
-    var current = slider.getCurrentSlide();
-    alert(current+1);
-  
-});
-	</script>
+    	
     
     <div class="fighters index large-9 medium-8 columns content">
     <h3><?= __('Combattants') ?></h3>
@@ -89,15 +60,31 @@ $('a.bx-next').click(function () {
         </tbody>
     </table>
     
-    
+     <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
+    <br>
     <!-- Select a personnage and level-->
                  <?= $this->Form->create() ?>
                 <fieldset>
-                    <legend><?= __('Seletion combattant') ?></legend>
+                    
+                    <legend><?= __('Combattant') ?></legend>
+                    
+                    <h4> Selection avatar:</h4>
+                    <div id="fighterslider">
+                        <ul class="oSlider">
+                            <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
+                            <li><?php  echo $this->Html->image("miniatures/xena.png", ["alt" => "xena"]);?></li>
+                            <li><?php  echo $this->Html->image("miniatures/sorcier.png", ["alt" => "sorcier"]);?></li>
+                            <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
+                        </ul>
+                    </div> 
+                    
+                    <h4> Selection paramètres:</h4>
                     <?php
-                        pr($playerfighters);
-                        echo $this->Form->input('name',['label' => 'Personnage actif']);
+                        //pr($playerfighters);
+                        echo $this->Form->input('name',['label'=>'Pseudo' ,'options' => $fighterslist]);
                         echo $this->Form->input('level',['label' => 'Niveau']);
+                        echo $this->Form->input('avatar',['label' => 'Avatar', 'disabled' => 'disabled']);
+                        //echo $this->Form->hidden('avatar');
                     ?>
                     <?= $this->Form->button(__('Jouer')) ?>
                 </fieldset>
@@ -107,11 +94,44 @@ $('a.bx-next').click(function () {
     <?php    } else {    ?>
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
     <?php }    ?>
-     
-    
-    <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
+      
     </div>
   
- 
+ <!--Script pour afficher le slider-->
+	<script>
+            var slider = $('.oSlider').bxSlider({
+                mode: 'horizontal',
+                autoControls: false,
+                touchEnabled: true,
+                pager: false
+            });
+            
+            /** initialize input value **/
+            var current=0; //default
+            $("#avatar").val(getCorrespondigAvatar(current));
+            
+            $('a.bx-next').click(function () {
+                var current = slider.getCurrentSlide();
+                //alert(current+1);
+                $("#avatar").val(getCorrespondigAvatar(current));
+            });
+            $('a.bx-prev').click(function () {
+                var current = slider.getCurrentSlide();
+                //alert(current+1);
+                $("#avatar").val(getCorrespondigAvatar(current));
+            });
+            
+            function getCorrespondigAvatar(currentid){
+                
+                switch (currentid) {
+                    case 0: avatar = "rogue"; break;
+                    case 1: avatar = "xena"; break;
+                    case 2: avatar = "sorcier";break;
+                    case 3: avatar = "elf";break;
+                }
+                return avatar;
+            }
+            
+	</script>
   
 </div>
