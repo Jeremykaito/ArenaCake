@@ -50,6 +50,10 @@
   text-align: center !important;
 }
 
+#events{
+    width: 550px;
+}
+
 .button_action {
   width : 55px;
   height : 55px;
