@@ -104,16 +104,19 @@ class FightersTable extends Table {
         //On calcule la case sur laquelle va atterrir le combattant
         $dirToCo = $this->dirToCo($dir);
         $nextPos = array('x' => $fighter->coordinate_x + $dirToCo["x"], 'y' => $fighter->coordinate_y + $dirToCo["y"]);
-        
+
         //On vérifie si le déplacement est possible
         if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighter, $nextPos);
             
             //On vérifie si il n'y a pas un monstre ou un trou dans les cases adjacentes
+
+
             $surroundingList = $surroundingsTable->getSurroundings();
             foreach ($surroundingList as $sur) {
                 if ($this->checkAdjacentCoordinates($nextPos["x"], $nextPos["y"], $sur["coordinate_x"], $sur["coordinate_y"])) {
                     if ($sur['type'] == 'W') {
+
                         
                         //Création d'un évènement
                         $eventsTables->createEvent($fighter->name . ' est asphyxié par une puanteur terrible.', $fighter->coordinate_x, $fighter->coordinate_y);
@@ -133,7 +136,7 @@ class FightersTable extends Table {
                     //Monstre
                     case "W":
                         //Création d'un évènement
-                        $eventsTables->createEvent('Un monstre a dévoré ' . $fighter->name, $nextPos["x"], $nextPos["y"] .'.');
+                        $eventsTables->createEvent('Un monstre a dévoré ' . $fighter->name, $nextPos["x"], $nextPos["y"] . '.');
 
                         //Le joueur est mort
                         $this->kill($fighter);
@@ -142,19 +145,19 @@ class FightersTable extends Table {
                     //Trou
                     case "T":
                         //Création d'un évènement
-                        $eventsTables->createEvent('Un trou a aspiré ' . $fighter->name, $nextPos["x"], $nextPos["y"].'.');
-                        
+                        $eventsTables->createEvent('Un trou a aspiré ' . $fighter->name, $nextPos["x"], $nextPos["y"] . '.');
+
                         //Le joueur est mort
                         $this->kill($fighter);
                         break;
-                    
+
                     default:
                         break;
                 }
             }
         }
     }
-    
+
     public function doMove($fighter, $nextPos) {
         /* $fightersTable = TableRegistry::get('Fighters');
           $fighter = $fightersTable->get($fighterid);//ici on utilise fighterid en tant que clé */
@@ -167,7 +170,7 @@ class FightersTable extends Table {
     }
 
     public function attack($dir, $currentfighter) {
-        
+
         //On charge les modèles
         $toolsTable = TableRegistry::get('Tools');
         $SurroundingsTable = TableRegistry::get('Surroundings');
@@ -176,16 +179,16 @@ class FightersTable extends Table {
         //On calcule la case à attaquer
         $dirToCo = $this->dirToCo($dir);
         $attackSpot = array('x' => $currentfighter->coordinate_x + $dirToCo["x"], 'y' => $currentfighter->coordinate_y + $dirToCo["y"]);
-        
+
         //on verifie si il y a un monstre sur la case
-        if($this->surroundingIsThere($attackSpot)){
-            if($SurroundingsTable->getSurroundingByCo($attackSpot['x'], $attackSpot['y'])->type == 'W'){
+        if ($this->surroundingIsThere($attackSpot)) {
+            if ($SurroundingsTable->getSurroundingByCo($attackSpot['x'], $attackSpot['y'])->type == 'W') {
                 $SurroundingsTable->removeSurrounding($attackSpot);
             }
         }
         //On vérifie s'il y a un combattant sur cette case
         else if ($this->fighterIsThere($attackSpot)) {
-  
+
             //On récupère le combattant ennemi
             $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['y']);
 
@@ -211,12 +214,14 @@ class FightersTable extends Table {
     }
 
     public function touchedByAttack($defender, $attacker, $strength) {
-        
+
         $toolsTable = TableRegistry::get('Tools');
 
         //on calcul la vie que va perdre le defender
         $degats = $strength - $toolsTable->getBonus($defender->id, 'L');
-       
+        if ($degats < 0) {
+            $degats = 0;
+        }
 
         //On retire la force de l'attaque à la vie de l'ennemi
         if ($defender->current_health > $degats) {
@@ -267,20 +272,19 @@ class FightersTable extends Table {
          * attention ici on ne test pas la présence d'objects quels qu'ils soient
          */
         $surroundingsTable = TableRegistry::get('Surroundings');
-        
+
         //Si le joueur est dans l'arène
         if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
             //Si la case ne contient pas un autre combattant ou une Colonne
             if (!$this->exist($nextPos["x"], $nextPos["y"])) {
                 //pas de combattant : ok
-                if($this->surroundingIsThere($nextPos)){
+                if ($this->surroundingIsThere($nextPos)) {
                     // surroundings : ok
-                    if(!($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])->type == 'P')){
-                    return true;
-                   
+                    if (!($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])->type == 'P')) {
+                        return true;
                     }
-                }else
-                    // no surroundings
+                } else
+                // no surroundings
                     return true;
             }
         }
@@ -373,7 +377,7 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($fighterlist as $fighter) {
                             if ($fighter->coordinate_x == $x && $fighter->coordinate_y == $y) {
-                                $viewtab[$x][$y] = $fighterSkin; 
+                                $viewtab[$x][$y] = $fighterSkin;
                                 $unused = false;
                             }
                         }
@@ -383,7 +387,7 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($toollist as $tool) {
                             if ($tool->coordinate_x == $x && $tool->coordinate_y == $y) {
-                                switch ($tool->type){
+                                switch ($tool->type) {
                                     case "V":
                                         $viewtab[$x][$y] = "Jumelles";
                                         break;
@@ -403,8 +407,11 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($surroundinglist as $surrounding) {
                             if ($surrounding->coordinate_x == $x && $surrounding->coordinate_y == $y) {
+
                                 if ($surrounding->type == "P"){ //on ne traite pas les cas des monstres et trous qui sont invisibles
                                     $viewtab[$x][$y] = "Colonne";
+
+
                                     $unused = false;
                                 }
                             }
@@ -419,9 +426,5 @@ class FightersTable extends Table {
             }
         }
         return $viewtab;
-    }
-    
-    public function getSelectedFighter(){
-        return 3;
     }
 }
