@@ -63,6 +63,7 @@ class ArenasController extends AppController {
             $this->loadModel('Fighters');
             $this->loadModel('Tools');
             $this->loadModel('Surroundings');
+            $this->loadModel('Events');
 
             //On récupère le combattant actuel
             $currentFighter = $this->Fighters->getFighterById($PlayerFighterId);
@@ -113,6 +114,10 @@ class ArenasController extends AppController {
                 //On envoie les objets du combattant
                 $tools = $this->Tools->getToolsByFighter($PlayerFighterId);
                 $this->set(compact('tools', $tools));
+                
+                //On envoie les derniers évènements
+                $events=$this->Events->getMostRecentEvents();
+                $this->set(compact('events', $events));
             }
             else{
                 $this->Flash->error(__('Vous êtes mort ! Veuillez choisir un combattant.'));
@@ -132,7 +137,7 @@ class ArenasController extends AppController {
 
         //On récupère les évènements à portée de vue des personnages du joueur
         $this->loadModel('Fighters');
-        $events = $this->Fighters->getEventByFighter($playerId, $allevents);
+        $events = $this->Fighters->getEventsInView($playerId, $allevents);
 
         //On envoie les évènements à la vue
         $this->set(compact('events'));

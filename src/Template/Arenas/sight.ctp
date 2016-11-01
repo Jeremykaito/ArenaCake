@@ -33,6 +33,23 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+    $(document).ready(function () {
+        $('#tab_events').DataTable({
+            "order": [[1, "desc"]],
+            "language": {
+              emptyTable: "Aucun événement durant les dernières 24h, allez on se bouge!",
+              paginate: {
+                first:      "Début",
+                previous:   "Précédente",
+                next:       "Suivante",
+                last:       "Fin"
+              }
+            }
+        });
+    });
+</script>
+
 <?php 
 $bonusVue=0;
 $bonusVie=0;
@@ -126,6 +143,7 @@ endforeach;
 <!-- Interface de jeu -->
 <section id='interface_action' class="cadre_gris">
   <h3>Actions</h3>
+  
   <!-- Actions de déplacement -->
   <table class="tab_action">
     <tr>
@@ -243,7 +261,27 @@ endforeach;
         <?= $this->Form->end() ?>
 
 </section>
-<!-- Feuille de personnage -->
-<section>
 
-  </section>
+<section class="cadre_gris" id="events">
+    <h3>Evènements<h3>
+    <?php if(!empty($events)){?>
+    <table id="tab_events" class="display">
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <?php foreach ($events as $event): ?>
+        <tr>
+           <td><?= $event->name ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </table>
+    <?php
+    }
+    else{?>
+    <p>Il n'y a aucun évènement à afficher !</p>
+    <?php }
+    ?>     
+
+</section>

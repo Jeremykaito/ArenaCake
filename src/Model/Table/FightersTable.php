@@ -151,8 +151,8 @@ class FightersTable extends Table {
         $fighter->coordinate_y = $nextPos["y"];
         $this->save($fighter);
         //Création d'un évènement
-        $eventsTables = TableRegistry::get('Events');
-        $eventsTables->createEvent($fighter->name . ' avance.', $nextPos["x"], $nextPos["y"]);
+        //$eventsTables = TableRegistry::get('Events');
+        //$eventsTables->createEvent($fighter->name . ' avance.', $nextPos["x"], $nextPos["y"]);
     }
 
     public function attack($dir, $currentfighter) {
@@ -297,7 +297,7 @@ class FightersTable extends Table {
         return false;
     }
 
-    public function getEventByFighter($playerId, $events) {
+    public function getEventsInView($playerId, $events) {
 
         //Déclaration des variables
         $found_events = array();

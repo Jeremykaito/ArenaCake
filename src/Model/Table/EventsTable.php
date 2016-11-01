@@ -20,6 +20,13 @@ class EventsTable extends Table {
                 ->find('all', array('conditions' => array('Events.date BETWEEN NOW() -INTERVAL 1 DAY AND NOW()')));
         return $events;
     }
+    
+    public function getMostRecentEvents() {
+
+        $events = $this
+                ->find() -> order(['date' => 'DESC']) ->limit(3);
+        return $events->toArray();
+    }
 
     /*Fonctions pour gérer des évènements*/
     
