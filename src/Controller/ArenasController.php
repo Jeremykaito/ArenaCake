@@ -29,15 +29,27 @@ class ArenasController extends AppController {
 
         //Gère la recupération des infos depuis la vue
         if ($this->request->is('post')) {
+            if ($this->request->data['type'] == 'choose') {
+                //On récupère l'avatar et le fighter utilisés
+                $varFighterNumber = $this->request->data['name'];
+                $varFighterSkin = $this->request->data['avatar'];
 
-            //On récupère l'avatar et le fighter utilisés
-            $varFighterNumber = $this->request->data['name'];
-            $varFighterSkin = $this->request->data['avatar'];
-
-            //On écrit dans la session l'id et l'avatar du combattant choisi
-            $session = $this->request->session();
-            $session->write('PlayerFighterId', $varFighterNumber);
-            $session->write('PlayerFighterSkin', $varFighterSkin);
+                //On écrit dans la session l'id et l'avatar du combattant choisi
+                $session = $this->request->session();
+                $session->write('PlayerFighterId', $varFighterNumber);
+                $session->write('PlayerFighterSkin', $varFighterSkin);
+            }
+            if ($this->request->data['type'] == 'upgrade') {
+                //pr($this->request->data);
+                $skilltoUpgrade=($this->request->data['skills']);
+                switch ($skilltoUpgrade){
+                    case 'skill_health': pr('health');
+                        break;
+                    case 'skill_strength': pr('strength'); break;
+                    case 'skill_sight': pr('sigth'); break;
+                }
+            }
+            
         }
 
         //On envoie les combattants à la vue

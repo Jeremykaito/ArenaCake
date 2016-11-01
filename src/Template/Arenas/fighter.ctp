@@ -83,6 +83,7 @@
 
     <!-- Select a personnage and level-->
                  <?= $this->Form->create() ?>
+                 <?= $this->Form->hidden('type', ['value' => 'choose']) ?>
                 <fieldset>
 
                     <legend><?= __('Combattant') ?></legend>
@@ -107,6 +108,7 @@
 
 
     <?= $this->Form->create() ?>
+    <?= $this->Form->hidden('type', ['value' => 'upgrade']) ?>
     <fieldset>
 
         <?php $options=array('skill_health'=>'Vie','skill_strength'=>'Force','skill_sight'=>'Vue');
@@ -143,7 +145,7 @@
         <td style="color:red;">+1</td>
       </tr>
     </table>
-    <?= $this->Form->button(__('Améliorer ce stat')) ?>
+    <?= $this->Form->button(__('Améliorer ce stat'),array('class' => 'button_gold')) ?>
     </fieldset>
     <?= $this->Form->end() ?>
 
