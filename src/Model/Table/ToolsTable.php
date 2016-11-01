@@ -63,21 +63,23 @@ class ToolsTable extends Table {
         /* On part du principe qu'un combattant ne peut avoir qu'un seul objet */
 
         //On récupère l'objet qui se trouve à la place du joueur
-        $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
+        if ($this->exist($j, $i)) {
+            $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
 
-        //Le combattant lâche son objet
-        $this->dropTool($fighter->id);
+            //Le combattant lâche son objet
+            $this->dropTool($fighter->id);
 
-        //On lui ajoute l'id du combattant
-        $tool->fighter_id = $fighter->id;
-        $tool->coordinate_x = NULL;
-        $tool->coordinate_y = NULL;
-        $this->save($tool);
+            //On lui ajoute l'id du combattant
+            $tool->fighter_id = $fighter->id;
+            $tool->coordinate_x = NULL;
+            $tool->coordinate_y = NULL;
+            $this->save($tool);
 
-        //Création d'un évènement
+            //Création d'un évènement
 
-        $eventsTables = TableRegistry::get('Events');
-        $eventsTables->createEvent($fighter->name . ' a ramassé un équipement.', $j, $i);
+            $eventsTables = TableRegistry::get('Events');
+            $eventsTables->createEvent($fighter->name . ' a ramassé un équipement.', $j, $i);
+        }
     }
 
     /* Fonctions utilitaires */

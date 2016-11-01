@@ -212,6 +212,12 @@ $(document).ready(function () {
       </td>
     </tr>
   </table>
+          
+        <?= $this->Form->create('pickup',array('class' => 'game_form')) ?>
+        <?= $this->Form->hidden('action', ['value' => 'pickup']) ?>
+        <?= $this->Form->button(__('ramasser'),array('class' => 'button_gold button_action')); ?>
+        <?= $this->Form->end() ?>
+          
 </section>
 <!-- Feuille de personnage -->
 <section>
