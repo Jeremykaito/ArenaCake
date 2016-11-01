@@ -200,6 +200,8 @@ class FightersTable extends Table {
     }
 
     public function touchedByAttack($defender, $attacker, $strength) {
+        
+        $toolsTable = TableRegistry::get('Tools');
 
         //on calcul la vie que va perdre le defender
         $degats = $strength - $toolsTable->getBonus($defender->id, 'L');
