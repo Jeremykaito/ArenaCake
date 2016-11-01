@@ -38,13 +38,14 @@ $(document).ready(function () {
     <table id="tab_stat" class="display">
       <thead>
         <tr>
-          <th></th>
-          <th></th>
+          <th>Skill</th>
+          <th>Valeur</th>
         </tr>
       </thead>
       <tr>
         <td>Vie</td>
-        <td><?= $fighter->current_health ."/".$fighter->skill_health ?></td>
+        
+        <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health ?>></meter></td>
       </tr>
       <tr>
         <td>Force</td>
