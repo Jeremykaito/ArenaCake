@@ -54,7 +54,7 @@ $('a.bx-next').click(function () {
     
     
     <?php
-    if(!empty($fighters)){?>
+    if(!empty($playerfighters)){?>
    <p>
         Sur cette page, vous pouvez visualiser vos combattants et les modifier.
         Vous pouvez aussi choisir un combattant, en créer un nouveau ou bien passer au niveau suivant.
@@ -73,7 +73,7 @@ $('a.bx-next').click(function () {
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($fighters as $fighter): ?>
+            <?php foreach ($playerfighters as $fighter): ?>
             <tr>
                 <td><?= h($fighter->name) ?></td>
                
@@ -89,6 +89,21 @@ $('a.bx-next').click(function () {
             <?php endforeach; ?>
         </tbody>
     </table>
+    
+    
+    <!-- Select a personnage and level-->
+                 <?= $this->Form->create() ?>
+                <fieldset>
+                    <legend><?= __('Seletion combattant') ?></legend>
+                    <?php
+                        pr($playerfighters);
+                        echo $this->Form->input('name',['label' => 'Personnage actif']);
+                        echo $this->Form->input('level',['label' => 'Niveau']);
+                    ?>
+                    <?= $this->Form->button(__('Jouer')) ?>
+                </fieldset>
+                <?= $this->Form->end() ?>
+    
     
     <?php    } else {    ?>
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>

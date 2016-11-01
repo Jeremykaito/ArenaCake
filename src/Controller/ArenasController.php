@@ -35,10 +35,11 @@ class ArenasController extends AppController {
 
         //On écrit dans la session l'avatar choisi
         $session = $this->request->session();
+        $session->write('PlayerFighterId', $varFighterNumber);
         $session->write('PlayerFighterSkin', "rogue");
 
         //On envoie les combattants à la vue
-        $this->set(compact('fighters'));
+        $this->set('playerfighters',$fighters);
     }
 
     public function sight() {
