@@ -122,7 +122,7 @@ class FightersTable extends Table {
                     //Monstre
                     case "W":
                         //Création d'un évènement
-                        $eventsTables->createEvent('Un monstre a dévoré ' . $fighter->name, $nextPos["x"], $nextPos["y"]);
+                        $eventsTables->createEvent('Un monstre a dévoré ' . $fighter->name, $nextPos["x"], $nextPos["y"] .'.');
 
                         //Le joueur est mort
                         $this->kill($fighter);
@@ -131,7 +131,7 @@ class FightersTable extends Table {
                     //Trou
                     case "T":
                         //Création d'un évènement
-                        $eventsTables->createEvent('Un trou a aspiré ' . $fighter->name, $nextPos["x"], $nextPos["y"]);
+                        $eventsTables->createEvent('Un trou a aspiré ' . $fighter->name, $nextPos["x"], $nextPos["y"].'.');
                         
                         //Le joueur est mort
                         $this->kill($fighter);

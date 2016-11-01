@@ -115,7 +115,7 @@ class ArenasController extends AppController {
                 $this->set(compact('tools', $tools));
             }
             else{
-                $this->Flash->error(__('Vous êtes mort Veuillez choisir un combattant.'));
+                $this->Flash->error(__('Vous êtes mort ! Veuillez choisir un combattant.'));
                 return $this->redirect(['action' => 'fighter']);
             }
         }
