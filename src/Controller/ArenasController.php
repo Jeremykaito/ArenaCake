@@ -43,13 +43,13 @@ class ArenasController extends AppController {
     }
 
     public function sight() {
-        
+
         //S'il n'a pas choisi de combattant, on le redirige sur la page champions
         if (!$this->request->session()->read('PlayerFighterId')) {
             $this->Flash->error(__('Veuillez choisir un combattant.'));
             return $this->redirect(['action' => 'fighter']);
-        } 
-        
+        }
+
         //S'il a choisi un combattant, il peut jouer
         else {
             // On récupère le combattant et son avatar depuis la session
@@ -169,14 +169,16 @@ class ArenasController extends AppController {
 
     public function fighterNew() {
 
+        //On charge le modèle fighter
+        $this->loadModel('Fighters');
+
+        //On crée un nouveau combattant
+        $fighter = $this->Fighters->newEntity();
+        
         //Si le formulaire est rempli
         if ($this->request->is('post')) {
 
-            //On charge le modèle fighter
-            $this->loadModel('Fighters');
 
-            //On crée un nouveau combattant
-            $fighter = $this->Fighters->newEntity();
 
             //On renseigne l'id avec celle du joueur connecté
             $fighter->player_id = $this->request->session()->read('PlayerLoggedIn')['id'];
@@ -186,7 +188,7 @@ class ArenasController extends AppController {
 
             //On sauvegarde le combattant
             if ($this->Fighters->save($fighter)) {
-                $this->Flash->success(__('Votre personnage a bien été crée.'));
+                $this->Flash->success(__('Votre personnage a bien été créé.'));
 
                 //On redirige vers la page combattants
                 return $this->redirect(['action' => 'fighter']);

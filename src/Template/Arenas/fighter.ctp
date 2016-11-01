@@ -14,7 +14,6 @@
 
 <div id="main-content">
     <!-- access session variables-->
-    <?php pr( $PlayerFighterId ) ?>
     <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
 
     <h3>Selectionnez votre personnage</h3>
