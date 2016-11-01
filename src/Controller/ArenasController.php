@@ -89,6 +89,11 @@ class ArenasController extends AppController {
                 if ($this->request->data['action'] == 'generateSurroundings') {
                     $this->Surroundings->generateSurroundings();
                 }
+                
+                //Ramasser objets
+                if ($this->request->data['action'] == 'pickup') {
+                    $this->Tools->takeTool($currentFighter->coordinate_x, $currentFighter->coordinate_y, $currentFighter);
+                }
             }
 
             /* Envoi des données à la vue */
