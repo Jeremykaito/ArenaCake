@@ -26,23 +26,23 @@ class ArenasController extends AppController {
         $this->loadModel('Fighters');
         $fighters = $this->Fighters->getFightersByPlayer($playerId)->toArray();
         $fighterslist = $this->Fighters->getFightersByPlayer($playerId)->find('list');
-        
+
         //Gère la recupération des infos depuis la vue
         if ($this->request->is('post')) {
 
             //On récupére l'avatar et le fighter utilisés
-           $varFighterNumber=$this->request->data['name'] ;
-           $varFighterSkin= $this->request->data['avatar'] ;
-           
+            $varFighterNumber = $this->request->data['name'];
+            $varFighterSkin = $this->request->data['avatar'];
+
             //On écrit dans la session l'id et l'avatar du combattant choisi
             $session = $this->request->session();
             $session->write('PlayerFighterId', $varFighterNumber);
             $session->write('PlayerFighterSkin', $varFighterSkin);
         }
-        
+
         //On envoie les combattants à la vue
-        $this->set('playerfighters',$fighters);
-        $this->set('fighterslist',$fighterslist);
+        $this->set('playerfighters', $fighters);
+        $this->set('fighterslist', $fighterslist);
     }
 
     public function sight() {
@@ -96,21 +96,28 @@ class ArenasController extends AppController {
                 }
             }
 
-            /* Envoi des données à la vue */
-            //On envoie le terrain de jeu
-            $viewtab = $this->Fighters->createViewTab($currentFighter);
-            $this->set("viewtab", $viewtab);
+            /* Envoi des données à la vue si le joueur n'est pas mort */
+            if ($this->Fighters->getFighterById($PlayerFighterId)) {
+                
+                //On envoie le terrain de jeu
+                $viewtab = $this->Fighters->createViewTab($currentFighter);
+                $this->set("viewtab", $viewtab);
 
-            //On envoie l'avatar du combattant
-            $this->set("PlayerFighterSkin", $PlayerFighterSkin);
+                //On envoie l'avatar du combattant
+                $this->set("PlayerFighterSkin", $PlayerFighterSkin);
 
-            //On envoie le combattant
-            $fighter = $this->Fighters->getFighterById($PlayerFighterId);
-            $this->set(compact('fighter', $fighter));
+                //On envoie le combattant
+                $fighter = $this->Fighters->getFighterById($PlayerFighterId);
+                $this->set(compact('fighter', $fighter));
 
-            //On envoie les objets du combattant
-            $tools = $this->Tools->getToolsByFighter($PlayerFighterId);
-            $this->set(compact('tools', $tools));
+                //On envoie les objets du combattant
+                $tools = $this->Tools->getToolsByFighter($PlayerFighterId);
+                $this->set(compact('tools', $tools));
+            }
+            else{
+                $this->Flash->error(__('Vous êtes mort Veuillez choisir un combattant.'));
+                return $this->redirect(['action' => 'fighter']);
+            }
         }
     }
 
@@ -182,7 +189,7 @@ class ArenasController extends AppController {
 
         //On crée un nouveau combattant
         $fighter = $this->Fighters->newEntity();
-        
+
         //Si le formulaire est rempli
         if ($this->request->is('post')) {
 
