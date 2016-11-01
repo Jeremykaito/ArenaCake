@@ -38,19 +38,13 @@ $(document).ready(function () {
         $('#tab_events').DataTable({
             "order": [[1, "desc"]],
             "language": {
-              emptyTable: "Aucun événement durant les dernières 24h, allez on se bouge!",
-              paginate: {
-                first:      "Début",
-                previous:   "Précédente",
-                next:       "Suivante",
-                last:       "Fin"
-              }
+              emptyTable: "Aucun événement récent, allez on se bouge!",
             }
         });
     });
 </script>
 
-<?php 
+<?php
 $bonusVue=0;
 $bonusVie=0;
 $bonusForce=0;
@@ -69,13 +63,15 @@ endforeach;
 ?>
 
 <!-- Interface fighter -->
+<div id="interface_gauche">
 <section class="cadre_gris" id="interface_fighter">
-    
-  <h3><?= $fighter->name ?><h3>
-    <p>Niveau : <?= $fighter->level ?></p>
-    <p>Expérience : <?= $fighter->xp ?></p>
-    
-    
+
+  <h3><?= $fighter->name ?></h3>
+    <ul>
+      <li>Niveau : <?= $fighter->level ?></li>
+      <li>Expérience : <?= $fighter->xp ?></li>
+    </ul>
+
     <!-- Tableau des compétences -->
     <table id="tab_stat" class="display">
       <thead>
@@ -116,7 +112,6 @@ endforeach;
     </table>
 </section>
 
-
 <!-- Matrice de jeu -->
 <table id="damier">
   <?php
@@ -139,11 +134,25 @@ endforeach;
   }
   ?>
 </table>
-
+<div class="cadre_gris" id="events">
+    <table id="tab_events" class="display">
+        <thead>
+            <tr>
+                <th>Evénements</th>
+            </tr>
+        </thead>
+        <?php foreach ($events as $event): ?>
+        <tr>
+           <td><?= $event->name ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </table>
+</div>
+</div>
 <!-- Interface de jeu -->
 <section id='interface_action' class="cadre_gris">
   <h3>Actions</h3>
-  
+
   <!-- Actions de déplacement -->
   <table class="tab_action">
     <tr>
@@ -259,29 +268,5 @@ endforeach;
         <?= $this->Form->hidden('action', ['value' => 'pickup']) ?>
         <?= $this->Form->button(__('ramasser'),array('class' => 'button_gold button_action')); ?>
         <?= $this->Form->end() ?>
-
-</section>
-
-<section class="cadre_gris" id="events">
-    <h3>Evènements<h3>
-    <?php if(!empty($events)){?>
-    <table id="tab_events" class="display">
-        <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <?php foreach ($events as $event): ?>
-        <tr>
-           <td><?= $event->name ?></td>
-        </tr>
-    <?php endforeach; ?>
-    </table>
-    <?php
-    }
-    else{?>
-    <p>Il n'y a aucun évènement à afficher !</p>
-    <?php }
-    ?>     
 
 </section>
