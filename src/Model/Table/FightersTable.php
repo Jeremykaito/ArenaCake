@@ -103,8 +103,9 @@ class FightersTable extends Table {
 
         //On calcule la case sur laquelle va atterrir le combattant
         $dirToCo = $this->dirToCo($dir);
-        $nextPos = array('x' => $fighter->coordinate_x += $dirToCo["x"], 'y' => $fighter->coordinate_y += $dirToCo["y"]);
-        //On vérifie si le déplacement est possible (dans l'arène et pas sur un autre joueur)
+        $nextPos = array('x' => $fighter->coordinate_x + $dirToCo["x"], 'y' => $fighter->coordinate_y + $dirToCo["y"]);
+        
+        //On vérifie si le déplacement est possible
         if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighter, $nextPos);
 
@@ -155,20 +156,20 @@ class FightersTable extends Table {
     }
 
     public function attack($dir, $currentfighter) {
-
+        
         //On charge les modèles
         $toolsTable = TableRegistry::get('Tools');
         $eventsTables = TableRegistry::get('Events');
 
         //On calcule la case à attaquer
         $dirToCo = $this->dirToCo($dir);
-        $attackSpot = array('x' => $currentfighter->coordinate_x += $dirToCo["x"], 'y' => $currentfighter->coordinate_y += $dirToCo["y"]);
-
+        $attackSpot = array('x' => $currentfighter->coordinate_x + $dirToCo["x"], 'y' => $currentfighter->coordinate_y + $dirToCo["y"]);
+        
         //On vérifie s'il y a un combattant sur cette case
         if ($this->fighterIsThere($attackSpot)) {
 
             //On récupère le combattant ennemi
-            $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['x']);
+            $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['y']);
 
             //On calcule la force de notre combattant
             $mystrength = $currentfighter->skill_strength + $toolsTable->getBonus($currentfighter->id, 'D');
@@ -194,16 +195,18 @@ class FightersTable extends Table {
     public function touchedByAttack($defender, $attacker, $strength) {
 
         //L'attaquant gagne de l'xp
-        $this->winXp($attacker, $defender->level);
+       
 
         //On retire la force de l'attaque à la vie de l'ennemi
         if ($defender->current_health > $strength) {
             $defender->current_health -= $strength;
             $this->save($defender);
+            $this->winXp($attacker, 1); //l'attaquant gagne 1 xp car le coup a reussit
         }
 
         //S'il n'as pas assez de vie, l'ennemi est mort
         else {
+            $this->winXp($attacker, $defender->level); //l'attaquant gagne autant d'xp que le level du defender
             $this->kill($defender);
         }
     }
