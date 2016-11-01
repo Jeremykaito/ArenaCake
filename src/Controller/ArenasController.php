@@ -25,31 +25,21 @@ class ArenasController extends AppController {
         //On récupère tous les combattants du joueur
         $this->loadModel('Fighters');
         $fighters = $this->Fighters->getFightersByPlayer($playerId)->toArray();
-
-        //On récupère l'id du combattant actuel
-        $PlayerId = $this->request->session()->read('PlayerLoggedIn')['id'];
-
-        //On écrit en session le combattant sélectionné
-        $varFighterNumber = $this->Fighters->getSelectedFighter();
-        $this->set("PlayerFighterId", $varFighterNumber);
-        
-        //gère la recupération des infos depuis la vue
-        if ($this->request->is('post')) {
-            //recupére l'avatar et le fighter a utilisé
-            //$this->request->data['name'] ;
-            //$this->request->data['niveau'] ;
-           //$varFighterSkin= $this->request->data['avatar'] ;
- 
-        }
-        $varFighterSkin ="xena";
-        //On écrit dans la session l'avatar choisi
-        $session = $this->request->session();
-        $session->write('PlayerFighterId', $varFighterNumber);
-        $session->write('PlayerFighterSkin', $varFighterSkin);
-        
-        
-        //liste des fighters du player
         $fighterslist = $this->Fighters->getFightersByPlayer($playerId)->find('list');
+        
+        //Gère la recupération des infos depuis la vue
+        if ($this->request->is('post')) {
+
+            //On récupére l'avatar et le fighter utilisés
+           $varFighterNumber=$this->request->data['name'] ;
+           $varFighterSkin= $this->request->data['avatar'] ;
+           
+            //On écrit dans la session l'id et l'avatar du combattant choisi
+            $session = $this->request->session();
+            $session->write('PlayerFighterId', $varFighterNumber);
+            $session->write('PlayerFighterSkin', $varFighterSkin);
+        }
+        
         //On envoie les combattants à la vue
         $this->set('playerfighters',$fighters);
         $this->set('fighterslist',$fighterslist);

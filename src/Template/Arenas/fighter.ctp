@@ -68,7 +68,9 @@
                     
                     <legend><?= __('Combattant') ?></legend>
                     
-                    <h4> Selection avatar:</h4>
+                    <h4> Sélection du combattant:</h4>
+                    <?php
+                        echo $this->Form->input('name',['label'=>'Nom' ,'options' => $fighterslist]); ?>
                     <div id="fighterslider">
                         <ul class="oSlider">
                             <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
@@ -77,15 +79,7 @@
                             <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
                         </ul>
                     </div> 
-                    
-                    <h4> Selection paramètres:</h4>
-                    <?php
-                        //pr($playerfighters);
-                        echo $this->Form->input('name',['label'=>'Pseudo' ,'options' => $fighterslist]);
-                        echo $this->Form->input('level',['label' => 'Niveau']);
-                        echo $this->Form->input('avatar',['label' => 'Avatar', 'disabled' => 'disabled']);
-                        //echo $this->Form->hidden('avatar');
-                    ?>
+                       <?php echo $this->Form->input('avatar',['label' => 'Avatar']); ?> 
                     <?= $this->Form->button(__('Jouer')) ?>
                 </fieldset>
                 <?= $this->Form->end() ?>
