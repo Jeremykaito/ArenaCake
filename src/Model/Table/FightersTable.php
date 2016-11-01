@@ -427,4 +427,24 @@ class FightersTable extends Table {
         }
         return $viewtab;
     }
+    
+    public function updateSkillSight($fighter, $amount) {
+        $fighter->skill_sight += $amount;
+        $fighter->level += 1;
+        $this->save($fighter);
+    }
+    
+    public function updateSkillStrength($fighter, $amount) {
+        $fighter->skill_sight += $amount;
+        $fighter->level += 1;
+        $this->save($fighter);
+    }
+    
+    public function updateSkillHealth($fighter, $amount) {
+        $fighter->skill_sight += $amount;
+        $fighter->level += 1; 
+        $this->save($fighter);
+    }
+    
+    
 }
