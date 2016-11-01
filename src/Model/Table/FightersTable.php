@@ -357,7 +357,7 @@ class FightersTable extends Table {
                                         $viewtab[$x][$y] = "jumelle";
                                         break;
                                     case "D":
-                                        $viewtab[$x][$y] = "epee";
+                                        $viewtab[$x][$y] = "epe";
                                         break;
                                     case "L":
                                         $viewtab[$x][$y] = "armure";

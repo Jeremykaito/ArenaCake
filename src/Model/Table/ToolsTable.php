@@ -122,13 +122,13 @@ class ToolsTable extends Table {
                     $r = rand(0, 90);
                     switch ($r) {
                         case 12:
-                            $this->addTool($j, $i, 'V', 1); //vue  lunettes
+                            $this->addTool($j, $i, 'V', rand(1, 3)); //vue  lunettes
                             break;
                         case 15:
-                            $this->addTool($j, $i, 'D', 1); //force  epee
+                            $this->addTool($j, $i, 'D', rand(1, 3)); //force  epee
                             break;
                         case 18:
-                            $this->addTool($j, $i, 'L', 1); //vie   armure
+                            $this->addTool($j, $i, 'L', rand(1, 3)); //vie   armure
                             break;
                     }
                 }
