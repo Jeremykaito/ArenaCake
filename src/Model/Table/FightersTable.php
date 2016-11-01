@@ -10,8 +10,8 @@ class FightersTable extends Table {
 
     public function beforeSave($event, $entity) {
         if ($entity->isNew()) {
-            $entity->coordinate_x = 5;
-            $entity->coordinate_y = 5;
+            $entity->coordinate_x = rand(0,14);
+            $entity->coordinate_y = rand(0,9);
             $entity->skill_sight = 2;
             $entity->skill_strength = 1;
             $entity->skill_health = 5;
