@@ -27,10 +27,10 @@
 
 
 <div id="main-content">
-    <!-- access session variables -->
+    <!-- access session variables 
     <?php pr( $this->request->session()->read('PlayerFighterSkin'));?>
     <?php pr( $this->request->session()->read('PlayerFighterId'));?>
-    	
+    	-->
     
 
     <div class="fighters index large-9 medium-8 columns content">
