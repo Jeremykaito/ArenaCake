@@ -176,7 +176,11 @@ endforeach;
         <?= $this->Form->button(__('Gauche'),array('class' => 'button_gold button_action')); ?>
         <?= $this->Form->end() ?>
       </td>
-      <td>Bouger</td>
+      <td>
+              <?= $this->Form->create('pickup',array('class' => 'game_form')) ?>
+              <?= $this->Form->hidden('action', ['value' => 'pickup']) ?>
+              <?= $this->Form->button(__('Prendre'),array('class' => 'button_gold button_action')); ?>
+              <?= $this->Form->end() ?></td>
       <td>
         <?= $this->Form->create('Move_Right',array('class' => 'game_form')) ?>
         <?= $this->Form->hidden('action', ['value' => 'move']) ?>
@@ -223,7 +227,7 @@ endforeach;
         <?= $this->Form->button(__('Gauche'),array('class' => 'button_red button_action')); ?>
         <?= $this->Form->end() ?>
       </td>
-      <td>Attaquer</td>
+      <td>Attaque</td>
       <td>
         <?= $this->Form->create('Attack_Right',array('class' => 'game_form')) ?>
         <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
@@ -263,10 +267,5 @@ endforeach;
       </td>
     </tr>
   </table>
-
-        <?= $this->Form->create('pickup',array('class' => 'game_form')) ?>
-        <?= $this->Form->hidden('action', ['value' => 'pickup']) ?>
-        <?= $this->Form->button(__('ramasser'),array('class' => 'button_gold button_action')); ?>
-        <?= $this->Form->end() ?>
 
 </section>
