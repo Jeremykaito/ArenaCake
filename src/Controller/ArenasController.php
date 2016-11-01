@@ -202,8 +202,9 @@ class ArenasController extends AppController {
 
     public function fighterNew() {
 
-        //On charge le modèle fighter
+        //On charge les modèles
         $this->loadModel('Fighters');
+        $this->loadModel('Events');
 
         //On crée un nouveau combattant
         $fighter = $this->Fighters->newEntity();
@@ -219,8 +220,12 @@ class ArenasController extends AppController {
 
             //On sauvegarde le combattant
             if ($this->Fighters->save($fighter)) {
+                
                 $this->Flash->success(__('Votre personnage a bien été créé.'));
-
+                
+                //On créé un évènement
+                $this->Events->createEvent($fighter->name ." fait son entrée dans l'Arène.", $fighter->coordinate_x, $fighter->coordinate_y);
+                
                 //On redirige vers la page combattants
                 return $this->redirect(['action' => 'fighter']);
             } else {
