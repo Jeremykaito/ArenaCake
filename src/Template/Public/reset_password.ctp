@@ -8,7 +8,7 @@
 			<fieldset>
 				<legend><?= __('Entrer votre adresse mail') ?></legend>
 				<?= $this->Form->input('email',['label' => 'E-mail']) ?>
-        <?= $this->Form->button(__('Réinitialiser')); ?>
+        <?= $this->Form->button(__('Réinitialiser'), array('class'=>'button_gold')); ?>
 			</fieldset>
 			<?= $this->Form->end() ?>
 		</section>
