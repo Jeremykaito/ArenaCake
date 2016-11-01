@@ -435,13 +435,13 @@ class FightersTable extends Table {
     }
     
     public function updateSkillStrength($fighter, $amount) {
-        $fighter->skill_sight += $amount;
+        $fighter->skill_strength += $amount;
         $fighter->level += 1;
         $this->save($fighter);
     }
     
     public function updateSkillHealth($fighter, $amount) {
-        $fighter->skill_sight += $amount;
+        $fighter->skill_health += $amount;
         $fighter->level += 1; 
         $this->save($fighter);
     }

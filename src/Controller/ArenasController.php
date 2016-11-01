@@ -40,14 +40,18 @@ class ArenasController extends AppController {
                 $session->write('PlayerFighterSkin', $varFighterSkin);
             }
             if ($this->request->data['type'] == 'upgrade') {
-                //pr($this->request->data);
+
                 $fightertoUp = $this->Fighters->getFighterById($this->request->session()->read('PlayerFighterId'));
                 $skilltoUpgrade=($this->request->data['skills']);
-                
-                switch ($skilltoUpgrade){
-                    case 'skill_health': $this->Fighters->updateSkillHealth($fightertoUp,3); break;
-                    case 'skill_strength': $this->Fighters->updateSkillStrength($fightertoUp,1) ; break;
-                    case 'skill_sight': $this->Fighters->updateSkillSight($fightertoUp,1); break;
+                if(!empty($fightertoUp)){
+                    switch ($skilltoUpgrade){
+                        case 'skill_health': $this->Fighters->updateSkillHealth($fightertoUp,3); break;
+                        case 'skill_strength': $this->Fighters->updateSkillStrength($fightertoUp,1) ; break;
+                        case 'skill_sight': $this->Fighters->updateSkillSight($fightertoUp,1); break;
+                    }
+                $this->Flash->success(__('Amélioration effectué!'));
+                }else{
+                    $this->Flash->error(__('Veuillez choisir un combattant'));
                 }
             }
             

@@ -68,8 +68,9 @@
                     <?= $this->Form->postLink(__('Supprimer'), ['action' => 'fighterDelete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
                     <?php
                     $leveltheory = $fighter->xp/4;
-                    if( $leveltheory > $fighter->level){
-                        echo $this->Html->link(__('Passer de niveau'), ['action' => 'fighterEdit', $fighter->id]);
+                    if( $leveltheory > $fighter->level){ 
+                        //echo $this->Html->link(__('Passer de niveau'), ['action' => 'fighterEdit', $fighter->id]);
+                        echo $this->Form->button(__('Passer de niveau'), ['class' => 'linklevelup','value'=>$fighter->id]);
                     }?>
 
                 </td>
@@ -109,43 +110,44 @@
 
     <?= $this->Form->create() ?>
     <?= $this->Form->hidden('type', ['value' => 'upgrade']) ?>
-    <fieldset>
-
+    
+    
+    
+    <fieldset id="levelingUp" style="display: none;">
+        <!-- Tableau des compétences -->
+        <table id="tab_stat" class="display">
+          <thead>
+            <tr>
+              <th>Skill</th>
+              <th>Bonus<th>
+              <th></th>
+            </tr>
+          </thead>
+          <tr>
+            <td>Vie</td>
+            <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health+3 ?></meter>+3</td>
+            <td style="color:red;">+3</td>
+          </tr>
+          <tr>
+            <td>Force</td>
+             <td><meter value= <?= $fighter->skill_strength ?> min="0" max=<?= $fighter->skill_strength+1 ?> </meter></td>
+             <td style="color:red;">+1</td>
+          </tr>
+          <tr>
+            <td>Vue</td>
+            <td><meter value= <?= $fighter->skill_sight ?> min="0" max=<?= $fighter->skill_sight+1 ?> </meter></td>
+            <td style="color:red;">+1</td>
+          </tr>
+        </table>
+        
+        <div id="radioskils">
         <?php $options=array('skill_health'=>'Vie','skill_strength'=>'Force','skill_sight'=>'Vue');
             $attributes=array('legend'=>false);
             echo $this->Form->radio('skills',$options,$attributes);
         ?>
-
-
-        <!-- Tableau des compétences -->
-    <table id="tab_stat" class="display">
-      <thead>
-        <tr>
-          <th>Skill</th>
-          <th>Valeur<th>
-          <th></th>
-        </tr>
-      </thead>
-      <tr>
-        <td>Vie</td>
-        <td><?= $fighter->skill_health ?></td>
-        <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health+3 ?></meter>+3</td>
-        <td style="color:red;">+3</td>
-      </tr>
-      <tr>
-        <td>Force</td>
-        <td><?= $fighter->skill_strength ?></td>
-         <td><meter value= <?= $fighter->skill_strength ?> min="0" max=<?= $fighter->skill_strength+1 ?> </meter></td>
-         <td style="color:red;">+1</td>
-      </tr>
-      <tr>
-        <td>Vue</td>
-         <td><?= $fighter->skill_sight ?></td>
-        <td><meter value= <?= $fighter->skill_sight ?> min="0" max=<?= $fighter->skill_sight+1 ?> </meter></td>
-        <td style="color:red;">+1</td>
-      </tr>
-    </table>
-    <?= $this->Form->button(__('Améliorer ce stat'),array('class' => 'button_gold')) ?>
+        </div>
+        
+        <?= $this->Form->button(__('Améliorer le stat'),['class' => 'button_gold','id'=>'levelupexe']) ?>
     </fieldset>
     <?= $this->Form->end() ?>
 
@@ -193,7 +195,13 @@
                 return avatar;
             }
 
-
+            /** show and hide amelioration form**/
+            
+            $('.linklevelup').click(function () {
+                $('#levelingUp').show();
+            });
+            
+            
 	</script>
 
     <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
