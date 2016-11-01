@@ -1,18 +1,17 @@
-<?=$this->Html->css('Datatables.jquery.dataTables.min');?>
+<?= $this->Html->css('Datatables.jquery.dataTables.min');?>
 <?= $this->Html->script('jquery.min.js');?>
 <?= $this->Html->script('Datatables.jquery.dataTables.min');?>
 <?= $this->Html->script('Datatables.shCore'); ?>
-<?php
 
+    <?php
+    echo $this->Html->script('BxSlider.jquery.bxslider.min');
+    echo $this->Html->css('BxSlider.jquery.bxslider');
 
-	echo $this->Html->script('BxSlider.jquery.bxslider.min');
-	echo $this->Html->css('BxSlider.jquery.bxslider');
+    echo $this->Html->css('Arenas/index.css');
+    echo $this->Html->css('champions/fighters.css');
 
-	echo $this->Html->css('Arenas/index.css');
-        echo $this->Html->css('champions/fighters.css');
-
-	$this->assign('title', 'WebArena - Champions');
-	$this->assign('header_title', 'Champions');?>
+    $this->assign('title', 'WebArena - Champions');
+    $this->assign('header_title', 'Champions');?>
 
 	<script>
 		$(document).ready(function () {
@@ -24,13 +23,13 @@
 			{ targets: [4], sortable: false}]
 		  });
 		});
-		</script>
+        </script>
 
 
 <div id="main-content">
     <!-- access session variables -->
-    <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
-    <?php pr( $this->request->session()->read('PlayerFighterId'))?>
+    <?php pr( $this->request->session()->read('PlayerFighterSkin'));?>
+    <?php pr( $this->request->session()->read('PlayerFighterId'));?>
     	
     
 
@@ -76,8 +75,7 @@
         </tbody>
     </table>
 
-     <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
-    <br>
+    
     <!-- Select a personnage and level-->
                  <?= $this->Form->create() ?>
                 <fieldset>
@@ -85,24 +83,21 @@
                     <legend><?= __('Combattant') ?></legend>
 
                     <h4> Sélection du combattant:</h4>
-                    <?php
-                        echo $this->Form->input('name',['label'=>'Nom' ,'options' => $fighterslist]); ?>
+                    <?php  echo $this->Form->input('name',['label'=>'Nom' ,'options' => $fighterslist]); ?>
+                        <div id="fighterslider">
+                            <ul class="oSlider">
+                                <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
+                                <li><?php  echo $this->Html->image("miniatures/xena.png", ["alt" => "xena"]);?></li>
+                                <li><?php  echo $this->Html->image("miniatures/sorcier.png", ["alt" => "sorcier"]);?></li>
+                                <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
+                            </ul>
+                        </div> 
+                    <?php  echo $this->Form->input('avatar',['disabled' => 'disabled']); ?> 
+
                     
                     
-                    <label for="avatar">Avatar</label>
-                    <div id="fighterslider">
-                        <ul class="oSlider">
-                            <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
-                            <li><?php  echo $this->Html->image("miniatures/xena.png", ["alt" => "xena"]);?></li>
-                            <li><?php  echo $this->Html->image("miniatures/sorcier.png", ["alt" => "sorcier"]);?></li>
-                            <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
-                        </ul>
-
-                    </div> 
-                       <?php echo $this->Form->hidden('avatar'); ?> 
-
-                    <?= $this->Form->button(__('Jouer')) ?>
                 </fieldset>
+                <?= $this->Form->button(__('Jouer')) ?>
                 <?= $this->Form->end() ?>
 
 
@@ -150,4 +145,7 @@
 
 	</script>
 
+    <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
+    <br>   
+        
 </div>
