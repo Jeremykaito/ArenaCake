@@ -27,11 +27,11 @@
 
 
 <div id="main-content">
-    <!-- access session variables 
+    <!-- access session variables
     <?php pr( $this->request->session()->read('PlayerFighterSkin'));?>
     <?php pr( $this->request->session()->read('PlayerFighterId'));?>
     	-->
-    
+
 
     <div class="fighters index large-9 medium-8 columns content">
 
@@ -66,21 +66,21 @@
                 <td class="actions">
                     <?= $this->Html->link(__('Modifier'), ['action' => 'fighterEdit', $fighter->id]) ?>
                     <?= $this->Form->postLink(__('Supprimer'), ['action' => 'fighterDelete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
-                    <?php 
+                    <?php
                     $leveltheory = $fighter->xp/4;
                     if( $leveltheory > $fighter->level){
                         echo $this->Html->link(__('Passer de niveau'), ['action' => 'fighterEdit', $fighter->id]);
                     }?>
-                
+
                 </td>
             </tr>
-            
-           
+
+
             <?php endforeach; ?>
         </tbody>
     </table>
 
-    
+
     <!-- Select a personnage and level-->
                  <?= $this->Form->create() ?>
                 <fieldset>
@@ -96,25 +96,25 @@
                                 <li><?php  echo $this->Html->image("miniatures/Sorcier.png", ["alt" => "Sorcier"]);?></li>
                                 <li><?php  echo $this->Html->image("miniatures/Elfe.png", ["alt" => "Elfe"]);?></li>
                             </ul>
-                        </div> 
-                    <?php  echo $this->Form->input('avatar',['type' => 'hidden']); ?> 
+                        </div>
+                    <?php  echo $this->Form->input('avatar',['type' => 'hidden']); ?>
 
-                    
-                    
+
+
                 </fieldset>
-                <?= $this->Form->button(__('Choisir')) ?>
+                <?= $this->Form->button(__('Choisir'),array('class' => 'button_gold')) ?>
                 <?= $this->Form->end() ?>
 
-    
+
     <?= $this->Form->create() ?>
     <fieldset>
-        
+
         <?php $options=array('skill_health'=>'Vie','skill_strength'=>'Force','skill_sight'=>'Vue');
             $attributes=array('legend'=>false);
-            echo $this->Form->radio('skills',$options,$attributes); 
+            echo $this->Form->radio('skills',$options,$attributes);
         ?>
-        
-        
+
+
         <!-- Tableau des compétences -->
     <table id="tab_stat" class="display">
       <thead>
@@ -143,13 +143,13 @@
         <td style="color:red;">+1</td>
       </tr>
     </table>
-    <?= $this->Form->button(__('Améliorer ce stat')) ?>    
+    <?= $this->Form->button(__('Améliorer ce stat')) ?>
     </fieldset>
     <?= $this->Form->end() ?>
-    
-    
-    
-    
+
+
+
+
     <?php    } else {    ?>
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
     <?php }    ?>
@@ -195,6 +195,6 @@
 	</script>
 
     <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
-    <br>   
-        
+    <br>
+
 </div>

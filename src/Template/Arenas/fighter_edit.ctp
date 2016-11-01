@@ -1,14 +1,14 @@
 
-<?php 
+<?php
 	echo $this->Html->script('jquery.min.js');
 	echo $this->Html->script('BxSlider.jquery.bxslider.min');
 	echo $this->Html->css('BxSlider.jquery.bxslider');
 	echo $this->Html->css('Arenas/index.css');
         echo $this->Html->css('champions/fighters.css');
-        
-	$this->assign('title', 'WebArena - Modifier un combattant');	
+
+	$this->assign('title', 'WebArena - Modifier un combattant');
 	$this->assign('header_title', 'Champions');?>
-	
+
 	<!--Script pour afficher le slider-->
 	<script>
 		$(document).ready(function(){
@@ -20,13 +20,13 @@
 		});
 		});
 	</script>
-        
-        
+
+
 <section >
 <div id="main-content">
 
- 
-            <section>             
+
+            <section>
                 <?= $this->Form->create($fighter) ?>
                 <fieldset>
                     <legend><?= __('Edit Fighter') ?></legend>
@@ -34,14 +34,14 @@
                         echo $this->Form->input('name',['label' => 'Nom']);
                     ?>
                 </fieldset>
-                <?= $this->Form->button(__('Modifier')) ?>
+                <?= $this->Form->button(__('Modifier'),array('class' => 'button_gold')) ?>
                 <?= $this->Form->end() ?>
 
-                
+
             </section>
-    
-    
+
+
 </div>
 
-   
+
 </section>
