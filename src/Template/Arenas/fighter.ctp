@@ -4,6 +4,7 @@
 <?= $this->Html->script('Datatables.shCore'); ?>
 <?php
 
+
 	echo $this->Html->script('BxSlider.jquery.bxslider.min');
 	echo $this->Html->css('BxSlider.jquery.bxslider');
 
@@ -145,6 +146,7 @@
                 }
                 return avatar;
             }
+
 
 	</script>
 

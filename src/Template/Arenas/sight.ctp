@@ -25,7 +25,10 @@ $(document).ready(function () {
   $('#tab_obj').DataTable({
     "paging":   false,
     "info":     false,
-    "filter":   false
+    "filter":   false,
+    "language": {
+      emptyTable:     "Pas d'objet, pas de bonus. Dommage...",
+    }
   });
 });
 </script>
@@ -45,7 +48,7 @@ $(document).ready(function () {
       </thead>
       <tr>
         <td>Vie</td>
-        
+
         <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health ?>></meter></td>
       </tr>
       <tr>
@@ -88,7 +91,7 @@ $(document).ready(function () {
         else{
            echo "<td>";
         }
-      
+
       if (!empty($viewtab[$x][$y])) {
         echo $this->Html->image('sprites/' . $viewtab[$x][$y] . '.png', ['alt' => $viewtab[$x][$y]]);
       }
@@ -148,7 +151,7 @@ $(document).ready(function () {
       </td>
     </tr>
   </table>
-  
+
   <!-- Actions d'attaque -->
   <table class="tab_action">
     <tr>
@@ -195,7 +198,7 @@ $(document).ready(function () {
       </td>
     </tr>
   </table>
-  
+
   <!-- Actions d'ajout d'objets -->
   <h5>Génération<h5>
     <table class="tab_action">
@@ -212,12 +215,12 @@ $(document).ready(function () {
       </td>
     </tr>
   </table>
-          
+
         <?= $this->Form->create('pickup',array('class' => 'game_form')) ?>
         <?= $this->Form->hidden('action', ['value' => 'pickup']) ?>
         <?= $this->Form->button(__('ramasser'),array('class' => 'button_gold button_action')); ?>
         <?= $this->Form->end() ?>
-          
+
 </section>
 <!-- Feuille de personnage -->
 <section>

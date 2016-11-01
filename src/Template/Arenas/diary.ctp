@@ -8,7 +8,16 @@
 <script>
     $(document).ready(function () {
         $('#diary').DataTable({
-            "order": [[1, "desc"]]
+            "order": [[1, "desc"]],
+            "language": {
+              emptyTable:     "Aucun événement durant les dernières 24h, allez on se bouge!",
+              paginate: {
+                first:      "Début",
+                previous:   "Précédente",
+                next:       "Suivante",
+                last:       "Fin"
+              }
+            }
         });
     });
 </script>
