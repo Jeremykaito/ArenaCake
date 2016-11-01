@@ -66,8 +66,16 @@
                 <td class="actions">
                     <?= $this->Html->link(__('Modifier'), ['action' => 'fighterEdit', $fighter->id]) ?>
                     <?= $this->Form->postLink(__('Supprimer'), ['action' => 'fighterDelete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
+                    <?php 
+                    $leveltheory = $fighter->xp/4;
+                    if( $leveltheory > $fighter->level){
+                        echo $this->Html->link(__('Passer de niveau'), ['action' => 'fighterEdit', $fighter->id]);
+                    }?>
+                
                 </td>
             </tr>
+            
+           
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -97,7 +105,51 @@
                 <?= $this->Form->button(__('Choisir')) ?>
                 <?= $this->Form->end() ?>
 
-
+    
+    <?= $this->Form->create() ?>
+    <fieldset>
+        
+        <?php $options=array('skill_health'=>'Vie','skill_strength'=>'Force','skill_sight'=>'Vue');
+            $attributes=array('legend'=>false);
+            echo $this->Form->radio('skills',$options,$attributes); 
+        ?>
+        
+        
+        <!-- Tableau des compétences -->
+    <table id="tab_stat" class="display">
+      <thead>
+        <tr>
+          <th>Skill</th>
+          <th>Valeur<th>
+          <th></th>
+        </tr>
+      </thead>
+      <tr>
+        <td>Vie</td>
+        <td><?= $fighter->skill_health ?></td>
+        <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health+3 ?></meter>+3</td>
+        <td style="color:red;">+3</td>
+      </tr>
+      <tr>
+        <td>Force</td>
+        <td><?= $fighter->skill_strength ?></td>
+         <td><meter value= <?= $fighter->skill_strength ?> min="0" max=<?= $fighter->skill_strength+1 ?> </meter></td>
+         <td style="color:red;">+1</td>
+      </tr>
+      <tr>
+        <td>Vue</td>
+         <td><?= $fighter->skill_sight ?></td>
+        <td><meter value= <?= $fighter->skill_sight ?> min="0" max=<?= $fighter->skill_sight+1 ?> </meter></td>
+        <td style="color:red;">+1</td>
+      </tr>
+    </table>
+    <?= $this->Form->button(__('Améliorer ce stat')) ?>    
+    </fieldset>
+    <?= $this->Form->end() ?>
+    
+    
+    
+    
     <?php    } else {    ?>
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
     <?php }    ?>
