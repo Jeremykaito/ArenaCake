@@ -29,7 +29,7 @@ class ArenasController extends AppController {
 
         //Gère la recupération des infos depuis la vue
         if ($this->request->is('post')) {
-            pr($this->request->data);
+           // pr($this->request->data);
             //On récupére l'avatar et le fighter utilisés
             $varFighterNumber = $this->request->data['name'];
             $varFighterSkin = $this->request->data['avatar'];
