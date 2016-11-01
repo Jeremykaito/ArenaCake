@@ -346,7 +346,7 @@ class FightersTable extends Table {
         return false;
     }
 
-    public function createViewTab($currentfighter) {
+    public function createViewTab($currentfighter, $fighterSkin) {
 
         //On charge les différents modèles
         $toolsTable = TableRegistry::get('Tools');
@@ -370,7 +370,7 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($fighterlist as $fighter) {
                             if ($fighter->coordinate_x == $x && $fighter->coordinate_y == $y) {
-                                $viewtab[$x][$y] = "rogue"; // ici on devrait mettre le nom du skin du fighter en question------------------------------
+                                $viewtab[$x][$y] = $fighterSkin; 
                                 $unused = false;
                             }
                         }

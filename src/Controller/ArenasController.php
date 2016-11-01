@@ -29,8 +29,8 @@ class ArenasController extends AppController {
 
         //Gère la recupération des infos depuis la vue
         if ($this->request->is('post')) {
-           // pr($this->request->data);
-            //On récupére l'avatar et le fighter utilisés
+
+            //On récupère l'avatar et le fighter utilisés
             $varFighterNumber = $this->request->data['name'];
             $varFighterSkin = $this->request->data['avatar'];
 
@@ -101,7 +101,7 @@ class ArenasController extends AppController {
             if ($this->Fighters->getFighterById($PlayerFighterId)) {
                 
                 //On envoie le terrain de jeu
-                $viewtab = $this->Fighters->createViewTab($currentFighter);
+                $viewtab = $this->Fighters->createViewTab($currentFighter,$PlayerFighterSkin);
                 $this->set("viewtab", $viewtab);
 
                 //On envoie l'avatar du combattant
