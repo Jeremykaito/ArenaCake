@@ -33,11 +33,32 @@ $(document).ready(function () {
 });
 </script>
 
+<?php 
+$bonusVue=0;
+$bonusVie=0;
+$bonusForce=0;
+
+foreach ($tools as $tool):
+    if($tool->type=='L'){
+        $bonusVie= $bonusVie + $tool->bonus;
+    }
+    else if ($tool->type=='D'){
+         $bonusForce= $bonusForce + $tool->bonus;
+    }
+    else if ($tool->type=='V'){
+        $bonusVue= $bonusVue + $tool->bonus;
+    }
+endforeach;
+?>
+
 <!-- Interface fighter -->
 <section class="cadre_gris" id="interface_fighter">
+    
   <h3><?= $fighter->name ?><h3>
     <p>Niveau : <?= $fighter->level ?></p>
     <p>Expérience : <?= $fighter->xp ?></p>
+    
+    
     <!-- Tableau des compétences -->
     <table id="tab_stat" class="display">
       <thead>
@@ -49,15 +70,15 @@ $(document).ready(function () {
       <tr>
         <td>Vie</td>
 
-        <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health ?>></meter></td>
+        <td><meter value= <?= $fighter->current_health + $bonusVie ?> min="0" max=<?= $fighter->skill_health + $bonusVie ?>></meter></td>
       </tr>
       <tr>
         <td>Force</td>
-        <td><?= $fighter->skill_strength ?></td>
+        <td><?= $fighter->skill_strength + $bonusForce ?></td>
       </tr>
       <tr>
         <td>Vue</td>
-        <td><?= $fighter->skill_sight ?></td>
+        <td><?= $fighter->skill_sight + $bonusVue ?></td>
       </tr>
     </table>
 
