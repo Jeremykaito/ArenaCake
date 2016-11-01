@@ -50,7 +50,8 @@ class ArenasController extends AppController {
                         case 'skill_strength': $this->Fighters->updateSkillStrength($fightertoUp,1) ; break;
                         case 'skill_sight': $this->Fighters->updateSkillSight($fightertoUp,1); break;
                     }
-                $this->Flash->success(__('Amélioration effectué!'));
+                    $this->Flash->success(__('Amélioration effectué!'));
+                    return $this->redirect(['action' => 'fighter']);
                 }else{
                     $this->Flash->error(__('Veuillez choisir un combattant'));
                 }
