@@ -1,27 +1,27 @@
 <?php
+
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 
 class ToolsTable extends Table {
+    /* Fonctions pour trouver des objets */
 
-    /*Fonctions pour trouver des objets*/
-    
     public function getTools() {
         $yo = $this->find('all')->toArray();
         return $yo;
     }
-    
+
     public function getToolsByFighter($fighterId) {
         $tools = $this
-        ->find()
-        ->where(['fighter_id' => $fighterId]);
+                ->find()
+                ->where(['fighter_id' => $fighterId]);
 
         return $tools;
     }
-    
-    /*Fonctions pour gérer les objets*/
+
+    /* Fonctions pour gérer les objets */
 
     public function addTool($x, $y, $type, $bonus) {
 
@@ -34,7 +34,7 @@ class ToolsTable extends Table {
 
         $this->save($tool);
     }
-    
+
     public function dropTool($fighterid) {
 
         //On récupère le combattant concerné
@@ -44,7 +44,6 @@ class ToolsTable extends Table {
         //On récupère l'objet que le combattant détient
         $tool = $this->find()->where(['fighter_id' => $fighterid])->first();
         if (!empty($tool)) {//si le fighter a un équipement
-        
             //On "dépose" l'objet à la place du combattant
             $tool->coordinate_x = $fighter->coordinate_x;
             $tool->coordinate_y = $fighter->coordinate_y;
@@ -52,7 +51,7 @@ class ToolsTable extends Table {
 
             //On sauvegarde l'objet
             $this->save($tool);
-            
+
             //Création d'un évènement
             $eventsTables = TableRegistry::get('Events');
             $eventsTables->createEvent($fighter->name . ' a laché un équipement.', $fighter->coordinate_x, $fighter->coordinate_y);
@@ -60,31 +59,28 @@ class ToolsTable extends Table {
     }
 
     public function takeTool($j, $i, $fighterid) {
-        
-         /* On part du principe qu'un combattant ne peut avoir qu'un seul objet */
-        
+
+        /* On part du principe qu'un combattant ne peut avoir qu'un seul objet */
+
         //On récupère l'objet qui se trouve à la place du joueur
         $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
-        
+
         //Le combattant lâche son objet
         $this->dropTool($fighterid);
-        
+
         //On lui ajoute l'id du combattant
-        $tool->fighter_id = $fighterid;
+        $tool->fighter_id = $fighter->id;
         $tool->coordinate_x = NULL;
         $tool->coordinate_y = NULL;
         $this->save($tool);
-        
+
         //Création d'un évènement
-        $fightersTables = TableRegistry::get('Fighters');
+
         $eventsTables = TableRegistry::get('Events');
-        $currentfighter = $fightersTables->getFighterById($fighterid);
-        $eventsTables->createEvent($currentfighter->name.' a ramassé un équipement.',$j,$i);
+        $eventsTables->createEvent($fighter->name . ' a ramassé un équipement.', $j, $i);
     }
-    
-  
-    
-    /*Fonctions utilitaires*/
+
+    /* Fonctions utilitaires */
 
     public function getBonus($id, $type) {
         $tool = $this->find()->where(['fighter_id' => $id, 'type' => $type])->first();
@@ -99,7 +95,7 @@ class ToolsTable extends Table {
     public function flushTools() {
         $this->deleteAll(['fighter_id IS' => NULL]);
     }
-    
+
     public function exist($x, $y) {
         if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
             $exist = false;
@@ -110,7 +106,7 @@ class ToolsTable extends Table {
     }
 
     public function generateTools() {
-        
+
         //On détruit tous les objets
         $this->flushTools();
 
@@ -139,4 +135,5 @@ class ToolsTable extends Table {
             }
         }
     }
+
 }
