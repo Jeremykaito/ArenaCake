@@ -110,7 +110,7 @@ class FightersTable extends Table {
 
             //On vérifie s'il y a un objet à prendre
             if ($this->toolIsThere($nextPos)) {
-                $toolsTable->takeTool($nextPos["x"], $nextPos["y"], $fighterid);
+                $toolsTable->takeTool($nextPos["x"], $nextPos["y"], $fighter);
             }
 
             //On vérifie s'il y a un décor
@@ -142,6 +142,17 @@ class FightersTable extends Table {
             }
         }
     }
+    
+    public function doMove($fighter, $nextPos) {
+        /* $fightersTable = TableRegistry::get('Fighters');
+          $fighter = $fightersTable->get($fighterid);//ici on utilise fighterid en tant que clé */
+        $fighter->coordinate_x = $nextPos["x"];
+        $fighter->coordinate_y = $nextPos["y"];
+        $this->save($fighter);
+        //Création d'un évènement
+        $eventsTables = TableRegistry::get('Events');
+        $eventsTables->createEvent($fighter->name . ' avance.', $nextPos["x"], $nextPos["y"]);
+    }
 
     public function attack($dir, $currentfighter) {
 
@@ -160,10 +171,10 @@ class FightersTable extends Table {
             $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['x']);
 
             //On calcule la force de notre combattant
-            $mystrength = $currentfighter->skill_strength + $toolsTable->getBonus($fighterid, 'D');
+            $mystrength = $currentfighter->skill_strength + $toolsTable->getBonus($currentfighter->id, 'D');
 
             //Test si l'attaque réussit ou non
-            if (tryAttack($oponent, $currentfighter)) {
+            if ($this->tryAttack($oponent, $currentfighter)) {
 
                 //Le combattant ennemi est blessé
                 $this->touchedByAttack($oponent, $currentfighter, $mystrength);

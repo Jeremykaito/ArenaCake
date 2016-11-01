@@ -58,7 +58,7 @@ class ToolsTable extends Table {
         }
     }
 
-    public function takeTool($j, $i, $fighterid) {
+    public function takeTool($j, $i, $fighter) {
 
         /* On part du principe qu'un combattant ne peut avoir qu'un seul objet */
 
@@ -66,7 +66,7 @@ class ToolsTable extends Table {
         $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
 
         //Le combattant lâche son objet
-        $this->dropTool($fighterid);
+        $this->dropTool($fighter->id);
 
         //On lui ajoute l'id du combattant
         $tool->fighter_id = $fighter->id;
