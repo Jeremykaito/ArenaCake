@@ -15,11 +15,17 @@
     /*background-color: white;*/
     min-height:120px;
     max-width: 300px;
+    margin:5px 15px 20px 5px ;
+}
+
+.bx-wrapper{
+    margin-left:2px !important;
 }
 
 .bx-viewport{
     height:130px !important;
     width:250px !important;
+    
 }
 .bx-viewport li{
     width:240px !important;

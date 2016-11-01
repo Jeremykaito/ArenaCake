@@ -13,10 +13,10 @@
 
 
 <div id="main-content">
-    <!-- access session variables-->
+    <!-- access session variables
     <?php pr( $this->request->session()->read('PlayerFighterSkin'))?>
-    
-    	
+    <?php pr( $this->request->session()->read('PlayerFighterId'))?>
+    	-->
     
     <div class="fighters index large-9 medium-8 columns content">
     <h3><?= __('Combattants') ?></h3>
@@ -71,6 +71,9 @@
                     <h4> Sélection du combattant:</h4>
                     <?php
                         echo $this->Form->input('name',['label'=>'Nom' ,'options' => $fighterslist]); ?>
+                    
+                    
+                    <label for="avatar">Avatar</label>
                     <div id="fighterslider">
                         <ul class="oSlider">
                             <li><?php  echo $this->Html->image("miniatures/rogue.png", ["alt" => "rogue"]);?></li>
@@ -79,7 +82,7 @@
                             <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
                         </ul>
                     </div> 
-                       <?php echo $this->Form->input('avatar',['label' => 'Avatar']); ?> 
+                       <?php echo $this->Form->hidden('avatar'); ?> 
                     <?= $this->Form->button(__('Jouer')) ?>
                 </fieldset>
                 <?= $this->Form->end() ?>
