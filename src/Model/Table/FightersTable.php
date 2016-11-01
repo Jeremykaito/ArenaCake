@@ -55,7 +55,6 @@ class FightersTable extends Table {
     /* Fonctions pour gérer les combattants */
 
     public function kill($fighter) {
-;
 
         //Création d'un évènement
         $eventsTables = TableRegistry::get('Events');
