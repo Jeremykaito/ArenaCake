@@ -92,7 +92,7 @@
                                 <li><?php  echo $this->Html->image("miniatures/elf.png", ["alt" => "elf"]);?></li>
                             </ul>
                         </div> 
-                    <?php  echo $this->Form->input('avatar',['disabled' => 'disabled']); ?> 
+                    <?php  echo $this->Form->input('avatar',['type' => 'hidden']); ?> 
 
                     
                     
