@@ -53,17 +53,20 @@ class ArenasController extends AppController {
         $this->loadModel('Tools');
         $this->loadModel('Surroundings');
         
+        //On récupère le combattant actuel
+        $currentFighter=$this->Fighters->getFighterById($PlayerFighterId);
+        
         //Gestion des actions du joueur :
         if ($this->request->is('post')) {
             
             //Déplacement
             if ($this->request->data['action'] == 'move') {
-                $this->Fighters->move($this->request->data['dir'], $PlayerFighterId);
+                $this->Fighters->move($this->request->data['dir'], $currentFighter);
             }
             
             //Attaque
             if ($this->request->data['action'] == 'attack') {
-                $this->Fighters->attack($this->request->data['dir'], $PlayerFighterId);
+                $this->Fighters->attack($this->request->data['dir'], $currentFighter);
             }
             
             //Génération d'objets
@@ -80,7 +83,7 @@ class ArenasController extends AppController {
         /*Envoi des données à la vue*/
         
         //On envoie le terrain de jeu
-        $viewtab = $this->Fighters->createViewTab();
+        $viewtab = $this->Fighters->createViewTab($currentFighter);
         $this->set("viewtab", $viewtab);
         
         //On envoie l'avatar du combattant

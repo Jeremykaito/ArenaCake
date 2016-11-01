@@ -35,14 +35,10 @@ class ToolsTable extends Table {
         $this->save($tool);
     }
     
-    public function dropTool($fighterid){
-        
-        //On récupère le combattant concerné
-        $fightersTable = TableRegistry::get('Fighters');
-        $fighter = $fightersTable->getFighterById($fighterid);
+    public function dropTool($fighter){
         
         //On récupère l'objet que le combattant détient
-        $tool = $this->find()->where(['fighter_id' => $fighterid])->first();
+        $tool = $this->find()->where(['fighter_id' => $fighter->id])->first();
         
         //On "dépose" l'objet à la place du combattant
         $tool->coordinate_x = $fighter->coordinate_x;
@@ -57,26 +53,24 @@ class ToolsTable extends Table {
         $eventsTables->createEvent($fighter->name.' a laché un équipement.',$fighter->coordinate_x,$fighter->coordinate_y);
     }
     
-    public function takeTool($j, $i, $fighterid) {
+    public function takeTool($j, $i, $fighter) {
         
          /* On part du principe qu'un combattant ne peut avoir qu'un seul objet */
         
         //Le combattant lâche son objet
-        $this->dropTool($fighterid);
+        $this->dropTool($fighter);
         
         //On récupère l'objet qui se trouve à la place du joueur
         $tool = $this->find()->where(['coordinate_x' => $j, 'coordinate_y' => $i])->first();
         
         //On lui ajoute l'id du combattant
-        $tool->fighter_id = $fighterid;
+        $tool->fighter_id = $fighter->id;
         $tool->coordinate_x = NULL;
         $tool->coordinate_y = NULL;
         $this->save($tool);
         
         //Création d'un évènement
-        $eventsTables = TableRegistry::get('Fighters');
         $eventsTables = TableRegistry::get('Events');
-        $currentfighter = $this->getFighterById($fighterid);
         $eventsTables->createEvent($fighter->name.' a ramassé un équipement.',$j,$i);
     }
     

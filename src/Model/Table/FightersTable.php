@@ -6,7 +6,6 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 
 class FightersTable extends Table {
-    
     /* Fonctions pour la validation des données */
 
     public function beforeSave($event, $entity) {
@@ -15,8 +14,8 @@ class FightersTable extends Table {
             $entity->coordinate_y = 5;
             $entity->skill_sight = 2;
             $entity->skill_strength = 1;
-            $entity->skill_health = 3;
-            $entity->current_health = 3;
+            $entity->skill_health = 5;
+            $entity->current_health = 5;
             $entity->level = 1;
             $entity->xp = 0;
             $entity->next_action_time = date('Y-m-d H:i:s');
@@ -55,22 +54,20 @@ class FightersTable extends Table {
 
     /* Fonctions pour gérer les combattants */
 
-    public function kill($fighterid) {
-
-        $entity = $this->get($fighterid);
+    public function kill($fighter) {
+;
 
         //Création d'un évènement
         $eventsTables = TableRegistry::get('Events');
-        $eventsTables->createEvent($entity->name . ' est mort.', $entity->coordinate_x, $entity->coordinate_y);
+        $eventsTables->createEvent($fighter->name . ' est mort.', $fighter->coordinate_x, $fighter->coordinate_y);
 
         //On supprime le combattant
-        $result = $this->delete($entity);
+        $result = $this->delete($fighter);
     }
 
-    public function winXp($fighterid, $amount) {
-        $entity = $this->get($fighterid);
-        $entity->xp += $amount;
-        $this->save($entity);
+    public function winXp($fighter, $amount) {
+        $fighter->xp += $amount;
+        $this->save($fighter);
     }
 
     /* Fonctions pour vérifier les coordonnées */
@@ -98,15 +95,12 @@ class FightersTable extends Table {
 
     /* Fonction d'actions */
 
-    public function move($dir, $fighterid) {
+    public function move($dir, $fighter) {
 
         //On charge les modèles
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
         $eventsTables = TableRegistry::get('Events');
-
-        //On cherche le combattant à déplacer
-        $fighter = $this->getFighterById($fighterid);
 
         //On calcule la case sur laquelle va atterrir le combattant
         $dirToCo = $this->dirToCo($dir);
@@ -114,7 +108,7 @@ class FightersTable extends Table {
 
         //On vérifie si le déplacement est possible
         if ($this->moveIsPossible($nextPos)) {
-            $this->doMove($fighterid, $nextPos);
+            $this->doMove($fighter, $nextPos);
 
             //On vérifie s'il y a un objet à prendre
             if ($this->toolIsThere($nextPos)) {
@@ -125,24 +119,24 @@ class FightersTable extends Table {
             else if ($this->surroundingIsThere($nextPos)) {
 
                 switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])) {
-                   
+
                     //Monstre
                     case "W":
 
                         //Création d'un évènement
                         $eventsTables->createEvent('Un monstre a dévoré ' . $fighter->name, $nextPos["x"], $nextPos["y"]);
-                        
+
                         //Le joueur est mort
-                        $this->kill($fighterid);
+                        $this->kill($fighter);
                         break;
-                    
+
                     //Trou
                     case "T":
                         //Création d'un évènement
                         $eventsTables->createEvent('Un trou a aspiré ' . $fighter->name, $nextPos["x"], $nextPos["y"]);
-                        
+
                         //Le joueur est mort
-                        $this->kill($fighterid);
+                        $this->kill($$fighter);
                         break;
                     default:
                         break;
@@ -151,47 +145,9 @@ class FightersTable extends Table {
         }
     }
 
-    public function moveIsPossible($nextPos) {
+    public function doMove($fighter, $nextPos) {
 
-        $surroundingsTable = TableRegistry::get('Surroundings');
-        
-        //Si le joueur est dans l'arène
-        if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
-
-            //Si la case ne contient pas un autre combattant ou une colonne
-            if (!$this->exist($nextPos["x"], $nextPos["y"]) && !($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"]))=='P') {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public function toolIsThere($nextPos) {
-        
-        $toolsTable = TableRegistry::get('Tools');
-        
-        //Si un objet est présent aux coordonnées données
-        if ($toolsTable->exist($nextPos["x"], $nextPos["y"])) {
-            return true;
-        }
-        return false;
-    }
-
-    public function surroundingIsThere($nextPos) {
-        
-        $surroundingsTable = TableRegistry::get('Surroundings');
-        
-        //Si un décor est présent aux coordonnées données
-        if ($surroundingsTable->exist($nextPos["x"], $nextPos["y"])) {
-            return true;
-        }
-        return false;
-    }
-
-    public function doMove($fighterid, $nextPos) {
-        /* $fightersTable = TableRegistry::get('Fighters');
-          $fighter = $fightersTable->get($fighterid);//ici on utilise fighterid en tant que clé */
-        $fighter = $this->get($fighterid);
+        //On fait bouger le combattant
         $fighter->coordinate_x = $nextPos["x"];
         $fighter->coordinate_y = $nextPos["y"];
         $this->save($fighter);
@@ -201,17 +157,31 @@ class FightersTable extends Table {
         $eventsTables->createEvent($fighter->name . ' avance.', $nextPos["x"], $nextPos["y"]);
     }
 
-    public function attack($dir, $fighterid) {
+    public function attack($dir, $currentfighter) {
+
+        //On charge les modèles
         $toolsTable = TableRegistry::get('Tools');
         $eventsTables = TableRegistry::get('Events');
-        $currentfighter = $this->getFighterById($fighterid);
+
+        //On calcule la case à attaquer
         $dirToCo = $this->dirToCo($dir);
         $attackSpot = array('x' => $currentfighter->coordinate_x += $dirToCo["x"], 'y' => $currentfighter->coordinate_y += $dirToCo["y"]);
-        if ($this->exist($attackSpot['x'], $attackSpot['x'])) {
+
+        //On vérifie s'il y a un combattant sur cette case
+        if ($this->fighterIsThere($attackSpot)) {
+
+            //On récupère le combattant ennemi
             $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['x']);
+
+            //On calcule la force de notre combattant
             $mystrength = $currentfighter->skill_strength + $toolsTable->getBonus($fighterid, 'D');
-            if (rand(1, 20) > (10 + $oponent->level - $currentfighter->level)) { //test de la réuissite de l'attaque
-                $this->touchedByAttack($oponent->id, $fighterid, $mystrength);
+
+            //Test si l'attaque réussit ou non
+            if (tryAttack($oponent, $currentfighter)) {
+
+                //Le combattant ennemi est blessé
+                $this->touchedByAttack($oponent, $currentfighter, $mystrength);
+
                 //Création d'un évènement
                 $eventsTables->createEvent($currentfighter->name . ' attaque et touche ' . $oponent->name, $attackSpot['x'], $attackSpot['y']);
             } else {
@@ -219,19 +189,25 @@ class FightersTable extends Table {
                 $eventsTables->createEvent($currentfighter->name . ' attaque et rate ' . $oponent->name, $attackSpot['x'], $attackSpot['y']);
             }
         } else {
+            //Création d'un évènement
             $eventsTables->createEvent($currentfighter->name . ' se bat contre le vent et espère gagner... ', $attackSpot['x'], $attackSpot['y']);
         }
     }
 
-    public function touchedByAttack($defenderid, $attackerid, $strength) {
-        $defender = $this->getFighterById($defenderid);
+    public function touchedByAttack($defender, $attacker, $strength) {
+
+        //L'attaquant gagne de l'xp
+        $this->winXp($attacker, $defender->level);
+
+        //On retire la force de l'attaque à la vie de l'ennemi
         if ($defender->current_health > $strength) {
             $defender->current_health -= $strength;
             $this->save($defender);
-            $this->winXp($attackerid, 1);
-        } else {
-            $this->winXp($attackerid, $defender->level);
-            $this->kill($defenderid);
+        }
+
+        //S'il n'as pas assez de vie, l'ennemi est mort
+        else {
+            $this->kill($defender);
         }
     }
 
@@ -265,6 +241,52 @@ class FightersTable extends Table {
         return $exist;
     }
 
+    public function moveIsPossible($nextPos) {
+
+        $surroundingsTable = TableRegistry::get('Surroundings');
+
+        //Si le joueur est dans l'arène
+        if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
+
+            //Si la case ne contient pas un autre combattant ou une colonne
+            if (!$this->exist($nextPos["x"], $nextPos["y"]) && !($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])) == 'P') {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function toolIsThere($nextPos) {
+
+        $toolsTable = TableRegistry::get('Tools');
+
+        //Si un objet est présent aux coordonnées données
+        if ($toolsTable->exist($nextPos["x"], $nextPos["y"])) {
+            return true;
+        }
+        return false;
+    }
+
+    public function surroundingIsThere($nextPos) {
+
+        $surroundingsTable = TableRegistry::get('Surroundings');
+
+        //Si un décor est présent aux coordonnées données
+        if ($surroundingsTable->exist($nextPos["x"], $nextPos["y"])) {
+            return true;
+        }
+        return false;
+    }
+
+    public function fighterIsThere($nextPos) {
+
+        //Si un combattant est présent aux coordonnées données
+        if ($this->exist($nextPos['x'], $nextPos['x'])) {
+            return true;
+        }
+        return false;
+    }
+
     public function getEventByFighter($playerId, $events) {
 
         //Déclaration des variables
@@ -274,6 +296,7 @@ class FightersTable extends Table {
         //On récupère tous les personnages du joueur
         $fighters = $this->getFightersByPlayer($playerId);
 
+        //On vérifie si les évènements sont à portée de vue du combattant
         foreach ($events as $event):
             foreach ($fighters as $fighter):
                 if ($this->checkInViewCoordinates($fighter, $event->coordinate_x, $event->coordinate_y)) {
@@ -288,9 +311,16 @@ class FightersTable extends Table {
         return $found_events;
     }
 
-    public function createViewTab() {
+    public function tryAttack($oponent, $currentfighter) {
+        if ((rand(1, 20) > (10 + $oponent->level - $currentfighter->level))) {
+            return true;
+        }
+        return false;
+    }
 
-        //On cherche les différents modèles
+    public function createViewTab($currentfighter) {
+
+        //On charge les différents modèles
         $toolsTable = TableRegistry::get('Tools');
         $surroundingsTable = TableRegistry::get('Surroundings');
 
@@ -300,15 +330,15 @@ class FightersTable extends Table {
         $surroundinglist = $surroundingsTable->getSurroundings();
 
         //Autres variables
-        $idFighter = 3; // à remplacer par : 1)une var de cession 2)un paramètre de la fonction----------------------
         $viewtab = array(array());
-        $currentfighter = $this->getFighterById($idFighter);
-        $distance = $currentfighter->skill_sight + $toolsTable->getBonus($idFighter, 'V'); // definition de la distance de vue du fighter.
+
         //On vérifie les cases à portée de vue du joueur
         for ($y = 0; $y < 10; $y++) {
             for ($x = 0; $x < 15; $x++) {
-                if (abs($x - ($currentfighter->coordinate_x)) + abs($y - ($currentfighter->coordinate_y)) <= $distance) {
+                if ($this->checkInViewCoordinates($currentfighter, $x, $y)) {
                     $unused = true;
+
+                    //On affiche les combattants
                     if ($unused) {
                         foreach ($fighterlist as $fighter) {
                             if ($fighter->coordinate_x == $x && $fighter->coordinate_y == $y) {
@@ -317,6 +347,8 @@ class FightersTable extends Table {
                             }
                         }
                     }
+
+                    //On affiche les objets
                     if ($unused) {
                         foreach ($toollist as $tool) {
                             if ($tool->coordinate_x == $x && $tool->coordinate_y == $y) {
@@ -325,6 +357,8 @@ class FightersTable extends Table {
                             }
                         }
                     }
+
+                    //On affiche les décors
                     if ($unused) {
                         foreach ($surroundinglist as $surrounding) {
                             if ($surrounding->coordinate_x == $x && $surrounding->coordinate_y == $y) {
@@ -333,6 +367,8 @@ class FightersTable extends Table {
                             }
                         }
                     }
+
+                    //On affiche l'herbe
                     if ($unused) {
                         $viewtab[$x][$y] = 'herbe';
                     }
