@@ -108,16 +108,16 @@ class FightersTable extends Table {
         //On vérifie si le déplacement est possible
         if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighter, $nextPos);
-
+/*
             //On vérifie s'il y a un objet à prendre
             if ($this->toolIsThere($nextPos)) {
                 $toolsTable->takeTool($nextPos["x"], $nextPos["y"], $fighter);
             }
-
+*/
             //On vérifie s'il y a un décor
-            else if ($this->surroundingIsThere($nextPos)) {
+            if ($this->surroundingIsThere($nextPos)) {
 
-                switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])) {
+                switch ($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])[0]['type']) {
 
                     //Monstre
                     case "W":
@@ -132,9 +132,9 @@ class FightersTable extends Table {
                     case "T":
                         //Création d'un évènement
                         $eventsTables->createEvent('Un trou a aspiré ' . $fighter->name, $nextPos["x"], $nextPos["y"]);
-
+                        
                         //Le joueur est mort
-                        $this->kill($$fighter);
+                        $this->kill($fighter);
                         break;
                     
                     default:
@@ -164,10 +164,10 @@ class FightersTable extends Table {
         //On calcule la case à attaquer
         $dirToCo = $this->dirToCo($dir);
         $attackSpot = array('x' => $currentfighter->coordinate_x + $dirToCo["x"], 'y' => $currentfighter->coordinate_y + $dirToCo["y"]);
-        
+
         //On vérifie s'il y a un combattant sur cette case
         if ($this->fighterIsThere($attackSpot)) {
-
+  
             //On récupère le combattant ennemi
             $oponent = $this->getFighterByCo($attackSpot['x'], $attackSpot['y']);
 
@@ -242,15 +242,25 @@ class FightersTable extends Table {
     }
 
     public function moveIsPossible($nextPos) {
-
+        /*
+         * attention ici on ne test pas la présence d'objects quels qu'ils soient
+         */
         $surroundingsTable = TableRegistry::get('Surroundings');
-
+        
         //Si le joueur est dans l'arène
         if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
-
             //Si la case ne contient pas un autre combattant ou une colonne
-            if (!$this->exist($nextPos["x"], $nextPos["y"]) && !($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])) == 'P') {
-                return true;
+            if (!$this->exist($nextPos["x"], $nextPos["y"])) {
+                //pas de combattant : ok
+                if($this->surroundingIsThere($nextPos)){
+                    // surroundings : ok
+                    if(!($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])[0]['type'] == 'P')){
+                    return true;
+                   
+                    }
+                }else
+                    // no surroundings
+                    return true;
             }
         }
         return false;
@@ -281,7 +291,7 @@ class FightersTable extends Table {
     public function fighterIsThere($nextPos) {
 
         //Si un combattant est présent aux coordonnées données
-        if ($this->exist($nextPos['x'], $nextPos['x'])) {
+        if ($this->exist($nextPos['x'], $nextPos['y'])) {
             return true;
         }
         return false;
