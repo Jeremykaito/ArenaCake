@@ -65,7 +65,7 @@ $(document).ready(function(){
 								il a repoussé les limites de son esprit dont il se sert désormais comme d'une arme. Assoiffé de gloire et de reconnaissance,
 								Mantis compte bien se forger une réputation dans l'Arène Herbeuse.</dd>
 
-								<dt><?php  echo $this->Html->image("champions/Elfe.png", ["alt" => "Elfe"]);?>Winky l'Elfee</dt>
+								<dt><?php  echo $this->Html->image("champions/Elfe.png", ["alt" => "Elfe"]);?>Winky l'Elfe</dt>
 								<dd>Sous son air timide et effrayé, Winky cache bien son jeu. Combattante aguerrie, elle connaît sur le bout des doigts les
 									secrets de la magie de son peuple. Ses yeux bleus perçants et son bâton sont ses principaux alliés pour venir à bout des ennemis
 									qu'elle rencontre. On raconte qu'elle serait à la recherche d'un trésor légendaire enfoui dans le sol de l'Arène Herbeuse...</dd>
@@ -74,7 +74,7 @@ $(document).ready(function(){
 </div>
 <aside class='cadre_jaune news'>
 	<h3 class='text_light'>Un nouveau combattant fait son entrée dans l'Arène !</h3>
-	<p>Winky est une Elfee qui semble
+	<p>Winky est une Elfe qui semble
 		être à la recherche d'un trésor légendaire enfoui dans l'Arène Herbeuse...</p>
 		<p>Vous pouvez jouer avez Winky dès maintenant !</p>
 	</aside>
