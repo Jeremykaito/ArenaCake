@@ -108,12 +108,20 @@ class FightersTable extends Table {
         //On vérifie si le déplacement est possible
         if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighter, $nextPos);
-/*
-            //On vérifie s'il y a un objet à prendre
-            if ($this->toolIsThere($nextPos)) {
-                $toolsTable->takeTool($nextPos["x"], $nextPos["y"], $fighter);
+            
+            //on vérifie si il n'y a pas un monstre ou un trou dans les cases adjacantes
+            $surroundingList = $surroundingsTable->getSurroundings();
+            foreach ($surroundingList as $sur) {
+                if ($this->checkAdjacentCoordinates($nextPos["x"], $nextPos["y"], $sur["coordinate_x"], $sur["coordinate_y"])) {
+                    if ($sur['type'] == 'W') {
+                            pr('Puanteur');
+                    }
+                    if ($sur['type'] == 'T') {
+                            pr('Brise Suspect');
+                    }
+                }
             }
-*/
+
             //On vérifie s'il y a un décor
             if ($this->surroundingIsThere($nextPos)) {
 
