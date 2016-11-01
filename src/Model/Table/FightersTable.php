@@ -111,8 +111,7 @@ class FightersTable extends Table {
         //On calcule la case sur laquelle va atterrir le combattant
         $dirToCo = $this->dirToCo($dir);
         $nextPos = array('x' => $fighter->coordinate_x += $dirToCo["x"], 'y' => $fighter->coordinate_y += $dirToCo["y"]);
-
-        //On vérifie si le déplacement est possible
+        //On vérifie si le déplacement est possible (dans l'arène et pas sur un autre joueur)
         if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighterid, $nextPos);
 
@@ -128,7 +127,6 @@ class FightersTable extends Table {
                    
                     //Monstre
                     case "W":
-
                         //Création d'un évènement
                         $eventsTables->createEvent('Un monstre a dévoré ' . $fighter->name, $nextPos["x"], $nextPos["y"]);
                         
@@ -144,6 +142,7 @@ class FightersTable extends Table {
                         //Le joueur est mort
                         $this->kill($fighterid);
                         break;
+                    
                     default:
                         break;
                 }
@@ -152,15 +151,26 @@ class FightersTable extends Table {
     }
 
     public function moveIsPossible($nextPos) {
+        /*
+         * attention ici on ne test pas la présence d'objects quels qu'ils soient
+         */
 
         $surroundingsTable = TableRegistry::get('Surroundings');
         
         //Si le joueur est dans l'arène
         if ($nextPos["x"] >= 0 && $nextPos["x"] <= 14 && $nextPos["y"] >= 0 && $nextPos["y"] <= 9) {
-
             //Si la case ne contient pas un autre combattant ou une colonne
-            if (!$this->exist($nextPos["x"], $nextPos["y"]) && !($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"]))=='P') {
-                return true;
+            if (!$this->exist($nextPos["x"], $nextPos["y"])) {
+                //pas de combattant : ok
+                if($this->surroundingIsThere($nextPos)){
+                    // surroundings : ok
+                    if(!($surroundingsTable->getSurroundingByCo($nextPos["x"], $nextPos["y"])[0]['type'] == 'P')){
+                    return true;
+                   
+                    }
+                }else
+                    // no surroundings
+                    return true;
             }
         }
         return false;
@@ -183,6 +193,7 @@ class FightersTable extends Table {
         
         //Si un décor est présent aux coordonnées données
         if ($surroundingsTable->exist($nextPos["x"], $nextPos["y"])) {
+            
             return true;
         }
         return false;
@@ -320,7 +331,17 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($toollist as $tool) {
                             if ($tool->coordinate_x == $x && $tool->coordinate_y == $y) {
-                                $viewtab[$x][$y] = "jumelle"; //ici on devrait mettre le nom du skin du tool en question------------------------------
+                                switch ($tool->type){
+                                    case "V":
+                                        $viewtab[$x][$y] = "jumelle";
+                                        break;
+                                    case "D":
+                                        $viewtab[$x][$y] = "epee";
+                                        break;
+                                    case "L":
+                                        $viewtab[$x][$y] = "armure";
+                                        break;
+                                }
                                 $unused = false;
                             }
                         }
@@ -328,8 +349,10 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($surroundinglist as $surrounding) {
                             if ($surrounding->coordinate_x == $x && $surrounding->coordinate_y == $y) {
-                                $viewtab[$x][$y] = "colonne"; //ici on devrait mettre le nom du skin du surrounding en question------------------------------
-                                $unused = false;
+                                if ($surrounding->type == "P"){ //on ne traite pas les cas des monstres et trous qui sont invisibles
+                                    $viewtab[$x][$y] = "colonne";
+                                    $unused = false;
+                                }
                             }
                         }
                     }
