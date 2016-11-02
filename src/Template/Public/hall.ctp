@@ -39,7 +39,7 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
         }
        $nbrofPlayer++;
     }
-    pr($varArrayPlayerFighter);
+    //pr($varArrayPlayerFighter);
     // select all attributes of fighter to parse it later in javascript
     foreach ($fighterlist as  $fighter){
         $names[] =  $fighter->name;
