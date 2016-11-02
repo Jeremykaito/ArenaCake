@@ -377,7 +377,11 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($fighterlist as $fighter) {
                             if ($fighter->coordinate_x == $x && $fighter->coordinate_y == $y) {
-                                $viewtab[$x][$y] = $fighterSkin;
+                                if ($fighter == $currentfighter){
+                                    $viewtab[$x][$y] = $fighterSkin;
+                                }else{
+                                    $viewtab[$x][$y] = 'Ninja';
+                                }
                                 $unused = false;
                             }
                         }
