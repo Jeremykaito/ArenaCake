@@ -45,18 +45,22 @@ $(document).ready(function () {
 </script>
 
 <?php
+$competence;
 $bonusVue=0;
 $bonusVie=0;
 $bonusForce=0;
 
 foreach ($tools as $tool):
   if($tool->type=='L'){
+    $competence='Vie';
     $bonusVie= $bonusVie + $tool->bonus;
   }
   else if ($tool->type=='D'){
+    $competence='Force';
     $bonusForce= $bonusForce + $tool->bonus;
   }
   else if ($tool->type=='V'){
+    $competence='Vue';
     $bonusVue= $bonusVue + $tool->bonus;
   }
 endforeach;
@@ -105,7 +109,7 @@ endforeach;
       </thead>
       <?php foreach ($tools as $tool): ?>
         <tr>
-          <td><?= $tool->type ?></td>
+          <td><?= $competence ?></td>
           <td><?= $tool->bonus ?></td>
         </tr>
       <?php endforeach; ?>

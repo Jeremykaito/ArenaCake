@@ -33,10 +33,10 @@
     <table id="diary" class="display">
         <thead>
             <tr>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Date</th>
-                <th>Coordinate X</th>
-                <th>Coordinate Y</th>
+                <th>Coordonnée X</th>
+                <th>Coordonnée Y</th>
             </tr>
         </thead>
         <?php foreach ($events as $event): ?>
