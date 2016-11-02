@@ -63,12 +63,12 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
     </div>
     
     <div class="graphChart" style="margin:auto;">
-        <h3>Pourcentage des combattants de chaque joueur.</h3>
+        <h3>Proportion des combattants dans l'arène.</h3>
         <div id="pieChart" ></div>
     </div>
     
     <div class="graphChart" style="margin:auto;">
-        <h3>Ratio Santé/level des combattans.</h3>
+        <h3>Pourcentage d'évènements par combattant.</h3>
         <div id="ratio" ></div>
     </div>
     
@@ -98,7 +98,7 @@ var fightersXp      =<?php echo json_encode($fightersXp );?>;
 var fighterslvl     =<?php echo json_encode($fighterslvl );?>;
 
 var playersfigthers =<?php echo json_encode($varArrayPlayerFighter);?>;
-
+var varEventperFighter = <?php echo json_encode($varEventperFighter);?>;
 
 
 
@@ -107,6 +107,7 @@ var xpResult = new Array();
 var levelRresult = new Array();
 var playerandFighter = new Array();
 var fighterLevel= new Array();
+var eventsAndFighter = new Array();
 
     for (var i = 0; i < namesArray.length; i++) {
         var temp1 = new Array();
@@ -131,36 +132,22 @@ var fighterLevel= new Array();
         fighterLevel.push(temp3);
     }
    
-   
-   //alert(playersfigthers.toString());
-           /*var sizeA = Object.keys(playersfigthers).length;
-    for (var i = 1; i < sizeA+1; i++){
-        var temp = new Array();
-        temp.push('Player_'+i);
-        temp.push(playersfigthers['Player_'+i]);
-        playerandFighter.push(temp);
-    }*/
-    
-    
     for (var key in playersfigthers) {
-    // skip loop if the property is from prototype
-    //if (!playersfigthers.hasOwnProperty(key)) continue;
-
-    var obj = playersfigthers[key];
-   // alert(key + "" + obj);
-  /* for (var prop in obj) {
-        // skip loop if the property is from prototype
-        if(!obj.hasOwnProperty(prop)) continue;
-        // your code
-        alert(prop + " = " + obj[prop]);
-    }*/
-         var temp = new Array();
+        var obj = playersfigthers[key];
+        var temp = new Array();
         temp.push(key);
         temp.push(obj);
         playerandFighter.push(temp);
         
-}
+    }
  
+    for (var oKey in varEventperFighter){
+        var obj = varEventperFighter[oKey];
+        var tempu = new Array();
+        tempu.push(oKey);
+        tempu.push(obj);
+        eventsAndFighter.push(tempu);
+    }
  /************** plot all chart ****/
 $(document).ready(function(){
         /* Plot of  Fighter skills */ 
@@ -279,10 +266,22 @@ $(document).ready(function(){
     }
   );
   
+  
+    var plot4 = jQuery.jqplot ('ratio', [eventsAndFighter], 
+    {
+       seriesDefaults:{
+            renderer:$.jqplot.PieRenderer,
+            rendererOptions: {
+                showDataLabels: true
+            }
+        },
+        legend:{show:true}     
+    }
+  );
+  
  // alert(playerandFighter.toString());
-  /** PLayer ratio **/
+  /** PLayer ratio 
     
-    //plot4 = $.jqplot('ratio',[arr],{
     plot4 = $.jqplot('ratio',[fighterLevel],{
         title: 'Player Level',
         seriesDefaults:{
@@ -295,7 +294,7 @@ $(document).ready(function(){
             shadowAlpha: 0.05
         }
     });   
-  
+  **/
 
 });
 

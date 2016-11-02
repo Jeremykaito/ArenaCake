@@ -123,9 +123,17 @@ class PublicController extends AppController {
         $fighterlist = $this->Fighters->getFighters();
         $playerlist = $this->Players->getPlayers();
 
+        //Get event per fighter 
+        foreach ($fighterlist as  $fighter){  
+            $fightername = $fighter->name;
+            $eventnumber = $this->Events->getnbrEventByFighter($fightername);
+            $varEventPlayerFighter[$fightername] = $eventnumber;
+        }
+        
         //On envoie les données à la vue
         $this->set('fighterlist', $fighterlist);
         $this->set('playerlist', $playerlist);
+        $this->set('varEventperFighter', $varEventPlayerFighter);
     }
 
     function sendPasswordEmail($email, $newPassword) {

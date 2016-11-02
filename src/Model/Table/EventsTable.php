@@ -34,5 +34,13 @@ class EventsTable extends Table {
         $event = $this->newEntity(['name' => $name, 'date' => date('Y-m-d H:i:s'), 'coordinate_x' => $coordinate_x, 'coordinate_y' => $coordinate_y]);
         $this->save($event);
     }
-
+    
+    
+    public function getnbrEventByFighter($fighter){
+        $query = $this->find()
+            ->where(['name LIKE' => '%'.$fighter.'%'])
+            ->toArray();
+        $nbrofEvent = count($query);
+        return $nbrofEvent;
+    }
 }
