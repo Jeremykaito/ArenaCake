@@ -119,7 +119,7 @@ endforeach;
       </thead>
       <?php foreach ($tools as $tool): ?>
         <tr>
-          <td><?= $competence ?></td>
+          <td><?= $myTool ?></td>
           <td><?= $tool->bonus ?></td>
         </tr>
       <?php endforeach; ?>

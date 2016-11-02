@@ -409,47 +409,7 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($toollist as $tool) {
                             if ($tool->coordinate_x == $x && $tool->coordinate_y == $y) {
-                                switch ($tool->type) {
-                                    case "V":
-                                        switch ($tool->bonus){
-                                            case 1:
-                                                $viewtab[$x][$y] = "Lunettes";
-                                                break;
-                                            case 2:
-                                                $viewtab[$x][$y] = "Longue-vue";
-                                                break;
-                                            case 3:
-                                                $viewtab[$x][$y] = "Oeil";
-                                                break;
-                                        }
-                                        break;
-                                    case "D":
-                                        switch ($tool->bonus){
-                                            case 1:
-                                                $viewtab[$x][$y] = "Marteau";
-                                                break;
-                                            case 2:
-                                                $viewtab[$x][$y] = "Epée";
-                                                break;
-                                            case 3:
-                                                $viewtab[$x][$y] = "Hache";
-                                                break;
-                                        }
-                                        break;
-                                    case "L":
-                                        switch ($tool->bonus){
-                                            case 1:
-                                                $viewtab[$x][$y] = "T-shirt";
-                                                break;
-                                            case 2:
-                                                $viewtab[$x][$y] = "Veste";
-                                                break;
-                                            case 3:
-                                                $viewtab[$x][$y] = "Cotte";
-                                                break;
-                                        }
-                                        break;
-                                }
+                                $viewtab[$x][$y] = $this->chooseSpriteName($tool);
                                 $unused = false;
                             }
                         }
@@ -480,6 +440,52 @@ class FightersTable extends Table {
         return $viewtab;
     }
     
+    public function chooseSpriteName($toolrequete) {
+        $tool = $toolrequete->toArray();
+        switch ($tool[0]['type']) {
+            case "V":
+                switch ($tool[0]['bonus']) {
+                    case 1:
+                        $name = "Lunettes";
+                        break;
+                    case 2:
+                        $name = "Longue-vue";
+                        break;
+                    case 3:
+                        $name = "Oeil";
+                        break;
+                }
+                break;
+            case "D":
+                switch ($tool[0]['bonus']) {
+                    case 1:
+                        $name = "Marteau";
+                        break;
+                    case 2:
+                        $name = "Epée";
+                        break;
+                    case 3:
+                        $name = "Hache";
+                        break;
+                }
+                break;
+            case "L":
+                switch ($tool[0]['bonus']) {
+                    case 1:
+                        $name = "T-shirt";
+                        break;
+                    case 2:
+                        $name = "Veste";
+                        break;
+                    case 3:
+                        $name = "Cotte";
+                        break;
+                }
+                break;
+        }
+        return $name;
+    }
+
     public function updateSkillSight($fighter, $amount) {
         $fighter->skill_sight += $amount;
         $fighter->level += 1;
