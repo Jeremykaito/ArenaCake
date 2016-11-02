@@ -119,7 +119,7 @@
             <!-- id du fighter à level up -->
             <?php  echo $this->Form->input('fightertolevelup',['type' => 'hidden']); ?>
 
-            <?= $this->Form->button(__('Améliorer le stat'),['class' => 'button_gold','id'=>'levelupexe']) ?>
+            <?= $this->Form->button(__('Améliorer cette stat.'),['class' => 'button_gold','id'=>'levelupexe']) ?>
         </fieldset>
         <?= $this->Form->end() ?>
 
