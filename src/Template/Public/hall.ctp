@@ -39,7 +39,7 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
         }
        $nbrofPlayer++;
     }
-    
+    pr($varArrayPlayerFighter);
     // select all attributes of fighter to parse it later in javascript
     foreach ($fighterlist as  $fighter){
         $names[] =  $fighter->name;
@@ -100,14 +100,19 @@ var fighterslvl     =<?php echo json_encode($fighterslvl );?>;
 var playersfigthers =<?php echo json_encode($varArrayPlayerFighter);?>;
 
 
+
+
 /** new array to pass **/
 var xpResult = new Array();
 var levelRresult = new Array();
 var playerandFighter = new Array();
+var fighterLevel= new Array();
 
     for (var i = 0; i < namesArray.length; i++) {
         var temp1 = new Array();
         var temp2 = new Array();
+        
+        var temp3= new Array();
         
         temp1.push(namesArray[i]);
         temp1.push(fightersXp[i]);
@@ -115,18 +120,46 @@ var playerandFighter = new Array();
         temp2.push(namesArray[i]);
         temp2.push(fighterslvl[i]);
         
+        var realLevel = fighterslvl[i]/4;
+        temp3.push(fightersXp[i]);
+        temp3.push(fighterslvl[i]);
+        temp3.push(1+realLevel);
+        temp3.push(namesArray[i]);
+        
         xpResult.push(temp1);
         levelRresult.push(temp2);
+        fighterLevel.push(temp3);
     }
    
-    var sizeA = Object.keys(playersfigthers).length;
+   
+   //alert(playersfigthers.toString());
+           /*var sizeA = Object.keys(playersfigthers).length;
     for (var i = 1; i < sizeA+1; i++){
         var temp = new Array();
         temp.push('Player_'+i);
         temp.push(playersfigthers['Player_'+i]);
         playerandFighter.push(temp);
-    }
+    }*/
     
+    
+    for (var key in playersfigthers) {
+    // skip loop if the property is from prototype
+    //if (!playersfigthers.hasOwnProperty(key)) continue;
+
+    var obj = playersfigthers[key];
+   // alert(key + "" + obj);
+  /* for (var prop in obj) {
+        // skip loop if the property is from prototype
+        if(!obj.hasOwnProperty(prop)) continue;
+        // your code
+        alert(prop + " = " + obj[prop]);
+    }*/
+         var temp = new Array();
+        temp.push(key);
+        temp.push(obj);
+        playerandFighter.push(temp);
+        
+}
  
  /************** plot all chart ****/
 $(document).ready(function(){
@@ -230,6 +263,7 @@ $(document).ready(function(){
         }
     });
 
+ // var plot2 = jQuery.jqplot ('pieChart', [playerandFighter], 
   var plot2 = jQuery.jqplot ('pieChart', [playerandFighter], 
     {
       seriesDefaults: {
@@ -245,13 +279,12 @@ $(document).ready(function(){
     }
   );
   
-  
+ // alert(playerandFighter.toString());
   /** PLayer ratio **/
-  var arr = [[3, 9, 3, "Aragorn"], [8, 10, 4, "Angmar"], 
-    [4, 7, 1, "Gandalf"]];
-     
-    plot4 = $.jqplot('ratio',[arr],{
-        title: 'Transparent Bubbles',
+    
+    //plot4 = $.jqplot('ratio',[arr],{
+    plot4 = $.jqplot('ratio',[fighterLevel],{
+        title: 'Player Level',
         seriesDefaults:{
             renderer: $.jqplot.BubbleRenderer,
             rendererOptions: {
