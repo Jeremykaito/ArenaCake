@@ -69,7 +69,7 @@
                     <?php
                     $leveltheory = $fighter->xp/4;
                     if( $leveltheory > $fighter->level){
-                        echo $this->Form->button($this->Html->image('icones/lvl_up.png', array('alt' => "Passer de niveau")), ['class' => 'linklevelup','value'=>$fighter->id ,'onclick'=>'passFighterID(this)']);
+                        echo $this->Form->button($this->Html->image('icones/lvl_up.png', array('alt' => "Passer de niveau")), ['class' => 'linklevelup button_gold','value'=>$fighter->id ,'onclick'=>'passFighterID(this)']);
                     }?>
 
                 </td>

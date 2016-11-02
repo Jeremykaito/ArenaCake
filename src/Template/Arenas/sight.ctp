@@ -60,7 +60,7 @@ $bonusVie=0;
 $bonusForce=0;
 
 if(!empty($tool)){
-      
+
   if($tool->type=='L'){
     $bonusVie= $bonusVie + $tool->bonus;
   }
@@ -140,7 +140,7 @@ if(!empty($tool)){
             if (!empty($viewtab[$x][$y])) {
               echo $this->Html->image('sprites/' . $viewtab[$x][$y] . '.png', ['alt' => $viewtab[$x][$y]]);
               echo  "<span class='tooltiptext'>".$viewtab[$x][$y]."</span>";
-                   
+
             }
             echo "</td>";
           }
@@ -148,7 +148,7 @@ if(!empty($tool)){
         }
         ?>
       </table>
-  
+
     <!-- Derniers évènements et infos des ennemis -->
       <div class="cadre_gris" id="events">
           <div class="part">
@@ -167,7 +167,7 @@ if(!empty($tool)){
         </table>
         </div>
         <div class="part">
-            
+
         <!-- Tableau des ennemis-->
         <table id="tab_fight" class="little_tab">
           <thead>
@@ -205,7 +205,7 @@ if(!empty($tool)){
             <?= $this->Form->create('Move_Up',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
             <?= $this->Form->hidden('action', ['value' => 'move']) ?>
             <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
-            <?= $this->Form->button(__('Haut'),array('class' => 'button_gold button_action')); ?>
+            <?= $this->Form->button($this->Html->image('icones/up.png', array('alt' => "Supprimer")),array('class' => 'button_gold button_action')); ?>
             <?= $this->Form->end() ?>
           </td>
           <td>
@@ -216,7 +216,7 @@ if(!empty($tool)){
             <?= $this->Form->create('Move_Left',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
             <?= $this->Form->hidden('action', ['value' => 'move']) ?>
             <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
-            <?= $this->Form->button(__('Gauche'),array('class' => 'button_gold button_action')); ?>
+            <?= $this->Form->button($this->Html->image('icones/left.png', array('alt' => "Supprimer")),array('class' => 'button_gold button_action')); ?>
             <?= $this->Form->end() ?>
           </td>
           <td>
@@ -231,7 +231,7 @@ if(!empty($tool)){
               <?= $this->Form->create('Move_Right',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'move']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'right']) ?>
-              <?= $this->Form->button(__('Droite'),array('class' => 'button_gold button_action')); ?>
+              <?= $this->Form->button($this->Html->image('icones/right.png', array('alt' => "Supprimer")),array('class' => 'button_gold button_action')); ?>
               <?= $this->Form->end() ?>
             </td>
           </tr>
@@ -242,7 +242,7 @@ if(!empty($tool)){
               <?= $this->Form->create('Move_Down',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'move']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'down']) ?>
-              <?= $this->Form->button(__('Bas'),array('class' => 'button_gold button_action')); ?>
+              <?= $this->Form->button($this->Html->image('icones/down.png', array('alt' => "Supprimer")),array('class' => 'button_gold button_action')); ?>
               <?= $this->Form->end() ?>
             </td>
             <td>
@@ -259,7 +259,7 @@ if(!empty($tool)){
               <?= $this->Form->create('Attack_Up',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
-              <?= $this->Form->button(__('Haut'),array('class' => 'button_red button_action')); ?>
+              <?= $this->Form->button($this->Html->image('icones/up.png', array('alt' => "Supprimer")),array('class' => 'button_red button_action')); ?>
               <?= $this->Form->end() ?>
             </td>
             <td>
@@ -270,15 +270,15 @@ if(!empty($tool)){
               <?= $this->Form->create('Attack_Left',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
-              <?= $this->Form->button(__('Gauche'),array('class' => 'button_red button_action')); ?>
+              <?= $this->Form->button($this->Html->image('icones/left.png', array('alt' => "Supprimer")),array('class' => 'button_red button_action')); ?>
               <?= $this->Form->end() ?>
             </td>
-            <td>Attaque</td>
+            <td><?=  $this->Html->image('sprites/Epée.png', array('alt' => "Supprimer"))?></td>
             <td>
               <?= $this->Form->create('Attack_Right',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'right']) ?>
-              <?= $this->Form->button(__('Droite'),array('class' => 'button_red button_action')); ?>
+              <?= $this->Form->button($this->Html->image('icones/right.png', array('alt' => "Supprimer")),array('class' => 'button_red button_action')); ?>
               <?= $this->Form->end() ?>
             </td>
           </tr>
@@ -289,7 +289,7 @@ if(!empty($tool)){
               <?= $this->Form->create('Attack_Down',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'down']) ?>
-              <?= $this->Form->button(__('Bas'),array('class' => 'button_red button_action')); ?>
+              <?= $this->Form->button($this->Html->image('icones/down.png', array('alt' => "Supprimer")),array('class' => 'button_red button_action')); ?>
               <?= $this->Form->end() ?>
             </td>
             <td>

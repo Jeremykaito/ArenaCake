@@ -23,6 +23,7 @@
     background: #6e0b14;
 }
 
+
 #fighterslider{
     /*background-color: white;*/
     min-height:120px;
@@ -37,7 +38,7 @@
 .bx-viewport{
     height:130px !important;
     width:250px !important;
-    
+
 }
 .bx-viewport li{
     width:240px !important;
