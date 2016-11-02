@@ -101,6 +101,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <h3>Groupe : SI1 Gr1-01-AE</h3>
     <p>Options : A, E, D</p>
     <p>Auteurs : Jeremy Ha, Emmanuel Jequier, Annelyse Nugue, Kevin Rahetilahy<p/>
+    <p>Liens vers Git : <?= $this->Html->link('Git', '/versions.log'); ?><p/>
 </section>
 <p id="copyright">Copyright 2016 © - ArenaCake</p>
 </footer>

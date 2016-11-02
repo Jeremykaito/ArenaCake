@@ -9,7 +9,7 @@
 echo $this->Html->css('JQPlot.jquery.jqplot.min');
 echo $this->Html->css('JQPlot.shThemejqPlot.min');
 echo $this->Html->css('JQPlot.shCoreDefault.min');
-echo $this->Html->css('Halls/hallofFame.css');
+echo $this->Html->css('Public/hallofFame.css');
 
 /** KRA :JQplot Plugins **/
 echo $this->Html->script('jquery.min.js');

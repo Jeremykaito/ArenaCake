@@ -8,7 +8,7 @@
     echo $this->Html->css('BxSlider.jquery.bxslider');
 
     echo $this->Html->css('Arenas/index.css');
-    echo $this->Html->css('champions/fighters.css');
+    echo $this->Html->css('Arenas/fighters.css');
 
     $this->assign('title', 'WebArena - Champions');
     $this->assign('header_title', 'Champions');?>
