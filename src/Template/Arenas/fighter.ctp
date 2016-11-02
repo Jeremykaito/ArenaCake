@@ -70,7 +70,7 @@
                     $leveltheory = $fighter->xp/4;
                     if( $leveltheory > $fighter->level){ 
                         //echo $this->Html->link(__('Passer de niveau'), ['action' => 'fighterEdit', $fighter->id]);
-                        echo $this->Form->button(__('Passer de niveau'), ['class' => 'linklevelup','value'=>$fighter->id]);
+                        echo $this->Form->button(__('Passer de niveau'), ['class' => 'linklevelup','value'=>$fighter->id ,'onclick'=>'passFighterID(this)']);
                     }?>
 
                 </td>
@@ -81,79 +81,76 @@
         </tbody>
     </table>
 
-
-    <!-- Select a personnage and level-->
-                 <?= $this->Form->create() ?>
-                 <?= $this->Form->hidden('type', ['value' => 'choose']) ?>
-                <fieldset>
-
-                    <legend><?= __('Combattant') ?></legend>
-
-                    <h4> Sélection du combattant:</h4>
-                    <?php  echo $this->Form->input('name',['label'=>'Nom' ,'options' => $fighterslist]); ?>
-                        <div id="fighterslider">
-                            <ul class="oSlider">
-                                <li><?php  echo $this->Html->image("miniatures/Voleur.png", ["alt" => "Voleur"]);?></li>
-                                <li><?php  echo $this->Html->image("miniatures/Xena.png", ["alt" => "Xena"]);?></li>
-                                <li><?php  echo $this->Html->image("miniatures/Sorcier.png", ["alt" => "Sorcier"]);?></li>
-                                <li><?php  echo $this->Html->image("miniatures/Elfe.png", ["alt" => "Elfe"]);?></li>
-                            </ul>
-                        </div>
-                    <?php  echo $this->Form->input('avatar',['type' => 'hidden']); ?>
-
-
-
-                </fieldset>
-                <?= $this->Form->button(__('Choisir'),array('class' => 'button_gold')) ?>
-                <?= $this->Form->end() ?>
-
-
+    <!-- select a paramter to upgrade -->
     <?= $this->Form->create() ?>
     <?= $this->Form->hidden('type', ['value' => 'upgrade']) ?>
+        <fieldset id="levelingUp" style="display: none;">
+            <!-- Tableau des compétences -->
+            <table id="tab_stat" class="display">
+              <thead>
+                <tr>
+                  <th>Skill</th>
+                  <th>Bonus<th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tr>
+                <td>Vie</td>
+                <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health+3 ?></meter>+3</td>
+                <td style="color:red;">+3</td>
+              </tr>
+              <tr>
+                <td>Force</td>
+                 <td><meter value= <?= $fighter->skill_strength ?> min="0" max=<?= $fighter->skill_strength+1 ?> </meter></td>
+                 <td style="color:red;">+1</td>
+              </tr>
+              <tr>
+                <td>Vue</td>
+                <td><meter value= <?= $fighter->skill_sight ?> min="0" max=<?= $fighter->skill_sight+1 ?> </meter></td>
+                <td style="color:red;">+1</td>
+              </tr>
+            </table>
+
+            <div id="radioskils">
+            <?php $options=array('skill_health'=>'Vie','skill_strength'=>'Force','skill_sight'=>'Vue');
+                $attributes=array('legend'=>false);
+                echo $this->Form->radio('skills',$options,$attributes);
+            ?>
+            </div>
+            <!-- id du fighter à level up -->           
+            <?php  echo $this->Form->input('fightertolevelup',['type' => 'hidden']); ?> 
+            
+            <?= $this->Form->button(__('Améliorer le stat'),['class' => 'button_gold','id'=>'levelupexe']) ?>
+        </fieldset>
+        <?= $this->Form->end() ?>
     
-    
-    
-    <fieldset id="levelingUp" style="display: none;">
-        <!-- Tableau des compétences -->
-        <table id="tab_stat" class="display">
-          <thead>
-            <tr>
-              <th>Skill</th>
-              <th>Bonus<th>
-              <th></th>
-            </tr>
-          </thead>
-          <tr>
-            <td>Vie</td>
-            <td><meter value= <?= $fighter->current_health ?> min="0" max=<?= $fighter->skill_health+3 ?></meter>+3</td>
-            <td style="color:red;">+3</td>
-          </tr>
-          <tr>
-            <td>Force</td>
-             <td><meter value= <?= $fighter->skill_strength ?> min="0" max=<?= $fighter->skill_strength+1 ?> </meter></td>
-             <td style="color:red;">+1</td>
-          </tr>
-          <tr>
-            <td>Vue</td>
-            <td><meter value= <?= $fighter->skill_sight ?> min="0" max=<?= $fighter->skill_sight+1 ?> </meter></td>
-            <td style="color:red;">+1</td>
-          </tr>
-        </table>
-        
-        <div id="radioskils">
-        <?php $options=array('skill_health'=>'Vie','skill_strength'=>'Force','skill_sight'=>'Vue');
-            $attributes=array('legend'=>false);
-            echo $this->Form->radio('skills',$options,$attributes);
-        ?>
-        </div>
-        
-        <?= $this->Form->button(__('Améliorer le stat'),['class' => 'button_gold','id'=>'levelupexe']) ?>
-    </fieldset>
-    <?= $this->Form->end() ?>
+    <!-- end -->
+    <!-- Select a personnage and level-->
+        <?= $this->Form->create() ?>
+        <?= $this->Form->hidden('type', ['value' => 'choose']) ?>
+       <fieldset>
+
+           <legend><?= __('Combattant') ?></legend>
+
+           <h4> Sélection du combattant:</h4>
+           <?php  echo $this->Form->input('name',['label'=>'Nom' ,'options' => $fighterslist]); ?>
+               <div id="fighterslider">
+                   <ul class="oSlider">
+                       <li><?php  echo $this->Html->image("miniatures/Voleur.png", ["alt" => "Voleur"]);?></li>
+                       <li><?php  echo $this->Html->image("miniatures/Xena.png", ["alt" => "Xena"]);?></li>
+                       <li><?php  echo $this->Html->image("miniatures/Sorcier.png", ["alt" => "Sorcier"]);?></li>
+                       <li><?php  echo $this->Html->image("miniatures/Elfe.png", ["alt" => "Elfe"]);?></li>
+                   </ul>
+               </div>
+           <?php  echo $this->Form->input('avatar',['type' => 'hidden']); ?>
 
 
 
-
+       </fieldset>
+       <?= $this->Form->button(__('Choisir'),array('class' => 'button_gold')) ?>
+       <?= $this->Form->end() ?>
+      <!-- end -->
+               
     <?php    } else {    ?>
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
     <?php }    ?>
@@ -200,6 +197,11 @@
             $('.linklevelup').click(function () {
                 $('#levelingUp').show();
             });
+            
+            function passFighterID(btntag){
+                $fightertoup = btntag.getAttribute('value');
+                $("#fightertolevelup").val($fightertoup);
+            }
             
             
 	</script>

@@ -33,7 +33,7 @@ class ArenasController extends AppController {
                 //On récupère l'avatar et le fighter utilisés
                 $varFighterNumber = $this->request->data['name'];
                 $varFighterSkin = $this->request->data['avatar'];
-
+                
                 //On écrit dans la session l'id et l'avatar du combattant choisi
                 $session = $this->request->session();
                 $session->write('PlayerFighterId', $varFighterNumber);
@@ -41,9 +41,11 @@ class ArenasController extends AppController {
             }
             if ($this->request->data['type'] == 'upgrade') {
 
-                $fightertoUp = $this->Fighters->getFighterById($this->request->session()->read('PlayerFighterId'));
+                //$fightertoUp = $this->Fighters->getFighterById($this->request->session()->read('PlayerFighterId'));
                 $skilltoUpgrade=($this->request->data['skills']);
-
+                $fightertolevelup = $this->request->data['fightertolevelup'];
+                $fightertoUp = $this->Fighters->getFighterById($fightertolevelup);
+                
                 if(!empty($fightertoUp)){
                     switch ($skilltoUpgrade){
                         case 'skill_health': $this->Fighters->updateSkillHealth($fightertoUp,3); break;
