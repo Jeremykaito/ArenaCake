@@ -87,7 +87,7 @@ endforeach;
       <tr>
         <td>Vie</td>
 
-        <td><meter value= <?= $fighter->current_health + $bonusVie ?> min="0" max=<?= $fighter->skill_health + $bonusVie ?>></meter></td>
+        <td><meter title= <?= ($fighter->current_health + $bonusVie). "/" .($fighter->skill_health+$bonusVie);?> value= <?= $fighter->current_health + $bonusVie ?> min="0" max=<?= $fighter->skill_health + $bonusVie ?>></meter></td>
       </tr>
       <tr>
         <td>Force</td>

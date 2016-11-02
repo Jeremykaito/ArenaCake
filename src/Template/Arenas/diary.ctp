@@ -10,6 +10,9 @@
         $('#diary').DataTable({
             "order": [[1, "desc"]],
             "language": {
+              search: "Rechercher",
+              info: "",
+              "lengthMenu":     "Montrer _MENU_ Entrées",
               emptyTable:     "Aucun événement durant les dernières 24h, allez on se bouge!",
               paginate: {
                 first:      "Début",
