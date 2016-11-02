@@ -393,13 +393,43 @@ class FightersTable extends Table {
                             if ($tool->coordinate_x == $x && $tool->coordinate_y == $y) {
                                 switch ($tool->type) {
                                     case "V":
-                                        $viewtab[$x][$y] = "Jumelles";
+                                        switch ($tool->bonus){
+                                            case 1:
+                                                $viewtab[$x][$y] = "Lunettes";
+                                                break;
+                                            case 2:
+                                                $viewtab[$x][$y] = "Longue-vue";
+                                                break;
+                                            case 3:
+                                                $viewtab[$x][$y] = "Oeil";
+                                                break;
+                                        }
                                         break;
                                     case "D":
-                                        $viewtab[$x][$y] = "Epée";
+                                        switch ($tool->bonus){
+                                            case 1:
+                                                $viewtab[$x][$y] = "Marteau";
+                                                break;
+                                            case 2:
+                                                $viewtab[$x][$y] = "Epée";
+                                                break;
+                                            case 3:
+                                                $viewtab[$x][$y] = "Hache";
+                                                break;
+                                        }
                                         break;
                                     case "L":
-                                        $viewtab[$x][$y] = "Armure";
+                                        switch ($tool->bonus){
+                                            case 1:
+                                                $viewtab[$x][$y] = "T-shirt";
+                                                break;
+                                            case 2:
+                                                $viewtab[$x][$y] = "Veste";
+                                                break;
+                                            case 3:
+                                                $viewtab[$x][$y] = "Cotte";
+                                                break;
+                                        }
                                         break;
                                 }
                                 $unused = false;
