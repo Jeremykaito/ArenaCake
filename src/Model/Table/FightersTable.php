@@ -72,13 +72,18 @@ class FightersTable extends Table {
     /* Fonctions pour gérer les combattants */
 
     public function kill($fighter) {
-
+        
+        //Connection à la table Tool
+        $toolsTable = TableRegistry::get('Tools');
+        
         //Création d'un évènement
         $eventsTables = TableRegistry::get('Events');
         $eventsTables->createEvent($fighter->name . ' est mort.', $fighter->coordinate_x, $fighter->coordinate_y);
 
         //On supprime le combattant
         $result = $this->delete($fighter);
+        //On suprmie son objet
+        $toolsTable->deleteTool($fighter->id);
     }
 
     public function winXp($fighter, $amount) {

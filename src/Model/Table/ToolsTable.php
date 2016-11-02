@@ -96,6 +96,10 @@ class ToolsTable extends Table {
     public function flushTools() {
         $this->deleteAll(['fighter_id IS' => NULL]);
     }
+    
+    public function deleteTool($fighterid){
+        $this->deleteAll(['fighter_id IS' => $fighterid]);
+    }
 
     public function exist($x, $y) {
         if (empty($this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->toArray())) {
