@@ -6,6 +6,7 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 
 class FightersTable extends Table {
+    
     /* Fonctions pour la validation des données */
 
     public function beforeSave($event, $entity) {
@@ -50,6 +51,23 @@ class FightersTable extends Table {
     public function getFighterByCo($x, $y) {
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
         return $yo;
+    }
+    
+    public function getAdjacentOpponents($fighter){
+        
+        $allfighters = $this->getFighters();
+        $found_opponents = array();
+        $i=0;
+        
+        foreach ($allfighters as $opponent):
+            if($this->checkAdjacentCoordinates($opponent->coordinate_x, $opponent->coordinate_y, $fighter->coordinate_x, $fighter->coordinate_y)){
+                if($opponent != $fighter){
+                        $found_opponents[$i] = $opponent;
+                        $i++;
+                }
+            }
+        endforeach;
+        return $found_opponents;
     }
 
     /* Fonctions pour gérer les combattants */

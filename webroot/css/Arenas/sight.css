@@ -41,12 +41,14 @@ border : none;
   padding : 5px;
   height : 480px;
 }
+
 #events{
   width: 920px;
   padding : 5px;
   margin : 0;
   float : left;
 }
+
 /*Fin conteneurs*/
 /*Tableaux*/
 .tab_action {
@@ -68,12 +70,13 @@ border : none;
   padding : 0px;
   text-align: center !important;
 }
-#tab_events {
+.part {
+    float : left ; 
+    width : 50%;
 }
-#tab_events th, #tab_events tr, #tab_events td{
+.little_tab th, .little_tab tr, .little_tab td{
   padding : 1px;
   height : 5px;
-  width : 500px;
 }
 /*Fin tableaux*/
 .button_action {

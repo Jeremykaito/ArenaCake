@@ -18,27 +18,37 @@ $(document).ready(function () {
     "filter":   false
   });
 });
-</script>
 
-<script>
 $(document).ready(function () {
   $('#tab_obj').DataTable({
     "paging":   false,
     "info":     false,
     "filter":   false,
     "language": {
-      emptyTable:     "Pas d'objet, pas de bonus. Dommage...",
+      emptyTable: "Pas d'objet, pas de bonus. Dommage...",
     }
   });
 });
-</script>
 
-<script>
+$(document).ready(function () {
+  $('#tab_fight').DataTable({
+    "paging":   false,
+    "info":     false,
+    "filter":   false,
+    "language": {
+      emptyTable: "Pas d'ennemi à proximité.",
+    }
+  });
+});
+
 $(document).ready(function () {
   $('#tab_events').DataTable({
-    "order": [[1, "desc"]],
+     "ordering": false,
+    "paging":   false,
+    "info":     false,
+    "filter":   false,
     "language": {
-      emptyTable: "Aucun événement récent, allez on se bouge!",
+      emptyTable: "Pas d'évènement, allez on se bouge !",
     }
   });
 });
@@ -141,8 +151,12 @@ endforeach;
         }
         ?>
       </table>
+  
+    <!-- Derniers évènements et infos des ennemis -->
       <div class="cadre_gris" id="events">
-        <table id="tab_events" class="display">
+          <div class="part">
+        <!-- Tableau évènements-->
+        <table id="tab_events" class="little_tab">
           <thead>
             <tr>
               <th>Evénements</th>
@@ -154,8 +168,33 @@ endforeach;
             </tr>
           <?php endforeach; ?>
         </table>
+        </div>
+        <div class="part">
+            
+        <!-- Tableau des ennemis-->
+        <table id="tab_fight" class="little_tab">
+          <thead>
+            <tr>
+              <th>Ennemi</th>
+              <th>Niveau</th>
+              <th>Force</th>
+              <th>Vie</th>
+            </tr>
+          </thead>
+          <?php foreach ($opponents as $opponent): ?>
+            <tr>
+              <td><?= $opponent->name ?></td>
+              <td><?= $opponent->level ?></td>
+              <td><?= $opponent->skill_strength ?></td>
+              <td><?= $opponent->current_health ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </table>
+        </div>
       </div>
     </div>
+
+
     <!-- Interface de jeu -->
     <section id='interface_action' class="cadre_gris">
       <h3>Actions</h3>

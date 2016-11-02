@@ -14,7 +14,7 @@ class ArenasController extends AppController {
     }
 
     public function index() {
-
+        
     }
 
     public function fighter() {
@@ -33,7 +33,7 @@ class ArenasController extends AppController {
                 //On récupère l'avatar et le fighter utilisés
                 $varFighterNumber = $this->request->data['name'];
                 $varFighterSkin = $this->request->data['avatar'];
-                
+
                 //On écrit dans la session l'id et l'avatar du combattant choisi
                 $session = $this->request->session();
                 $session->write('PlayerFighterId', $varFighterNumber);
@@ -42,23 +42,25 @@ class ArenasController extends AppController {
             if ($this->request->data['type'] == 'upgrade') {
 
                 //$fightertoUp = $this->Fighters->getFighterById($this->request->session()->read('PlayerFighterId'));
-                $skilltoUpgrade=($this->request->data['skills']);
+                $skilltoUpgrade = ($this->request->data['skills']);
                 $fightertolevelup = $this->request->data['fightertolevelup'];
                 $fightertoUp = $this->Fighters->getFighterById($fightertolevelup);
-                
-                if(!empty($fightertoUp)){
-                    switch ($skilltoUpgrade){
-                        case 'skill_health': $this->Fighters->updateSkillHealth($fightertoUp,3); break;
-                        case 'skill_strength': $this->Fighters->updateSkillStrength($fightertoUp,1) ; break;
-                        case 'skill_sight': $this->Fighters->updateSkillSight($fightertoUp,1); break;
+
+                if (!empty($fightertoUp)) {
+                    switch ($skilltoUpgrade) {
+                        case 'skill_health': $this->Fighters->updateSkillHealth($fightertoUp, 3);
+                            break;
+                        case 'skill_strength': $this->Fighters->updateSkillStrength($fightertoUp, 1);
+                            break;
+                        case 'skill_sight': $this->Fighters->updateSkillSight($fightertoUp, 1);
+                            break;
                     }
                     $this->Flash->success(__('Amélioration effectué!'));
                     return $this->redirect(['action' => 'fighter']);
-                }else{
+                } else {
                     $this->Flash->error(__('Veuillez choisir un combattant'));
                 }
             }
-
         }
 
         //On envoie les combattants à la vue
@@ -87,42 +89,46 @@ class ArenasController extends AppController {
             $this->loadModel('Events');
 
             //On récupère le combattant actuel
-            $currentFighter = $this->Fighters->getFighterById($PlayerFighterId);
+            if ($currentFighter = $this->Fighters->getFighterById($PlayerFighterId)) {
 
-            //Gestion des actions du joueur :
-            if ($this->request->is('post')) {
+                //Gestion des actions du joueur :
+                if ($this->request->is('post')) {
 
-                //Déplacement
-                if ($this->request->data['action'] == 'move') {
-                    $this->Fighters->move($this->request->data['dir'], $currentFighter);
+                    //Déplacement
+                    if ($this->request->data['action'] == 'move') {
+                        $this->Fighters->move($this->request->data['dir'], $currentFighter);
+                    }
+
+                    //Attaque
+                    if ($this->request->data['action'] == 'attack') {
+                        $this->Fighters->attack($this->request->data['dir'], $currentFighter);
+                    }
+
+                    //Génération d'objets
+                    if ($this->request->data['action'] == 'generateTools') {
+                        $this->Tools->generateTools();
+                    }
+
+                    //Génération de décors
+                    if ($this->request->data['action'] == 'generateSurroundings') {
+                        $this->Surroundings->generateSurroundings();
+                    }
+
+                    //Ramasser objets
+                    if ($this->request->data['action'] == 'pickup') {
+                        $this->Tools->takeTool($currentFighter->coordinate_x, $currentFighter->coordinate_y, $currentFighter);
+                    }
                 }
-
-                //Attaque
-                if ($this->request->data['action'] == 'attack') {
-                    $this->Fighters->attack($this->request->data['dir'], $currentFighter);
-                }
-
-                //Génération d'objets
-                if ($this->request->data['action'] == 'generateTools') {
-                    $this->Tools->generateTools();
-                }
-
-                //Génération de décors
-                if ($this->request->data['action'] == 'generateSurroundings') {
-                    $this->Surroundings->generateSurroundings();
-                }
-
-                //Ramasser objets
-                if ($this->request->data['action'] == 'pickup') {
-                    $this->Tools->takeTool($currentFighter->coordinate_x, $currentFighter->coordinate_y, $currentFighter);
-                }
+            } else {
+                $this->Flash->error(__('Vous êtes mort ! Veuillez choisir un combattant.'));
+                return $this->redirect(['action' => 'fighter']);
             }
 
             /* Envoi des données à la vue si le joueur n'est pas mort */
             if ($this->Fighters->getFighterById($PlayerFighterId)) {
 
                 //On envoie le terrain de jeu
-                $viewtab = $this->Fighters->createViewTab($currentFighter,$PlayerFighterSkin);
+                $viewtab = $this->Fighters->createViewTab($currentFighter, $PlayerFighterSkin);
                 $this->set("viewtab", $viewtab);
 
                 //On envoie le combattant
@@ -134,15 +140,18 @@ class ArenasController extends AppController {
                 $this->set(compact('tools', $tools));
 
                 //On envoie les derniers évènements
-                $events=$this->Events->getMostRecentEvents();
+                $events = $this->Events->getMostRecentEvents();
                 $this->set(compact('events', $events));
+                
+                //On envoie les ennemis à proximité
+                $opponents = $this->Fighters->getAdjacentOpponents($fighter);
+                $this->set(compact('opponents', $opponents));
 
                 $pos['x'] = $currentFighter->coordinate_x;
-                $pos['y'] =  $currentFighter->coordinate_y;
+                $pos['y'] = $currentFighter->coordinate_y;
                 $toolhere = $this->Fighters->toolIsThere($pos);
                 $this->set(compact('toolhere', $toolhere));
-            }
-            else{
+            } else {
                 $this->Flash->error(__('Vous êtes mort ! Veuillez choisir un combattant.'));
                 return $this->redirect(['action' => 'fighter']);
             }
@@ -234,7 +243,7 @@ class ArenasController extends AppController {
                 $this->Flash->success(__('Votre personnage a bien été créé.'));
 
                 //On créé un évènement
-                $this->Events->createEvent($fighter->name ." fait son entrée dans l'Arène.", $fighter->coordinate_x, $fighter->coordinate_y);
+                $this->Events->createEvent($fighter->name . " fait son entrée dans l'Arène.", $fighter->coordinate_x, $fighter->coordinate_y);
 
                 //On redirige vers la page combattants
                 return $this->redirect(['action' => 'fighter']);
