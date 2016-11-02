@@ -123,7 +123,8 @@ endforeach;
       echo "<tr>";
       for ($x = 0; $x < 15; $x++) {
         if(!empty($viewtab[$x][$y])){ ?>
-          <td title= "<?php echo $viewtab[$x][$y] ; ?>">
+          <!--<td title= "<?php echo $viewtab[$x][$y] ; ?>">-->
+          <td>
             <?php }
             else{
               echo "<td>";
@@ -131,6 +132,8 @@ endforeach;
 
             if (!empty($viewtab[$x][$y])) {
               echo $this->Html->image('sprites/' . $viewtab[$x][$y] . '.png', ['alt' => $viewtab[$x][$y]]);
+              echo  "<span class='tooltiptext'>".$viewtab[$x][$y]."</span>";
+                   
             }
             echo "</td>";
           }
