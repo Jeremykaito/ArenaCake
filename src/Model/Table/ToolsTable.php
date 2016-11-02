@@ -71,8 +71,8 @@ class ToolsTable extends Table {
 
         //On lui ajoute l'id du combattant
         $tool->fighter_id = $fighter->id;
-        $tool->coordinate_x = NULL;
-        $tool->coordinate_y = NULL;
+        $tool->coordinate_x = -1;
+        $tool->coordinate_y = -1;
         $this->save($tool);
 
         //Création d'un évènement
@@ -95,6 +95,10 @@ class ToolsTable extends Table {
 
     public function flushTools() {
         $this->deleteAll(['fighter_id IS' => NULL]);
+    }
+    
+    public function deleteTool($fighterid){
+        $this->deleteAll(['fighter_id IS' => $fighterid]);
     }
 
     public function exist($x, $y) {
