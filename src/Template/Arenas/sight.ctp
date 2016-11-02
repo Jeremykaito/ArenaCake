@@ -55,25 +55,22 @@ $(document).ready(function () {
 </script>
 
 <?php
-$competence;
 $bonusVue=0;
 $bonusVie=0;
 $bonusForce=0;
 
-foreach ($tools as $tool):
+if(!empty($tool)){
+      
   if($tool->type=='L'){
-    $competence='Vie';
     $bonusVie= $bonusVie + $tool->bonus;
   }
   else if ($tool->type=='D'){
-    $competence='Force';
     $bonusForce= $bonusForce + $tool->bonus;
   }
   else if ($tool->type=='V'){
-    $competence='Vue';
     $bonusVue= $bonusVue + $tool->bonus;
   }
-endforeach;
+}
 ?>
 
 <!-- Interface fighter -->
@@ -117,10 +114,12 @@ endforeach;
           <th>Bonus</th>
         </tr>
       </thead>
+      <?php if(!empty($tool)){ ?>
         <tr>
-          <td><?= $myToolname ?></td>
-          <td><?= $tools->bonus ?></td>
+          <td><?php $myToolname ?></td>
+          <td><?php $tool->bonus ?></td>
         </tr>
+      <?php }?>
     </table>
   </section>
 

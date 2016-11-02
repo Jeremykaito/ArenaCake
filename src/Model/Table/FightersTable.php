@@ -6,13 +6,12 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 
 class FightersTable extends Table {
-    
     /* Fonctions pour la validation des données */
 
     public function beforeSave($event, $entity) {
         if ($entity->isNew()) {
-            $entity->coordinate_x = rand(0,14);
-            $entity->coordinate_y = rand(0,9);
+            $entity->coordinate_x = rand(0, 14);
+            $entity->coordinate_y = rand(0, 9);
             $entity->skill_sight = 2;
             $entity->skill_strength = 1;
             $entity->skill_health = 5;
@@ -52,18 +51,18 @@ class FightersTable extends Table {
         $yo = $this->find()->where(['coordinate_x' => $x, 'coordinate_y' => $y])->first();
         return $yo;
     }
-    
-    public function getAdjacentOpponents($fighter){
-        
+
+    public function getAdjacentOpponents($fighter) {
+
         $allfighters = $this->getFighters();
         $found_opponents = array();
-        $i=0;
-        
+        $i = 0;
+
         foreach ($allfighters as $opponent):
-            if($this->checkAdjacentCoordinates($opponent->coordinate_x, $opponent->coordinate_y, $fighter->coordinate_x, $fighter->coordinate_y)){
-                if($opponent != $fighter){
-                        $found_opponents[$i] = $opponent;
-                        $i++;
+            if ($this->checkAdjacentCoordinates($opponent->coordinate_x, $opponent->coordinate_y, $fighter->coordinate_x, $fighter->coordinate_y)) {
+                if ($opponent != $fighter) {
+                    $found_opponents[$i] = $opponent;
+                    $i++;
                 }
             }
         endforeach;
@@ -126,7 +125,7 @@ class FightersTable extends Table {
         //On vérifie si le déplacement est possible
         if ($this->moveIsPossible($nextPos)) {
             $this->doMove($fighter, $nextPos);
-            
+
             //On vérifie si il n'y a pas un monstre ou un trou dans les cases adjacentes
 
 
@@ -135,12 +134,12 @@ class FightersTable extends Table {
                 if ($this->checkAdjacentCoordinates($nextPos["x"], $nextPos["y"], $sur["coordinate_x"], $sur["coordinate_y"])) {
                     if ($sur['type'] == 'W') {
 
-                        
+
                         //Création d'un évènement
                         $eventsTables->createEvent($fighter->name . ' est asphyxié par une puanteur terrible.', $fighter->coordinate_x, $fighter->coordinate_y);
                     }
                     if ($sur['type'] == 'T') {
-                                                    //Création d'un évènement
+                        //Création d'un évènement
                         $eventsTables->createEvent($fighter->name . ' a senti une brise suspecte.', $fighter->coordinate_x, $fighter->coordinate_y);
                     }
                 }
@@ -396,9 +395,9 @@ class FightersTable extends Table {
                     if ($unused) {
                         foreach ($fighterlist as $fighter) {
                             if ($fighter->coordinate_x == $x && $fighter->coordinate_y == $y) {
-                                if ($fighter == $currentfighter){
+                                if ($fighter == $currentfighter) {
                                     $viewtab[$x][$y] = $fighterSkin;
-                                }else{
+                                } else {
                                     $viewtab[$x][$y] = 'Ninja';
                                 }
                                 $unused = false;
@@ -421,7 +420,7 @@ class FightersTable extends Table {
                         foreach ($surroundinglist as $surrounding) {
                             if ($surrounding->coordinate_x == $x && $surrounding->coordinate_y == $y) {
 
-                                if ($surrounding->type == "P"){ //on ne traite pas les cas des monstres et trous qui sont invisibles
+                                if ($surrounding->type == "P") { //on ne traite pas les cas des monstres et trous qui sont invisibles
                                     $viewtab[$x][$y] = "Colonne";
 
 
@@ -440,49 +439,53 @@ class FightersTable extends Table {
         }
         return $viewtab;
     }
-    
+
     public function chooseSpriteName($toolrequete) {
+        $name ="";
+        if (!empty($toolrequete)) {
         $tool = $toolrequete->toArray();
-        switch ($tool['type']) {
-            case "V":
-                switch ($tool['bonus']) {
-                    case 1:
-                        $name = "Lunettes";
-                        break;
-                    case 2:
-                        $name = "Longue-vue";
-                        break;
-                    case 3:
-                        $name = "Oeil";
-                        break;
-                }
-                break;
-            case "D":
-                switch ($tool['bonus']) {
-                    case 1:
-                        $name = "Marteau";
-                        break;
-                    case 2:
-                        $name = "Epée";
-                        break;
-                    case 3:
-                        $name = "Hache";
-                        break;
-                }
-                break;
-            case "L":
-                switch ($tool['bonus']) {
-                    case 1:
-                        $name = "T-shirt";
-                        break;
-                    case 2:
-                        $name = "Veste";
-                        break;
-                    case 3:
-                        $name = "Cotte";
-                        break;
-                }
-                break;
+
+            switch ($tool['type']) {
+                case "V":
+                    switch ($tool['bonus']) {
+                        case 1:
+                            $name = "Lunettes";
+                            break;
+                        case 2:
+                            $name = "Longue-vue";
+                            break;
+                        case 3:
+                            $name = "Oeil";
+                            break;
+                    }
+                    break;
+                case "D":
+                    switch ($tool['bonus']) {
+                        case 1:
+                            $name = "Marteau";
+                            break;
+                        case 2:
+                            $name = "Epée";
+                            break;
+                        case 3:
+                            $name = "Hache";
+                            break;
+                    }
+                    break;
+                case "L":
+                    switch ($tool['bonus']) {
+                        case 1:
+                            $name = "T-shirt";
+                            break;
+                        case 2:
+                            $name = "Veste";
+                            break;
+                        case 3:
+                            $name = "Cotte";
+                            break;
+                    }
+                    break;
+            }
         }
         return $name;
     }
@@ -492,18 +495,17 @@ class FightersTable extends Table {
         $fighter->level += 1;
         $this->save($fighter);
     }
-    
+
     public function updateSkillStrength($fighter, $amount) {
         $fighter->skill_strength += $amount;
         $fighter->level += 1;
         $this->save($fighter);
     }
-    
+
     public function updateSkillHealth($fighter, $amount) {
         $fighter->skill_health += $amount;
-        $fighter->level += 1; 
+        $fighter->level += 1;
         $this->save($fighter);
     }
-    
-    
+
 }
