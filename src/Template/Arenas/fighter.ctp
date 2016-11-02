@@ -64,13 +64,12 @@
 
                 <td><?= $this->Number->format($fighter->current_health) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('Modifier'), ['action' => 'fighterEdit', $fighter->id]) ?>
-                    <?= $this->Form->postLink(__('Supprimer'), ['action' => 'fighterDelete', $fighter->id], ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
+                    <?= $this->Html->link($this->Html->image('icones/edit.png', array('alt' => "Modifier")), ['action' => 'fighterEdit', $fighter->id],  array('escape' => false)) ?>
+                    <?= $this->Form->postLink($this->Html->image('icones/delete.png', array('alt' => "Supprimer")), ['action' => 'fighterDelete', $fighter->id],  array('escape' => false), ['confirm' => __('Voulez vous vraiment supprimer le combattant: {0}?', $fighter->name)]) ?>
                     <?php
                     $leveltheory = $fighter->xp/4;
-                    if( $leveltheory > $fighter->level){ 
-                        //echo $this->Html->link(__('Passer de niveau'), ['action' => 'fighterEdit', $fighter->id]);
-                        echo $this->Form->button(__('Passer de niveau'), ['class' => 'linklevelup','value'=>$fighter->id ,'onclick'=>'passFighterID(this)']);
+                    if( $leveltheory > $fighter->level){
+                        echo $this->Form->button($this->Html->image('icones/lvl_up.png', array('alt' => "Passer de niveau")), ['class' => 'linklevelup','value'=>$fighter->id ,'onclick'=>'passFighterID(this)']);
                     }?>
 
                 </td>
@@ -117,13 +116,13 @@
                 echo $this->Form->radio('skills',$options,$attributes);
             ?>
             </div>
-            <!-- id du fighter à level up -->           
-            <?php  echo $this->Form->input('fightertolevelup',['type' => 'hidden']); ?> 
-            
+            <!-- id du fighter à level up -->
+            <?php  echo $this->Form->input('fightertolevelup',['type' => 'hidden']); ?>
+
             <?= $this->Form->button(__('Améliorer le stat'),['class' => 'button_gold','id'=>'levelupexe']) ?>
         </fieldset>
         <?= $this->Form->end() ?>
-    
+
     <!-- end -->
     <!-- Select a personnage and level-->
         <?= $this->Form->create() ?>
@@ -150,7 +149,7 @@
        <?= $this->Form->button(__('Choisir'),array('class' => 'button_gold')) ?>
        <?= $this->Form->end() ?>
       <!-- end -->
-               
+
     <?php    } else {    ?>
     <p>Vous n'avez aucun combattant à afficher! Veuillez créer votre personnage pour débuter le jeu.</p>
     <?php }    ?>
@@ -193,17 +192,17 @@
             }
 
             /** show and hide amelioration form**/
-            
+
             $('.linklevelup').click(function () {
                 $('#levelingUp').show();
             });
-            
+
             function passFighterID(btntag){
                 $fightertoup = btntag.getAttribute('value');
                 $("#fightertolevelup").val($fightertoup);
             }
-            
-            
+
+
 	</script>
 
     <?= $this->Html->link('Nouveau combattant', array('controller' => 'Arenas', 'action' => 'fighterNew'),array('class'=>'button_red')); ?>
