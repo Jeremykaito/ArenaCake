@@ -17,16 +17,11 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
 ?>
 
 
-
-
-
-
 <div id="main-content">
     <div>
         <h2>Hall Of Fame</h2>
     </div>
     <?php 
-    
     //create an object with the player and the fighter he owns
     $nbrofPlayer=1;
     foreach ( $playerlist as $player ) {
@@ -39,34 +34,30 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
         }
        $nbrofPlayer++;
     }
-    //pr($varArrayPlayerFighter);
     // select all attributes of fighter to parse it later in javascript
     foreach ($fighterlist as  $fighter){
-        $names[] =  $fighter->name;
-        $skillsight[] = $fighter->skill_sight;
-        $skillhealth[] = $fighter->skill_health;
-        $skillstrength[] = $fighter->skill_strength;
-        $fightersXp[] = $fighter->xp;
-        $fighterslvl[] = $fighter->level;
+        $names[]        =  $fighter->name;
+        $skillsight[]   = $fighter->skill_sight;
+        $skillhealth[]  = $fighter->skill_health;
+        $skillstrength[]= $fighter->skill_strength;
+        $fightersXp[]   = $fighter->xp;
+        $fighterslvl[]  = $fighter->level;
     }
 
     ?>
-    
+    <!-- Chart section -->
     <div class="graphChart" style="margin:auto;">
         <h3>Niveau moyen et expérience des combattants.</h3>
         <div id="levelchart" ></div>
     </div>
-    
     <div class="graphChart" style="margin:auto;">
         <h3>Tableau des capacités des combattants.</h3>
         <div id="skillchart" ></div>
     </div>
-    
     <div class="graphChart" style="margin:auto;">
         <h3>Proportion des combattants dans l'arène.</h3>
         <div id="pieChart" ></div>
     </div>
-    
     <div class="graphChart" style="margin:auto;">
         <h3>Pourcentage d'évènements par combattant.</h3>
         <div id="ratio" ></div>
@@ -74,18 +65,15 @@ echo $this->Html->script('JQPlot.jquery.jqplot.min');
     
  <?php
 /** KRA: mandatory files **/
-
 echo $this->Html->script('JQPlot.shCore.min');
 echo $this->Html->script('JQPlot.shBrushJScript.min');
 echo $this->Html->script('JQPlot.shBrushXml.min');
-
 /** KRA: additional plugins **/
 echo $this->Html->script('JQPlot.jqplot.barRenderer.min');
 echo $this->Html->script('JQPlot.jqplot.pieRenderer.min');
-echo $this->Html->script('JQPlot.jqplot.bubbleRenderer.min');
+echo $this->Html->script('JQPlot.jqplot.donutRenderer.min');
 echo $this->Html->script('JQPlot.jqplot.categoryAxisRenderer.min');
 echo $this->Html->script('JQPlot.jqplot.pointLabels.min');
-
 ?>   
 
 <script>
@@ -97,12 +85,13 @@ var skillstrength   =<?php echo json_encode($skillstrength );?>;
 var fightersXp      =<?php echo json_encode($fightersXp );?>;
 var fighterslvl     =<?php echo json_encode($fighterslvl );?>;
 
-var playersfigthers =<?php echo json_encode($varArrayPlayerFighter);?>;
-var varEventperFighter = <?php echo json_encode($varEventperFighter);?>;
+var playersfigthers     =<?php echo json_encode($varArrayPlayerFighter);?>;
+var varEventperFighter  =<?php echo json_encode($varEventperFighter);?>;
 
-
-
-/** new array to pass **/
+ /**********************************************/
+ /****Contruct parameters to pass to JQplot ****/
+ /**********************************************/
+ 
 var xpResult = new Array();
 var levelRresult = new Array();
 var playerandFighter = new Array();
@@ -148,52 +137,52 @@ var eventsAndFighter = new Array();
         tempu.push(obj);
         eventsAndFighter.push(tempu);
     }
- /************** plot all chart ****/
+/**********************************************/
+ /************** plot all charts **************/
+/**********************************************/
 $(document).ready(function(){
-        /* Plot of  Fighter skills */ 
-        plot2 = $.jqplot('skillchart', [skillhealth, skillsight,skillstrength], {
-            seriesDefaults: {
-                renderer:$.jqplot.BarRenderer,
-                pointLabels: { show: true }
+        
+    /****** 1)  Plot of  Fighter skills ************/ 
+    plot2 = $.jqplot('skillchart', [skillhealth, skillsight,skillstrength], {
+        seriesDefaults: {
+            renderer:$.jqplot.BarRenderer,
+            pointLabels: { show: true }
+        },
+        axes: {
+            xaxis: {
+                renderer: $.jqplot.CategoryAxisRenderer,
+                ticks: namesArray,
+                label:"Fighter's Name",
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
             },
-            axes: {
-                xaxis: {
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    ticks: namesArray,
-                    label:"Fighter's Name",
-                    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-                },
-                yaxis:{
-                    label:"Skill level",
-                    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-                }
+            yaxis:{
+                label:"Skill level",
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+            }
+        },
+        legend: {
+            show: true,
+            location: 'e',
+            placement: 'outside',
+            rendererOptions: {
+            numberRows: 1
             },
-            legend: {
-                show: true,
-                location: 'e',
-                placement: 'outside',
-                rendererOptions: {
-                numberRows: 1
-                },
-                labels:['health','sight','strength']
-            }   
-        });
-     
-        $('#skillchart').bind('jqplotDataHighlight', 
-            function (ev, seriesIndex, pointIndex, data) {
-                $('#info2').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
-            }
-        );
-             
-        $('#skillchart').bind('jqplotDataUnhighlight', 
-            function (ev) {
-                $('#info2').html('Nothing');
-            }
-        );
+            labels:['health','sight','strength']
+        }   
+    });
 
+    $('#skillchart').bind('jqplotDataHighlight', 
+        function (ev, seriesIndex, pointIndex, data) {
+            $('#info2').html('series: '+seriesIndex+', point: '+pointIndex+', data: '+data);
+        }
+    ); 
+    $('#skillchart').bind('jqplotDataUnhighlight', 
+        function (ev) {
+            $('#info2').html('Nothing');
+        }
+    );
 
-        /*****************  Plot of fighter exp and level  ************/    
-
+    /**********2)  Plot of fighter exp and level  ************/    
     plot1 = $.jqplot("levelchart", [  fighterslvl, fightersXp], {
         animate: true,
         animateReplot: true,
@@ -227,7 +216,6 @@ $(document).ready(function(){
             pad: 0
         },
         axes: {
-
             xaxis: {
                     renderer: $.jqplot.CategoryAxisRenderer,
                     ticks: namesArray,
@@ -250,55 +238,42 @@ $(document).ready(function(){
         }
     });
 
- // var plot2 = jQuery.jqplot ('pieChart', [playerandFighter], 
-  var plot2 = jQuery.jqplot ('pieChart', [playerandFighter], 
-    {
-      seriesDefaults: {
-        renderer: jQuery.jqplot.PieRenderer, 
-        rendererOptions: {
-          fill: false,
-          showDataLabels: true, 
-          sliceMargin: 4, 
-          lineWidth: 5
-        }
-      }, 
-      legend: { show:true, location: 'e' }
-    }
-  );
+    /***** 3) Pie render for porpotion  ******/
+     var plot2 = jQuery.jqplot ('pieChart', [playerandFighter], 
+       {
+         seriesDefaults: {
+           renderer: jQuery.jqplot.PieRenderer, 
+           rendererOptions: {
+             fill: false,
+             showDataLabels: true, 
+             sliceMargin: 4, 
+             lineWidth: 5
+           }
+         }, 
+         legend: { show:true, location: 'e' }
+       }
+     );
   
-  
-    var plot4 = jQuery.jqplot ('ratio', [eventsAndFighter], 
-    {
-       seriesDefaults:{
-            renderer:$.jqplot.PieRenderer,
-            rendererOptions: {
-                showDataLabels: true
-            }
-        },
-        legend:{show:true}     
-    }
-  );
-  
- // alert(playerandFighter.toString());
-  /** PLayer ratio 
-    
-    plot4 = $.jqplot('ratio',[fighterLevel],{
-        title: 'Player Level',
-        seriesDefaults:{
-            renderer: $.jqplot.BubbleRenderer,
-            rendererOptions: {
-                bubbleAlpha: 0.6,
-                highlightAlpha: 0.8
-            },
-            shadow: true,
-            shadowAlpha: 0.05
-        }
-    });   
-  **/
-
+    /***** 4) Donut Chart for player events **************/
+    var plot4 = jQuery.jqplot('ratio', [eventsAndFighter], {
+    seriesDefaults: {
+      renderer:$.jqplot.DonutRenderer,
+      rendererOptions:{
+        sliceMargin: 3,
+        startAngle: -90,
+        showDataLabels: true,
+        dataLabels: 'value',
+        totalLabel:true
+      }
+    },
+    legend: { show:true, location: 'e' }
+  });
+ 
+ /***************************************************************/
+ /**************************** End of all charts ****************/
+ /***************************************************************/
+ 
 });
-
-
 </script>
 
     
