@@ -130,8 +130,8 @@ class ArenasController extends AppController {
                 //On envoie le terrain de jeu
                 $viewtab = $this->Fighters->createViewTab($currentFighter, $PlayerFighterSkin);
                 $this->set("viewtab", $viewtab);
-                $myTool = $this->Fighters->chooseSpriteName($this->Tools->getToolsByFighter($PlayerFighterId));
-                $this->set("myTool", $myTool);
+                $myToolname = $this->Fighters->chooseSpriteName($this->Tools->getToolsByFighter($PlayerFighterId));
+                $this->set("myToolname", $myToolname);
 
                 //On envoie le combattant
                 $fighter = $this->Fighters->getFighterById($PlayerFighterId);

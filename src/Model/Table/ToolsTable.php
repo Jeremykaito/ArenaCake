@@ -16,7 +16,8 @@ class ToolsTable extends Table {
     public function getToolsByFighter($fighterId) {
         $tools = $this
                 ->find()
-                ->where(['fighter_id' => $fighterId]);
+                ->where(['fighter_id' => $fighterId])
+                ->first();
 
         return $tools;
     }

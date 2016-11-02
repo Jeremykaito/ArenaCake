@@ -117,12 +117,10 @@ endforeach;
           <th>Bonus</th>
         </tr>
       </thead>
-      <?php foreach ($tools as $tool): ?>
         <tr>
-          <td><?= $myTool ?></td>
-          <td><?= $tool->bonus ?></td>
+          <td><?= $myToolname ?></td>
+          <td><?= $tools->bonus ?></td>
         </tr>
-      <?php endforeach; ?>
     </table>
   </section>
 

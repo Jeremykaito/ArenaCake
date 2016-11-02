@@ -250,6 +250,7 @@ class FightersTable extends Table {
 
         //S'il n'as pas assez de vie, l'ennemi est mort
         else {
+            $this->winXp($attacker, 1); //l'attaquant gagne 1 xp car le coup a reussit
             $this->winXp($attacker, $defender->level); //l'attaquant gagne autant d'xp que le level du defender
             $this->kill($defender);
         }
@@ -442,9 +443,9 @@ class FightersTable extends Table {
     
     public function chooseSpriteName($toolrequete) {
         $tool = $toolrequete->toArray();
-        switch ($tool[0]['type']) {
+        switch ($tool['type']) {
             case "V":
-                switch ($tool[0]['bonus']) {
+                switch ($tool['bonus']) {
                     case 1:
                         $name = "Lunettes";
                         break;
@@ -457,7 +458,7 @@ class FightersTable extends Table {
                 }
                 break;
             case "D":
-                switch ($tool[0]['bonus']) {
+                switch ($tool['bonus']) {
                     case 1:
                         $name = "Marteau";
                         break;
@@ -470,7 +471,7 @@ class FightersTable extends Table {
                 }
                 break;
             case "L":
-                switch ($tool[0]['bonus']) {
+                switch ($tool['bonus']) {
                     case 1:
                         $name = "T-shirt";
                         break;
