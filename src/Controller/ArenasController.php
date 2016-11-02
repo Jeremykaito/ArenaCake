@@ -138,8 +138,8 @@ class ArenasController extends AppController {
                 $this->set(compact('fighter', $fighter));
 
                 //On envoie les objets du combattant
-                $tools = $this->Tools->getToolsByFighter($PlayerFighterId);
-                $this->set(compact('tools', $tools));
+                $tool = $this->Tools->getToolsByFighter($PlayerFighterId);
+                $this->set(compact('tool', $tool));
 
                 //On envoie les derniers évènements
                 $events = $this->Events->getMostRecentEvents();
@@ -153,6 +153,7 @@ class ArenasController extends AppController {
                 $pos['y'] = $currentFighter->coordinate_y;
                 $toolhere = $this->Fighters->toolIsThere($pos);
                 $this->set(compact('toolhere', $toolhere));
+                
             } else {
                 $this->Flash->error(__('Vous êtes mort ! Veuillez choisir un combattant.'));
                 return $this->redirect(['action' => 'fighter']);

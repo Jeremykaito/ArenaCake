@@ -60,9 +60,10 @@ $bonusVie=0;
 $bonusForce=0;
 
 if(!empty($tool)){
-      
+    
   if($tool->type=='L'){
     $bonusVie= $bonusVie + $tool->bonus;
+    
   }
   else if ($tool->type=='D'){
     $bonusForce= $bonusForce + $tool->bonus;
@@ -116,8 +117,8 @@ if(!empty($tool)){
       </thead>
       <?php if(!empty($tool)){ ?>
         <tr>
-          <td><?php $myToolname ?></td>
-          <td><?php $tool->bonus ?></td>
+          <td><?php echo $myToolname ?></td>
+          <td><?php echo $tool->bonus ?></td>
         </tr>
       <?php }?>
     </table>
