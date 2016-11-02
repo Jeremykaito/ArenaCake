@@ -166,7 +166,7 @@ endforeach;
           <td>
           </td>
           <td>
-            <?= $this->Form->create('Move_Up',array('class' => 'game_form')) ?>
+            <?= $this->Form->create('Move_Up',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
             <?= $this->Form->hidden('action', ['value' => 'move']) ?>
             <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
             <?= $this->Form->button(__('Haut'),array('class' => 'button_gold button_action')); ?>
@@ -177,7 +177,7 @@ endforeach;
         </tr>
         <tr>
           <td>
-            <?= $this->Form->create('Move_Left',array('class' => 'game_form')) ?>
+            <?= $this->Form->create('Move_Left',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
             <?= $this->Form->hidden('action', ['value' => 'move']) ?>
             <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
             <?= $this->Form->button(__('Gauche'),array('class' => 'button_gold button_action')); ?>
@@ -185,14 +185,14 @@ endforeach;
           </td>
           <td>
             <?php if($toolhere){ ?>
-              <?= $this->Form->create('pickup',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('pickup',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'pickup']) ?>
               <?= $this->Form->button(__('Prendre'),array('class' => 'button_gold button_action')); ?>
               <?= $this->Form->end() ?>
               <?php  } else echo 'Bouger'; ?>
             </td>
             <td>
-              <?= $this->Form->create('Move_Right',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Move_Right',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'move']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'right']) ?>
               <?= $this->Form->button(__('Droite'),array('class' => 'button_gold button_action')); ?>
@@ -203,7 +203,7 @@ endforeach;
             <td>
             </td>
             <td>
-              <?= $this->Form->create('Move_Down',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Move_Down',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'move']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'down']) ?>
               <?= $this->Form->button(__('Bas'),array('class' => 'button_gold button_action')); ?>
@@ -220,7 +220,7 @@ endforeach;
             <td>
             </td>
             <td>
-              <?= $this->Form->create('Attack_Up',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Attack_Up',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'up']) ?>
               <?= $this->Form->button(__('Haut'),array('class' => 'button_red button_action')); ?>
@@ -231,7 +231,7 @@ endforeach;
           </tr>
           <tr>
             <td>
-              <?= $this->Form->create('Attack_Left',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Attack_Left',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'left']) ?>
               <?= $this->Form->button(__('Gauche'),array('class' => 'button_red button_action')); ?>
@@ -239,7 +239,7 @@ endforeach;
             </td>
             <td>Attaque</td>
             <td>
-              <?= $this->Form->create('Attack_Right',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Attack_Right',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'right']) ?>
               <?= $this->Form->button(__('Droite'),array('class' => 'button_red button_action')); ?>
@@ -250,7 +250,7 @@ endforeach;
             <td>
             </td>
             <td>
-              <?= $this->Form->create('Attack_Down',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Attack_Down',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'attack']) ?>
               <?= $this->Form->hidden('dir', ['value' => 'down']) ?>
               <?= $this->Form->button(__('Bas'),array('class' => 'button_red button_action')); ?>
@@ -265,12 +265,12 @@ endforeach;
         <h5>Génération<h5>
           <table class="tab_action">
             <tr><td>
-              <?= $this->Form->create('Generate_Tools',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Generate_Tools',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'generateTools']) ?>
               <?= $this->Form->button(__('Objets'),array('class' => 'button_gold button_action')); ?>
               <?= $this->Form->end() ?>
             </td><td>
-              <?= $this->Form->create('Generate_Surroundings',array('class' => 'game_form')) ?>
+              <?= $this->Form->create('Generate_Surroundings',array('class' => 'game_form', 'url' => '/arenas/sight#interface_gauche')) ?>
               <?= $this->Form->hidden('action', ['value' => 'generateSurroundings']) ?>
               <?= $this->Form->button(__('Décors'),array('class' => 'button_red button_action')); ?>
               <?= $this->Form->end() ?>
