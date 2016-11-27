@@ -76,7 +76,7 @@ $(document).ready(function(){
 	<h3 class='text_light'>Un nouveau combattant fait son entrée dans l'Arène !</h3>
 	<p>Winky est une Elfe qui semble
 		être à la recherche d'un trésor légendaire enfoui dans l'Arène Herbeuse...</p>
-		<p>Vous pouvez jouer avez Winky dès maintenant !</p>
+		<p>Vous pouvez jouer avec Winky dès maintenant !</p>
 	</aside>
 
 	<aside class='cadre_jaune news'>
