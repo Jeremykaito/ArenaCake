@@ -22,6 +22,8 @@ class PublicController extends AppController {
         //Si le joueur est déjà connecté, il est redirigé vers l'accueil
         if (!$this->request->session()->read('PlayerLoggedIn')) {
 
+            $player= null;
+            
             //Si le formulaire est rempli
             if ($this->request->is('post')) {
 
